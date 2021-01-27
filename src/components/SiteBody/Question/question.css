@@ -1,0 +1,33 @@
+.questions-container{
+    border-top: 1px solid black;
+
+}
+.question-center{
+    display: flex;
+    flex-direction: column;
+
+}
+.questions-header{
+    margin: 0 auto;
+
+}
+.questions-body{
+    margin: 0 auto;
+
+}
+.question-h3{
+    font-size: 24px;
+    margin-bottom: 0;
+}
+.question-p{
+    font-size: 18px;
+    color: #828282;
+}
+.questions-buttons{
+display: flex;
+justify-content:flex-end;
+}
+.icon-conteiner{
+    margin-right: 5px;
+    cursor: pointer;
+}

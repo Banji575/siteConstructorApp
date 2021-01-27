@@ -1,0 +1,21 @@
+.block-menu-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.block-menu{
+    width: 80%;
+    border-radius: 8px;
+    background-color: #FFF;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    margin: 0 auto;
+}
+.block-menu-icon{
+    margin: 0 auto;
+}
+.block-menu-header{
+    border-bottom: 1px solid #BDBDBD;
+}
+.block-menu-close{
+    cursor: pointer;
+}

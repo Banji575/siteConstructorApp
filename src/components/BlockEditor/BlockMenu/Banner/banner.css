@@ -1,0 +1,34 @@
+.banner-upload-area-conteiner{
+    display: flex;
+    justify-content: center;
+    padding: 3%;
+    display: flex;
+}
+.input-file-button--custom-height{
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+}
+.input-wrapper-position{
+    position: relative;
+    height: 200px;
+    width: 70%;
+    border: 1px dotted black;
+    border-width: 1px;
+    border-style: dotted;
+    border-color: black;
+    border-radius: 5px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+}
+.banner-upload-logo{
+    position: absolute;
+}
+.banner-upload-link-conteiner{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}

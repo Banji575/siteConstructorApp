@@ -1,0 +1,32 @@
+.menu-item{
+    color: #4F4F4F;
+    background-color: salmon;
+    margin: 5px;
+    position: relative;
+}
+.menu-list{
+    list-style: none;
+}
+.menu-list-opions{
+    position: absolute;
+    top: -6px;
+    right: 0;
+    width: 15px;
+    height: 15px;
+   cursor: pointer;
+}
+
+.item-edit-text{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+.item-edit-text-show {
+    display: block;
+}

@@ -1,0 +1,11 @@
+.menu-cration-container {
+    color: #4F4F4F;
+    padding-top: 1%;
+}
+.add-menu-item{
+    background-color: rgba(51,153,255,0.55);
+    max-height: 30px;
+    border: 0;
+    color:#4F4F4F ;
+    margin-left: 1%;
+}
