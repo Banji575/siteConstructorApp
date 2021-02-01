@@ -13,6 +13,8 @@ import PopapContext  from './../../Context/ContextPopap'
 
 import Form from './../FormsGroup/Form/Form'
 
+import Contacts from './BlockMenu/Contacts/Contacts'
+import Social from './BlockMenu/Social/Social'
 
 const changeDataObjForBackend = (formdata, arr)=>{
     console.log(arr)
@@ -82,11 +84,14 @@ const BlockEditor = () => {
         switch (text) {
             case 'questions': return <BlockQueston changeStateVidjet = {changeStateVidjet}/>
             case 'text': return <Text setVidjetData = {setVidjetData} vidjArr = {vidjArr}/>
-            case 'banner': return <Banner/>
             case 'video' : return <Video  setVidjetData = {setVidjetData} vidjArr = {vidjArr} textTitle = "Тут будет текст заголовка" linkVideo="https://relieffo.ru"/>
+            case 'banner': return <Banner setVidjetData = {setVidjetData} vidjArr = {vidjArr}/>
+            case 'contacts': return <Contacts setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
+            case 'social': return <Social setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
             default: return null
         } 
     }
+
     return (
         // <ContextEditor.Provider value = {{setCurrentWidjet, setIsEditer}}></ContextEditor.Provider>
             <div className='container'>
@@ -95,7 +100,11 @@ const BlockEditor = () => {
                 {isEditer && <button onClick = {()=> handlerClickAddBlock()}  className = 'block-editor-button'>Добавить блок +</button>}
                     {/* {!isEditer && <BlockMenu setCurrentWidjet={(text)=>changeWidget(text)} hideBlock = {setIsEditer}/>} */}
                 {openWidjet()}
+                
                 {/* {handlerClickMenuItem()} */}
+            {/* {isEditer && <button onClick = {()=>setIsEditer(false)}  className = 'block-editor-button'>Добавить блок +</button>} 
+            {!isEditer && <BlockMenu setCurrentWidjet={(text)=>changeWidget(text)} hideBlock = {setIsEditer}/>}
+            {openWidjet()} */}
             </div>
         
     )

@@ -12,3 +12,7 @@
 .button:hover{
     filter: brightness(90%);
 }
+.button:disabled{
+    filter: brightness(60%);
+    color: grey;
+}

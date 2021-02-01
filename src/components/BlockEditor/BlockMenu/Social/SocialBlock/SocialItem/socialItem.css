@@ -1,0 +1,21 @@
+.social-item-conteiner{
+    display: flex;
+    justify-content: space-around;
+}
+.social-checkbox-conteiner{
+    display: flex;
+    width: 30%;
+}
+.social-item-checkbox{
+    transform: rotate(90deg);
+}
+.social-button-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.social-button-right{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

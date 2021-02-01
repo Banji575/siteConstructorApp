@@ -15,8 +15,7 @@ import {faCoffee} from '@fortawesome/free-solid-svg-icons'
 import './menuItem.css'
 import PopapContext from './../../../../Context/ContextPopap'
 
-const MenuItem = ({ item, setCurrentWidjet }) => {
-    console.log(item)
+const MenuItem = ({ item,setCurrentWidjet }) => {
     const src = () => {
         let src;
         switch (item.src) {

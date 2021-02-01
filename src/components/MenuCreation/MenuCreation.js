@@ -10,6 +10,7 @@ const MenuCreation = () => {
     const [response, doFetch] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_menu_item')
     const [resp, doFetchCreate] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=create_menu_item')
     const [respEditText, doFetchEditText] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=update_menu_item')
+    console.log('menucreation')
     const drawMenu = (data, isSub, lev) => {
         let level = lev || 0
         let children = []
