@@ -15,7 +15,6 @@ import {faCoffee} from '@fortawesome/free-solid-svg-icons'
 import './menuItem.css'
 
 const MenuItem = ({ item,setCurrentWidjet }) => {
-    console.log(item)
     const src = () => {
         let src;
         switch (item.src) {

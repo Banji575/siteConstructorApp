@@ -7,6 +7,8 @@ import Context from '../../Context'
 import useFetch from '../../hooks/useFetch'
 import Text from './BlockMenu/Text/Text'
 import Banner from './BlockMenu/Banner/Banner'
+import Contacts from './BlockMenu/Contacts/Contacts'
+import Social from './BlockMenu/Social/Social'
 
 const changeDataObjForBackend = (formdata, arr)=>{
     console.log(arr)
@@ -56,15 +58,18 @@ const BlockEditor = () => {
         switch (currentWidjet) {
             case 'questions': return <BlockQueston changeStateVidjet = {changeStateVidjet}/>
             case 'text': return <Text setVidjetData = {setVidjetData} vidjArr = {vidjArr}/>
-            case 'banner': return <Banner/>
+            case 'banner': return <Banner setVidjetData = {setVidjetData} vidjArr = {vidjArr}/>
+            case 'contacts': return <Contacts setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
+            case 'social': return <Social setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
             default: return null
         } 
     }
+
     return (
         <ContextEditor.Provider value = {[setCurrentWidjet, setIsEditer]}>
             <div className='container'>
             {isEditer && <button onClick = {()=>setIsEditer(false)}  className = 'block-editor-button'>Добавить блок +</button>} 
-            {!isEditer &&<BlockMenu setCurrentWidjet={(text)=>changeWidget(text)} hideBlock = {setIsEditer}/>}
+            {!isEditer && <BlockMenu setCurrentWidjet={(text)=>changeWidget(text)} hideBlock = {setIsEditer}/>}
             {openWidjet()}
             </div>
         </ContextEditor.Provider>

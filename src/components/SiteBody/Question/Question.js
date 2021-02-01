@@ -134,7 +134,7 @@ const Question = ({ body, id,replaceVidj }) => {
                     {elems()}
                 </div>
 
-                {body.length > 2 && !viewFullList ? <Button onClick={() => viewFillLisnHundler()} title='Еще' /> : null}
+                {body.length > 2 && !viewFullList ? <Button /* disabled = {false} */ onClick={() => viewFillLisnHundler()} title='Еще' /> : null}
             </div>
             {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} /> : null}
         </div>

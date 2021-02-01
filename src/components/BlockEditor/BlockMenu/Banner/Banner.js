@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState, useContext } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDown, faImage } from '@fortawesome/free-solid-svg-icons'
+import useFetch from '../../../../hooks/useFetch'
 import ContextEditor from '../../../../ContextEditor'
+import Context from '../../../../Context'
 import './banner.css'
+
+const convertBootToString = (bool) => {
+    return bool === true ? 1 : 0
+}
+
+const generaneId = () => Math.random()
 
 const checkLink = (str) => {
     const regex = new RegExp(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/)
-    if(!str) return
+    if (!str) return
     if (str.match(regex)) {
         return true
     } else {
@@ -14,36 +22,111 @@ const checkLink = (str) => {
     }
 }
 
-const Banner = () => {
+const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
     const root = useRef()
     const [previewImage, setPreviewImage] = useState(null)
+    const [state, changeState, setState, catalogId] = useContext(Context)
+    const [file, setFile] = useState(null)
+    const [oneLoad, setOneLoad] = useState(false)
     const [setCurrentWidjet, setIsEditer] = useContext(ContextEditor)
     const [isLink, setIsLink] = useState(false)
     const [isValidUrl, setIsValidUrl] = useState(true)
     const [link, setLink] = useState(null)
+    const [respEditBanner, doFetchEditBanner] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
+    console.log(vidjetObj, oneLoad)
+    if (vidjetObj && !oneLoad) {
+        
+        const url = `https://cloudsgoods.com/images${vidjetObj.link}`
+        setOneLoad(true)
+        setPreviewImage(url)
+    }
+    console.log(vidjArr)
+    useEffect(() => {
+        if (!vidjetObj) return
+        setIsLink(vidjetObj.checked)
+        setLink(vidjetObj.linkSite)
 
-
-    const saveList = () => { 
-        if(isLink){
-            if(!checkLink(link)){
+    }, [])
+    
+    console.log(id)
+    const saveList = () => {
+        if (isLink) {
+            if (!checkLink(link)) {
                 setIsValidUrl(false)
                 return
-           }
+            }
         }
-         setIsValidUrl(true)  
+        setIsValidUrl(true)
+        const formData = new FormData()
+        formData.set('banner_photo', file)
+        formData.set('catalog_id', catalogId)
+        formData.set('landing_prop_id', 6)
+        if (vidjetObj) {
+            formData.set('landing_prop_data_id', id)
+        }
+        if (isLink) {
+            formData.set('checkbox_banner', convertBootToString(isLink))
+            formData.set('link', link)
+        }
+
+        doFetchEditBanner(formData)
     }
 
+    useEffect(() => {
+        if (!respEditBanner) return
+        setOneLoad(false)
+        if (respEditBanner.success = 'Успешно!') {
+            if (!vidjetObj) {
+                const id = respEditBanner.landing_prop_data_id
+                const list = [...vidjArr]
+                const newObj = { title: 'banner', id, body: { checked: isLink, link: [respEditBanner.$fields.banner_photo.value[0]], linkSite: link } }
+                list.unshift(newObj)
+                setVidjetData(list)
+                closeWindow()
+                console.log(respEditBanner, 'new', id)
+            } else {
+
+                console.log(respEditBanner, 'edit')
+                const list = [...vidjArr]
+               console.log(list, 'old')
+                list.map((el,i) => {
+                    if (!el) return
+                    if (el.id == id) {
+
+                        const url = respEditBanner.$fields.banner_photo.value[0]
+                        console.log(el, url,)
+                        const newBody = { checked: isLink, link: url, linkSite: link }
+                        el.body = newBody
+                        console.log( vidjetObj)
+                        
+                        return el
+                    }
+                })
+
+                
+                console.log(list, 'new')
+                setVidjetData(list)
+                closeWindow()
+            }
+        }
+
+    }, [respEditBanner])
+
     const closeWindow = () => {
+        if (setViewEdit) {
+            setViewEdit(false)
+        }
         setCurrentWidjet(null)
     }
 
     const onLoadHandler = (evt) => {
         if (evt.target.files.length === 0) return
         const fr = new FileReader()
-        console.log('a;ldjsflkj')
+
         fr.readAsDataURL(evt.target.files[0])
         fr.addEventListener('load', function () {
             setPreviewImage(fr.result)
+            setFile(evt.target.files[0])
         })
     }
 
@@ -51,7 +134,8 @@ const Banner = () => {
         if (!previewImage) return
         const elem = root.current
         elem.style.backgroundImage = `url('${previewImage}')`
-        setPreviewImage(null)
+        /* setPreviewImage(null) */
+
     }, [previewImage])
 
     return (
@@ -77,14 +161,14 @@ const Banner = () => {
                 <div className='banner-upload-link-conteiner'>
                     <div className='d-flex'>
                         <div className='mr-2'>
-                            <input onChange={() => { setIsLink(s => !s) }} id='upload-check' type='checkbox' />
+                            <input checked={isLink} onChange={() => { setIsLink(s => !s) }} id='upload-check' type='checkbox' />
                         </div>
                         <div>
                             <label htmlFor='upload-check'>Сделать баннер ссылкой</label>
                         </div>
 
                     </div>
-                    <input type='text' pattern='/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/' onChange={(evt) => setLink(evt.target.value)} />
+                    <input type='text' value={link} pattern='/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/' onChange={(evt) => setLink(evt.target.value)} />
 
                     {!isValidUrl ? <p className='text-danger'>Не верный формат ссылки</p> : null}
                 </div>
