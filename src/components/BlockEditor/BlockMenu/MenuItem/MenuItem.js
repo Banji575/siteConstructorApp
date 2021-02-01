@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import carusel from '../../../../image/carusel.png'
 import banner from '../../../../image/banner.png'
 import callback from '../../../../image/callback.png'
@@ -13,8 +13,9 @@ import text from '../../../../image/text.png'
 import {  FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCoffee} from '@fortawesome/free-solid-svg-icons'
 import './menuItem.css'
+import PopapContext from './../../../../Context/ContextPopap'
 
-const MenuItem = ({ item,setCurrentWidjet }) => {
+const MenuItem = ({ item, setCurrentWidjet }) => {
     console.log(item)
     const src = () => {
         let src;

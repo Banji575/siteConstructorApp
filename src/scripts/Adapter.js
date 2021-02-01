@@ -41,15 +41,25 @@ export default class Adapter {
     }
     createVidjetData() {
        const newData = this.data.map((el,i )=> {
-        console.log(el)
+        console.log('tut', el)
             switch (el.title) {
+                case 'Видео' : return {
+                    title: 'video', id:el.id,
+                    body: {
+                        id: el.id,
+                        video_link: el.settings.fields.video_link.value, 
+                        title: el.settings.fields.title.value || '',
+                        catalog_id: el.catalog_id,
+                        landing_prop_id: el.landing_prop_id
+                    }
+                }
                 case 'Вопросы': return{title:'question', id:el.id, body:this.createQuestions(el)}
                 case 'Текст' : return {title: 'text', id:el.id, body: {title: el.settings.fields.title.value || '', discription: el.settings.fields.description.value || ''}}
                 //case 'Баннер' : return {title: 'banner', id:el.id, body:{link:el.banner_photo.value[0]}}
                 default: return null
             }
         })
-        console.log(newData)
+        console.log('createVidjetData', newData)
         
         return newData
     }

@@ -23,20 +23,20 @@ const MenuItem = ({ children, isList, data, deletItem, editItem }) => {
         setItemText('')
     }
     const inputChangeHandler = (evt) => {
-
         setItemText(evt.target.value)
     }
 
-
+    
 
     if (isList) {
         return (
             <ul className='menu-list'>
-                <li className='menu-item'>{data.text}<MenuItemOption editItem={editItemInput} id={data.id} show={shoeOpion} setShow={setShowOption} deletItem={deletItem} />
+                <li className='menu-item'>
+                {data.text}
+                <MenuItemOption editItem={editItemInput} id={data.id} show={shoeOpion} setShow={setShowOption} deletItem={deletItem} />
                     <div className='menu-list-opions' onClick={() => setShowOption(!shoeOpion)} >...</div>
                     <input autoFocus={true} ref={root} onBlur={editText} onChange={inputChangeHandler} placeholder={data.text} className={inputClasses.join(' ')} text />
                 </li>
-
                 {children}
             </ul>
 

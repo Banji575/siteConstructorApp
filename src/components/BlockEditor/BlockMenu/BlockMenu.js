@@ -22,10 +22,6 @@ const BlockMenu = ({ hideBlock ,setCurrentWidjet}) => {
 
     return (
         <React.Fragment>
-            <div className='block-menu '>
-                <div className='block-menu-header'>
-                    <h3>Новый блок</h3>
-                </div>
                 <div className='block-menu-listss p-3 row no-gutters mr-n3'>
                     {itemsObj.map((el, i) => {
                         return <MenuItem 
@@ -39,7 +35,6 @@ const BlockMenu = ({ hideBlock ,setCurrentWidjet}) => {
                 <div>
                     <p className='block-menu-close text-right pr-3'><a onClick={() => hideBlock(true)}>Отмена</a></p>
                 </div>
-            </div>
             {/* <BlockQueston/> */}
         
         </React.Fragment>
