@@ -1,0 +1,181 @@
+import React, { useEffect, useState, useContext } from 'react'
+import './timerVidjet.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import TimerNumber from './TimerNumber/TimerNumber'
+import useFetch from '../../../hooks/useFetch'
+import Context from '../../../Context'
+const dateFormat = date => date.toLocaleString('ru', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
+const createTime = (type, value = {}) => {
+    const { toDateDate, toDateTime, onDateDatumPoint, onDateDuration, cyclingDuration, cyclingDatePoint, timerCreated } = value
+    /*     console.log(toDateDate, toDateTime) */
+
+    let currentDate;
+    let expirationDate;
+    if (type == 'to_date') {
+        currentDate = Date.now()
+        expirationDate = Date.parse(toDateDate + ' ' + toDateTime)
+        /*     console.log(toDateDate, toDateTime)
+            console.log(expirationDate) */
+    }
+
+    if (type === 'on_date') {
+        currentDate = Date.now()
+        /* const days = onDateDuration.join(':') */
+        const date = onDateDuration.split(':').map(el => Number(el))
+        const days = date[0] * 86400000
+        const hours = date[1] * 3600000
+        const minuts = date[2] * 60000
+        expirationDate = (days + hours + minuts) + Date.parse(timerCreated)
+    }
+
+    if (type === "cycle") {
+        currentDate = Date.now()
+        const date = cyclingDuration.split(':').map(el => Number(el))
+        console.log(date)
+        const hours = date[0] * 3600000
+        const minuts = date[1] * 60000
+        expirationDate = (hours + minuts) + Date.parse(timerCreated)
+
+    }
+
+    const timerCountSecond = (expirationDate - currentDate) / 1000
+    const timerCountMinut = (timerCountSecond) / 60
+    const timerCountHour = timerCountMinut / 60
+
+    return {
+        days: Math.floor(timerCountHour / 24),
+        hours: Math.floor(timerCountHour % 24),
+        minutes: Math.floor(timerCountMinut % 60),
+        seconds: Math.floor(timerCountSecond % 60)
+    }
+    // /console.log(type, toDateDate, toDateTime, onDateDatumPoint, onDateDuration, cyclingDuration, cyclingDatePoint)
+}
+
+const TimerVidjet = ({ body, id }) => {
+
+    const [respDelVideo, doFetchDelVideo] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
+    const [state, changeState, setState, catalogId] = useContext(Context)
+    const [type, setType] = useState(body.type)
+    const { days, hours, minutes, seconds } = createTime(type, body)
+    const [second, setSecond] = useState(() => {
+        if(body.type === 'cycle' ){
+            console.log('попал в условие')
+            const {seconds} = createTime(type, body)
+            return seconds < 0 ? 0 : seconds
+         }
+        return seconds < 0 ? 0 : seconds
+    })
+    const [minut, setMinut] = useState(() => {
+        if(body.type === 'cycle'){
+           console.log(body)
+           const {minutes} = createTime(type, body)
+           return minutes < 0 ? 0 : minutes
+        }
+        return minutes < 0 ? 0 : minutes
+    })
+    const [hour, setHour] = useState(() => {
+        if(body.type === 'cycle'){
+            const {hours} = createTime(type, body)
+            return hours < 0 ? 0 : hours
+         }
+        return hours < 0 ? 0 : hours
+    })
+    const [day, setDay] = useState(()=>{
+        if(body.type === 'cycle'){
+            const {days} = createTime(type, body)
+            return days < 0 ? 0 : days
+         }
+        return days < 0 ? 0 : days
+    })
+    const delHandler = () => {
+        const formData = new FormData()
+        formData.set('landing_prop_id', 4)
+        formData.set('catalog_id', catalogId)
+        formData.set('landing_prop_data_id', id)
+        doFetchDelVideo(formData)
+    }
+
+
+    useEffect(() => {
+        if (day <= 0 && hour <= 0 && minut <= 0 && second <= 0) return
+        console.log('dsa;ljdaslkjdasflkjs')
+        const timer = setInterval(() => {
+            setSecond(state => state = state - 1)
+
+            if (second === 0) {
+                console.log('0 секунд')
+                setMinut(state => state -= 1)
+                setSecond(59)
+            }
+            if (minut === 0 && second === 0) {
+                setHour(state => state -= 1)
+                setMinut(59)
+            }
+            if (hour === 0 && minut === 0 && second === 0) {
+                setDay(state => state -= 1)
+                setHour(23)
+            }
+
+        }, 1000)
+
+        return () => clearInterval(timer)
+    }, [second])
+
+    return (
+        <div className='questions-container'>
+            <div className='container question-center'>
+                <div className='questions-header'>
+                    <div className='questions-buttons'>
+                        <div className='icon-conteiner'>
+                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('up', id)} */ icon={faAngleUp} />
+                        </div>
+                        <div className='icon-conteiner'>
+                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('down', id)} */ icon={faAngleDown} />
+                        </div>
+                        <div className='icon-conteiner'>
+                            <FontAwesomeIcon /* onClick={editHandler} */ icon={faEdit} />
+                        </div>
+                        <div className='icon-conteiner' onClick={delHandler} color='green'>
+                            <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
+                        </div>
+                    </div>
+                </div>
+                <div className='questions-body'>
+                    <h3 className='question-h3 mb-3'>До конца акции </h3>
+                    <div className='timer-number-conteiner'>
+                        <ul className='timer-number-list pl-0'>
+                            <li className='timer-number-item d-flex justify-content-center flex-column'>
+                                <div className='timer-number my-0 mx-auto'>
+                                    <TimerNumber title='Дни' number={day} />
+                                </div>
+                                <p className='timer-absolut-p'>Дней</p>
+                            </li>
+                            <li className='timer-number-item d-flex justify-content-center flex-column'>
+                                <div className='timer-number my-0 mx-auto'>
+                                    <TimerNumber title='Часы' number={hour} />
+                                </div>
+                                <p className='timer-absolut-p'>Часов</p>
+                            </li>
+                            <li className='timer-number-item d-flex justify-content-center flex-column'>
+                                <div className='timer-number my-0 mx-auto'>
+                                    <TimerNumber title='Минуты' number={minut} />
+                                </div>
+                                <p className='timer-absolut-p'>Минут</p>
+                            </li>
+                            <li className='timer-number-item d-flex justify-content-center flex-column'>
+                                <div className='timer-number my-0 mx-auto'>
+                                    <TimerNumber title='Секунды' number={second} />
+                                </div>
+                                <p className='timer-absolut-p'>Секунд</p>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {/* {viewEdit ? <Video setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} /> : null} */}
+        </div>
+    )
+}
+export default TimerVidjet

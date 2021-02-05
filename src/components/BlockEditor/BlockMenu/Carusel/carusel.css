@@ -1,0 +1,17 @@
+.items-input-hidden{
+    opacity: 0;
+    z-index: -1;
+    position: fixed;
+}
+.items-label{
+    background-color: #C8C8C8;
+    color: #FFF;
+    padding: 4%;
+    font-size: 9px;
+}
+.items-list{
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 60%;
+    flex-direction: column;
+}

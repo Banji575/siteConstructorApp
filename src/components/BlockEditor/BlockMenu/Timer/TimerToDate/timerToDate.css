@@ -1,0 +1,14 @@
+/* .date-picker{
+    position: relative;
+    
+} */
+.react-datepicker-wrapper{
+    position: relative;
+}
+.date-picker-icon{
+position: absolute;
+
+top: 65%;
+left: 168px;
+
+}

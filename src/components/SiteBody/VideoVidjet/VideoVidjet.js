@@ -1,34 +1,36 @@
-import React,{useState, useEffect,useContext} from 'react'
-import './socialVidjet.css'
-import SocialVidjetItem from './SocialVidjetItem/SocialVidjetItem'
+import React, { useState, useContext, useEffect } from 'react'
+import './videoVidjet.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import Social from '../../BlockEditor/BlockMenu/Social/Social'
-import useFetch from '../../../hooks/useFetch'
-import Context from '../../../Context'
+import Video from '../../BlockEditor/BlockMenu/Video/Video'
 import ContextEditor from '../../../ContextEditor'
+import Context from '../../../Context'
+import useFetch from '../../../hooks/useFetch'
 
-const SocialVidjet = ({ body ,id}) => {
-    const [viewEdit, setViewEdit] = useState(false)
-    const [respDelSocial, doFetchDelSocial] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
-    const [state, changeState, setState, catalogId] = useContext(Context)
+const getVideoLink = (link) => {
+    console.log(link.replace(/.+\?v=/, "https://www.youtube.com/embed/"))
+    return link.replace(/.+\?v=/, "https://www.youtube.com/embed/")
+}
+
+const VideoVidjet = ({ body, id }) => {
+    const [respDelVideo, doFetchDelVideo] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
+    const [state, changeState, setState, catalogId] = useContext(Context)
+    const [viewEdit, setViewEdit] = useState(false)
     const editHandler = () => {
         setViewEdit(true)
     }
 
     const delHandler = () => {
         const formData = new FormData()
-        formData.set('landing_prop_id', 10)
+        formData.set('landing_prop_id', 3)
         formData.set('catalog_id', catalogId)
         formData.set('landing_prop_data_id', id)
-        doFetchDelSocial(formData)
+        doFetchDelVideo(formData)
     }
-
     useEffect(() => {
-        if (!respDelSocial) return
-        if (respDelSocial.success === 'Успешно!') {
+        if (!respDelVideo) return
+        if (respDelVideo.success === 'Успешно!') {
             const list = [...vidjArr]
             list.map((el, i) => {
                 if (!el) return
@@ -38,8 +40,9 @@ const SocialVidjet = ({ body ,id}) => {
             })
             setVidjetData(list)
         }
-    }, [respDelSocial])
-    const socialSection = Object.keys(body)
+    }, [respDelVideo])
+
+
     return (
         <div className='questions-container'>
             <div className='container question-center'>
@@ -52,7 +55,7 @@ const SocialVidjet = ({ body ,id}) => {
                             <FontAwesomeIcon /* onClick = {()=>replaceVidj('down', id)} */ icon={faAngleDown} />
                         </div>
                         <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={editHandler}  icon={faEdit} />
+                            <FontAwesomeIcon onClick={editHandler} icon={faEdit} />
                         </div>
                         <div className='icon-conteiner' onClick={delHandler} color='green'>
                             <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
@@ -60,20 +63,13 @@ const SocialVidjet = ({ body ,id}) => {
                     </div>
                 </div>
                 <div className='questions-body'>
-                    <div className='social-vidjet-list-container'>
-                        {socialSection.map((el, i) => {
-                            return <SocialVidjetItem key={i} data={body[el]} />
-                        })}
-                    </div>
+                    <p>{body.title}</p>
+                    <iframe src={getVideoLink(body.link)} />
                 </div>
-
-
             </div>
-             {viewEdit ? <Social content = {body} setViewEdit={setViewEdit} id={id} /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ /> : null}
+            {viewEdit ? <Video setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} /> : null}
         </div>
     )
-
-
 }
 
-export default SocialVidjet
+export default VideoVidjet

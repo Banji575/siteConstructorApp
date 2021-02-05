@@ -2,8 +2,7 @@
 import React from 'react'
 import Button from '../../../../UI/Button/Button'
 import './socialVidjetItem.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArchive } from '@fortawesome/free-solid-svg-icons'
+
 
 const nameSocialButton = {
     vk: 'Наша страница в Вконтакте',
@@ -12,34 +11,27 @@ const nameSocialButton = {
     twitter: 'Наша страница в twitter',
     tiktok: 'Наша страница в tiktok',
     whatsup: 'Написать нам в WhatsApp',
-    Viber: 'Написать нам в Viber',
-    Skype: 'Написать нам в Skype',
+    viber: 'Написать нам в Viber',
+    skype: 'Написать нам в Skype',
     telegram: 'Написать нам в Telegtam',
 }
 
 const SocialVidjetItem = ({ data }) => {
-    console.log('data', data)
-
-    const goToLink = (link) =>{
-        console.log(link)
-        window.location.href = link
+    const goToLink = (link) => {
+        document.location.href = link
     }
-
-
     return (
-        <div className='social-vidjet-item-conteiner container'>
-            <h3>{data.title}</h3>
+        <div className='social-vidjet-item-conteiner container '>
+            <h3 className='social-vidjet-title'>{data.title}</h3>
             <div className='social-vidjet-item-buttons'>
                 {Object.keys(data)
                     .map((el, i) => {
-                        console.log(data[el])
                         if (el === 'title' || !data[el].checked)
                             return
                         return (
                             <React.Fragment>
-                                <button onClick = {()=>{goToLink(data[el].link)}} className = 'social-vidjet-button'>{nameSocialButton[el]}</button>
+                                <a key={i} href={`https://${data[el].link}`} /* onClick={() => { goToLink(data[el].link) }} */ className='social-vidjet-button'>{nameSocialButton[el]}</a>
                             </React.Fragment>
-
                         )
                     })}
             </div>

@@ -1,34 +1,47 @@
 import React, { useEffect, useState,useContext } from 'react'
 import Context from '../../../../Context'
+import ContextEditor from '../../../../ContextEditor'
 import useFetch from '../../../../hooks/useFetch'
 import SocialBlock from './SocialBlock/SocialBlock'
 const itemArrSocial = [
     { title: 'Вконтакте', name: 'vk' },
     { title: 'Facebook', name: 'facebook' },
     { title: 'Twitter', name: 'twitter' },
-    { title: 'TickTok', name: 'ticktok' },
+    { title: 'TikTok', name: 'tiktok' },
 ]
 const itemArrMessedger = [
     { title: 'WhatsApp', name: 'whatsup' },
     { title: 'Telegram', name: 'telegram' },
-    { title: 'Skype', name: 'skype' },
-    { title: 'Viber', name: 'viber' },
+    { title: 'skype', name: 'skype' },
+    { title: 'viber', name: 'viber' },
 ]
 
 const genetateId = () => Math.random()
 
-const Social = ({ content }) => {
-    const [data, setData] = useState(content ? content : { title: 'social', id: genetateId(), social: { title: 'Социальные сети и месседжеры', vk: { checked: true, link: 'akhdasfkljdhasfkj' }, facebook: { checked: false, link: '' }, twitter: { checked: false, link: '' }, ticktok: { checked: false, link: '' } }, messeger: { title: 'Месседжеры', whatsup: { checked: false, link: '' }, telegram: { checked: false, link: '' }, skype: { checked: false, link: '' }, viber: { chedked: false, link: '' } } })
+const Social = ({ content,setViewEdit ,id,setVidjetDataArray, vidjArray}) => {
+    const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
+    const [data, setData] = useState(content ? content : { title: 'social', id: genetateId(), social: { title: 'Социальные сети и месседжеры', vk: { checked: false, link: '' }, facebook: { checked: false, link: '' }, twitter: { checked: false, link: '' }, tiktok: { checked: false, link: '' } }, messeger: { title: 'Месседжеры', whatsup: { checked: false, link: '' }, telegram: { checked: false, link: '' }, skype: { checked: false, link: '' }, viber: { chedked: false, link: '' } } })
     const [respEditSocial, doFetchEditSocial] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
     const getParams = () => {
     }
 
-    const saveList = () => {
+    const closeWindow = () => {
+        if (setViewEdit) {
+            setViewEdit(false)
+        } else
+            setCurrentWidjet(null)
+    }
 
+    const saveList = () => {
+        console.log(data)
         const formData = new FormData()
         formData.set('landing_prop_id', 10)
         formData.set('catalog_id', catalogId)
+        if(content){
+            formData.set('landing_prop_data_id', id)
+        }
+   
         formData.set('social_title', data.social.title)
         formData.set('messengers_title', data.messeger.title)
 
@@ -38,8 +51,8 @@ const Social = ({ content }) => {
         formData.set('facebook', data.social.facebook.checked === true ? 1 : false)
         formData.set('twitter_link', data.social.twitter.socialLink)
         formData.set('twitter', data.social.twitter.checked === true ? 1 : false)
-        formData.set('ticktok_link', data.social.ticktok.socialLink)
-        formData.set('ticktok', data.social.ticktok.checked === true ? 1 : false)
+         formData.set('tiktok_link', data.social.tiktok.socialLink)
+        formData.set('tiktok', data.social.tiktok.checked === true ? 1 : false)
 
         formData.set('WhatsApp_link', data.messeger.whatsup.socialLink)
         formData.set('WhatsApp', data.messeger.whatsup.checked === true ? 1 : false)
@@ -56,7 +69,35 @@ const Social = ({ content }) => {
     useEffect(()=>{
         if(!respEditSocial)
         return
-        console.log(respEditSocial)
+        if(respEditSocial.success === 'Успешно!'){
+           
+            if(!content){
+                const list = [...vidjArray]
+                const body = {title: 'social', id: data.id, body:{social:data.social, messeger:data.messeger}}
+                console.log(data)
+                list.unshift(body)
+
+                console.log(body)
+                setVidjetDataArray(list)
+            }else{
+                const list = [...vidjArr]
+                console.log('edit',list)
+                
+                list.map((el,i)=>{
+                    if(!el) return
+                    if(el.id ===id){
+                        const body = {social:data.social, messeger:data.messeger}
+                        el.body=body
+                        console.log(el)
+                        console.log(body)
+
+                    }
+                })
+                setVidjetData(list)
+            }
+           
+            closeWindow()
+        }
     },[respEditSocial])
 
     const saveTitle = (category, title)=>{
@@ -85,7 +126,7 @@ const Social = ({ content }) => {
         <div className='block-question-conteiner'>
             <div className='block-menu-header'>
                 <h3>Соц. сети/ Месседжеры</h3>
-                <div /* onClick={closeWindow} */ className='block-header-close'></div>
+                <div onClick={closeWindow} className='block-header-close'></div>
             </div>
             <SocialBlock saveTitle = {saveTitle} itemArr={itemArrSocial} blockName = 'social' saveItem = {saveItem}  content = {data.social} blockTitle='Социальные сети' />
             <SocialBlock saveTitle = {saveTitle} itemArr={itemArrMessedger} blockName = 'messeger' saveItem = {saveItem} content = {data.messeger} blockTitle='Месседжеры' />

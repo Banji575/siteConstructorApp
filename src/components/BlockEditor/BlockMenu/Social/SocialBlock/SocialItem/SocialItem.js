@@ -5,9 +5,9 @@ import './socialItem.css'
 import Button from '../../../../../../UI/Button/Button'
 
 const SocialItem = ({ title, isChecked, link, name, data, saveItem, blockName }) => {
-    const [checked, setChecked] = useState(data.checked)
+    const [checked, setChecked] = useState(()=>data ? data.checked : false)
     const [isEdit, setIsEdit] = useState(false)
-    const [socialLink, setSocialLink] = useState(data.link)
+    const [socialLink, setSocialLink] = useState(()=>data ? data.link : '')
     const [isValidSocialLink, setIsValidSocialLink] = useState(true)
     const [state, setState] = useState({ [name]: data })
     const [initialize, setInitialaize] = useState(false)

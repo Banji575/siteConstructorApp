@@ -9,6 +9,12 @@ import Text from './BlockMenu/Text/Text'
 import Banner from './BlockMenu/Banner/Banner'
 import Contacts from './BlockMenu/Contacts/Contacts'
 import Social from './BlockMenu/Social/Social'
+import Feedback from './BlockMenu/FeedBack/Feedback'
+import Timer from './BlockMenu/Timer/Timer'
+import Video from './BlockMenu/Video/Video'
+import Maps from './BlockMenu/Maps/Maps'
+import Items from './BlockMenu/Items/Items'
+import Carusel from './BlockMenu/Carusel/Carusel'
 
 const changeDataObjForBackend = (formdata, arr)=>{
     console.log(arr)
@@ -55,12 +61,19 @@ const BlockEditor = () => {
         setVidjetData(list)
     },[response])
     const openWidjet = () => {
+        console.log(currentWidjet)
         switch (currentWidjet) {
             case 'questions': return <BlockQueston changeStateVidjet = {changeStateVidjet}/>
             case 'text': return <Text setVidjetData = {setVidjetData} vidjArr = {vidjArr}/>
             case 'banner': return <Banner setVidjetData = {setVidjetData} vidjArr = {vidjArr}/>
             case 'contacts': return <Contacts setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
             case 'social': return <Social setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
+            case 'callback' : return <Feedback setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
+            case 'timer' : return <Timer/>
+            case 'video' : return <Video setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
+            case 'map' : return <Maps/>
+            case 'items' : return <Items/>
+            case 'carusel' : return <Carusel setVidjetDataArray = {setVidjetData} vidjArray = {vidjArr}/>
             default: return null
         } 
     }

@@ -4,6 +4,10 @@
     background-color: #FFF;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
     margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 .block-menu-header{
     display: flex;

@@ -4,11 +4,17 @@
     justify-content: center;
 }
 .block-menu{
-    width: 80%;
+    min-width: 60%;
+    max-width: 70%;
     border-radius: 8px;
     background-color: #FFF;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
     margin: 0 auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 100;
 }
 .block-menu-icon{
     margin: 0 auto;

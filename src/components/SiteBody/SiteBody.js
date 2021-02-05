@@ -5,6 +5,10 @@ import TextContent from './TextContent/TextContent'
 import BannerVidjet from './BannerVidjet/BannerVidjet'
 import ContactsVidjets from './ContactsVidjets/ContactsVidjets'
 import SocialVidjet from './SocialVidjet/SocialVidjet'
+import FeedbackVidject from './FeedbackVidjet/FeedbackVidjet'
+import VideoVidjet from './VideoVidjet/VideoVidjet'
+import TimerVidjet from './TimerVidjet/TimerVidjet'
+import CaruselVidjet from './CaruselVidjet/CaruselVidjet'
 
 const SiteBody = ({ vidjArr,setVidjetData,replaceVidj }) => {
     const [isEditer, setIsEditer] = useState(true)
@@ -15,13 +19,18 @@ const SiteBody = ({ vidjArr,setVidjetData,replaceVidj }) => {
         if (!el) {
             return
         }
-        
+        console.log(el)
+
         switch (el.title) {
             case 'question': return <Question key = {i}  body={el.body} id = {el.id} replaceVidj = {replaceVidj} />
             case 'text': return <TextContent key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
             case 'banner' : return <BannerVidjet key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj} />
             case 'contacts' : return <ContactsVidjets key = {i} body = {el.body} id = {el.id} renderVidjet = {replaceVidj}/>
-            case 'social' : return <SocialVidjet body = {el.body}/>
+            case 'social' : return <SocialVidjet key = {i} body = {el.body} id ={el.id}/>
+            case 'feedback': return <FeedbackVidject key = {i} body = {el.body} id = {el.id}/>
+            case 'video' : return <VideoVidjet key = {i} body = {el.body} id = {el.id} />
+            case 'timer' : return <TimerVidjet key = {i} body = {el.body} id = {el.id}/>
+            case 'carusel': return <CaruselVidjet key = {i} body = {el.body} id = {el.id}/>
             default:
                 break;
         }

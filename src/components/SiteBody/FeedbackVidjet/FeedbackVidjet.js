@@ -1,34 +1,33 @@
-import React,{useState, useEffect,useContext} from 'react'
-import './socialVidjet.css'
-import SocialVidjetItem from './SocialVidjetItem/SocialVidjetItem'
+import React, { useState, useContext, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import Social from '../../BlockEditor/BlockMenu/Social/Social'
-import useFetch from '../../../hooks/useFetch'
+import './feedbackVidjet.css'
+import FeedbackVidjetItem from './FeedbackVidjetItem/FeedbackVidjetItem'
+import Button from '../../../UI/Button/Button'
 import Context from '../../../Context'
 import ContextEditor from '../../../ContextEditor'
+import Feedback from '../../BlockEditor/BlockMenu/FeedBack/Feedback'
+import useFetch from '../../../hooks/useFetch'
 
-const SocialVidjet = ({ body ,id}) => {
+const FeedbackVidject = ({ body , id}) => {
     const [viewEdit, setViewEdit] = useState(false)
-    const [respDelSocial, doFetchDelSocial] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
+    const [respDelFeedback, doFetchDelFeedback] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
-    const editHandler = () => {
-        setViewEdit(true)
-    }
+    const editHandler = () => setViewEdit(true)
 
     const delHandler = () => {
+        console.log('del', id)
         const formData = new FormData()
-        formData.set('landing_prop_id', 10)
+        formData.set('landing_prop_id', 9)
         formData.set('catalog_id', catalogId)
         formData.set('landing_prop_data_id', id)
-        doFetchDelSocial(formData)
+        doFetchDelFeedback(formData)
     }
 
-    useEffect(() => {
-        if (!respDelSocial) return
-        if (respDelSocial.success === 'Успешно!') {
+    useEffect(()=>{
+        if (!respDelFeedback) return
+        if (respDelFeedback.success === 'Успешно!') {
             const list = [...vidjArr]
             list.map((el, i) => {
                 if (!el) return
@@ -38,8 +37,8 @@ const SocialVidjet = ({ body ,id}) => {
             })
             setVidjetData(list)
         }
-    }, [respDelSocial])
-    const socialSection = Object.keys(body)
+    },[respDelFeedback])
+
     return (
         <div className='questions-container'>
             <div className='container question-center'>
@@ -52,7 +51,7 @@ const SocialVidjet = ({ body ,id}) => {
                             <FontAwesomeIcon /* onClick = {()=>replaceVidj('down', id)} */ icon={faAngleDown} />
                         </div>
                         <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={editHandler}  icon={faEdit} />
+                            <FontAwesomeIcon onClick={editHandler} icon={faEdit} />
                         </div>
                         <div className='icon-conteiner' onClick={delHandler} color='green'>
                             <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
@@ -60,20 +59,18 @@ const SocialVidjet = ({ body ,id}) => {
                     </div>
                 </div>
                 <div className='questions-body'>
-                    <div className='social-vidjet-list-container'>
-                        {socialSection.map((el, i) => {
-                            return <SocialVidjetItem key={i} data={body[el]} />
-                        })}
-                    </div>
+                    <h3 className='feedback-vidjet-h3'>{body.title.text}</h3>
+                    {Object.keys(body).map((el, i) => {
+                        return <FeedbackVidjetItem  key = {i} title = {el} data = {body[el]}/>
+                    })} 
+                    <Button  title = 'Отправить'/>
                 </div>
-
+                    
 
             </div>
-             {viewEdit ? <Social content = {body} setViewEdit={setViewEdit} id={id} /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ /> : null}
+             {viewEdit ?<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/> :  null}
         </div>
     )
-
-
 }
 
-export default SocialVidjet
+export default FeedbackVidject
