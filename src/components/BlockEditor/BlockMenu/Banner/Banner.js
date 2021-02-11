@@ -22,6 +22,7 @@ const checkLink = (str) => {
     }
 }
 
+
 const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
     const root = useRef()
     const [previewImage, setPreviewImage] = useState(null)
@@ -33,9 +34,11 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
     const [isValidUrl, setIsValidUrl] = useState(true)
     const [link, setLink] = useState(null)
     const [respEditBanner, doFetchEditBanner] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
-    console.log(vidjetObj, oneLoad)
+
+    console.log(isLink)
+
     if (vidjetObj && !oneLoad) {
-        
+
         const url = `https://cloudsgoods.com/images${vidjetObj.link}`
         setOneLoad(true)
         setPreviewImage(url)
@@ -47,8 +50,7 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
         setLink(vidjetObj.linkSite)
 
     }, [])
-    
-    console.log(id)
+
     const saveList = () => {
         if (isLink) {
             if (!checkLink(link)) {
@@ -88,8 +90,8 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
 
                 console.log(respEditBanner, 'edit')
                 const list = [...vidjArr]
-               console.log(list, 'old')
-                list.map((el,i) => {
+                console.log(list, 'old')
+                list.map((el, i) => {
                     if (!el) return
                     if (el.id == id) {
 
@@ -97,13 +99,13 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
                         console.log(el, url,)
                         const newBody = { checked: isLink, link: url, linkSite: link }
                         el.body = newBody
-                        console.log( vidjetObj)
-                        
+                        console.log(vidjetObj)
+
                         return el
                     }
                 })
 
-                
+
                 console.log(list, 'new')
                 setVidjetData(list)
                 closeWindow()
@@ -120,6 +122,7 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
     }
 
     const onLoadHandler = (evt) => {
+        console.log('banner upload')
         if (evt.target.files.length === 0) return
         const fr = new FileReader()
 
@@ -149,8 +152,8 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
                 <div className='banner-upload-area-conteiner'>
                     <FontAwesomeIcon className='banner-upload-logo' size='10x' icon={faImage} />
                     <div ref={root} className="input__wrapper input-wrapper-position" >
-                        <input name="file" type="file" name="file" id="input__file" className="input input__file" multiple onChange={(evt) => onLoadHandler(evt)}/* onChange={(evt) => fileChange(evt)} */ />
-                        <label htmlFor="input__file" className="input__file-button input-file-button--custom-height">
+                        <input name="file" type="file" name="file" id="input__file_banner" className="input input__file" multiple onChange={(evt) => onLoadHandler(evt)}/* onChange={(evt) => fileChange(evt)} */ />
+                        <label htmlFor="input__file_banner" className="input__file-button input-file-button--custom-height">
                             <span className="input__file-button-text"></span>
                         </label>
                         <p>Загрузить картинку</p>

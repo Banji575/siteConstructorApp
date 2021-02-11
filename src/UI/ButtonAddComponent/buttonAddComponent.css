@@ -1,0 +1,10 @@
+.button-add-component {
+    box-sizing: border-box;
+    border-radius: 3px;
+    background-color: rgba(242, 242, 242, 0.75);
+    border: 0.75px solid #0258AE;
+    color: #39F;
+    font-size: 28px;
+    text-align: center;
+    margin: 0 auto;
+}

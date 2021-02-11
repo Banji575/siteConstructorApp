@@ -40,8 +40,8 @@ const FeedbackVidject = ({ body , id}) => {
     },[respDelFeedback])
 
     return (
-        <div className='questions-container'>
-            <div className='container question-center'>
+        <div className='questions-container '>
+            <div className='container question-center site-top-line'>
                 <div className='questions-header'>
                     <div className='questions-buttons'>
                         <div className='icon-conteiner'>
@@ -58,8 +58,8 @@ const FeedbackVidject = ({ body , id}) => {
                         </div>
                     </div>
                 </div>
-                <div className='questions-body'>
-                    <h3 className='feedback-vidjet-h3'>{body.title.text}</h3>
+                <div className='questions-body feedback-body'>
+                    <h3 className='feedback-vidjet-h3 text-center'>{body.title.text}</h3>
                     {Object.keys(body).map((el, i) => {
                         return <FeedbackVidjetItem  key = {i} title = {el} data = {body[el]}/>
                     })} 

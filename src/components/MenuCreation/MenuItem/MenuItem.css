@@ -1,22 +1,24 @@
-.menu-item{
+.menu-item {
     color: #4F4F4F;
-    background-color: salmon;
+    /*  background-color: salmon; */
     margin: 5px;
     position: relative;
 }
-.menu-list{
+
+.menu-list {
     list-style: none;
 }
-.menu-list-opions{
+
+.menu-list-opions {
     position: absolute;
     top: -6px;
-    right: 0;
+    right: -25%;
     width: 15px;
     height: 15px;
-   cursor: pointer;
+    cursor: pointer;
 }
 
-.item-edit-text{
+.item-edit-text {
     position: absolute;
     width: 100%;
     height: 100%;

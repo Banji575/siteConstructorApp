@@ -9,7 +9,7 @@ import FeedbackVidject from './FeedbackVidjet/FeedbackVidjet'
 import VideoVidjet from './VideoVidjet/VideoVidjet'
 import TimerVidjet from './TimerVidjet/TimerVidjet'
 import CaruselVidjet from './CaruselVidjet/CaruselVidjet'
-
+import './siteBody.css';
 const SiteBody = ({ vidjArr,setVidjetData,replaceVidj }) => {
     const [isEditer, setIsEditer] = useState(true)
     const [currentWidjet, setCurrentWidjet] = useState(null)
@@ -38,7 +38,7 @@ const SiteBody = ({ vidjArr,setVidjetData,replaceVidj }) => {
 
     return (
         <ContextEditor.Provider value = {[setCurrentWidjet, setIsEditer,setVidjetData,vidjArr]}>
-            <div>
+            <div className = 'siteBody'>
                 {vidjArr.map((el,i) => {
                     return renderVidjet(el,i)
                 })}

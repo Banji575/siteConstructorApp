@@ -1,8 +1,8 @@
-.items-input__wrapper{
+.items-input__wrapper {}
 
-}
+.input__file-button-text {}
 
-.items-input-wrapper-position{
+.items-input-wrapper-position {
     position: relative;
     width: 100px;
     height: 30px;
@@ -13,4 +13,12 @@
     border-radius: 3px;
     border: 0.75px solid #0258AE;
     box-shadow: 0 1px 2px 0 #39F;
+}
+
+.input__file-button-text {
+    color: #4F4F4F;
+    font-size: 30px;
+    color: #0258AE;
+    margin-top: 16%;
+    opacity: .5;
 }

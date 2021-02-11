@@ -46,7 +46,7 @@ const TextContent = ({ body, id, replaceVidj }) => {
 
     return (
         <div className='text-container'>
-            <div className='container '>
+            <div className='container site-top-line'>
                 <div className='text-header'>
                     <div className='text-buttons'>
                         <div className='icon-conteiner'>

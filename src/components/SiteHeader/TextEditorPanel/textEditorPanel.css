@@ -1,0 +1,6 @@
+.text-editor-panel {
+    display: flex;
+    position: absolute;
+    right: 25%;
+    top: 17%;
+}

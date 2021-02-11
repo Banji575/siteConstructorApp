@@ -123,8 +123,8 @@ const TimerVidjet = ({ body, id }) => {
     }, [second])
 
     return (
-        <div className='questions-container'>
-            <div className='container question-center'>
+        <div className='questions-container '>
+            <div className='container question-center site-top-line'>
                 <div className='questions-header'>
                     <div className='questions-buttons'>
                         <div className='icon-conteiner'>
@@ -141,8 +141,8 @@ const TimerVidjet = ({ body, id }) => {
                         </div>
                     </div>
                 </div>
-                <div className='questions-body'>
-                    <h3 className='question-h3 mb-3'>До конца акции </h3>
+                <div className='questions-body '>
+                    <h3 className='question-h3 mb-3 text-center'>До конца акции </h3>
                     <div className='timer-number-conteiner'>
                         <ul className='timer-number-list pl-0'>
                             <li className='timer-number-item d-flex justify-content-center flex-column'>

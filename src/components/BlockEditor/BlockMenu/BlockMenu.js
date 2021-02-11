@@ -11,21 +11,15 @@ const itemsObj = [
     { text: 'Товары', src: 'items' },
     { text: 'Баннер', src: 'banner' },
     { text: 'Таймер', src: 'timer' },
-    { text: 'Карта', src: 'map' },
+   // { text: 'Карта', src: 'map' },
     { text: 'Обратная связь', src: 'callback' },
     { text: 'Соц. сети и месседжеры', src: 'social' },
     { text: 'Контакты', src: 'contacts' },
 ]
 
 const BlockMenu = ({ hideBlock ,setCurrentWidjet}) => {
- 
-
     return (
         <React.Fragment>
-            <div className='block-menu '>
-                <div className='block-menu-header'>
-                    <h3>Новый блок</h3>
-                </div>
                 <div className='block-menu-listss p-3 row no-gutters mr-n3'>
                     {itemsObj.map((el, i) => {
                         return <MenuItem 
@@ -37,9 +31,8 @@ const BlockMenu = ({ hideBlock ,setCurrentWidjet}) => {
                     })}
                 </div>
                 <div>
-                    <p className='block-menu-close text-right pr-3'><a onClick={() => hideBlock(true)}>Отмена</a></p>
+                  {/*   <p className='block-menu-close text-right pr-3'><a onClick={() => hideBlock(true)}>Отмена</a></p> */}
                 </div>
-            </div>
             {/* <BlockQueston/> */}
         
         </React.Fragment>

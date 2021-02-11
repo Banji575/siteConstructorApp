@@ -1,4 +1,4 @@
-.block-menu-item{
+.block-menu-item {
     border-radius: 5px;
     cursor: pointer;
     padding: 5px;
@@ -8,9 +8,9 @@
     justify-content: center;
     border: 0.5px solid #808080;
 }
-.block-menu-item:hover {
-     transform: scale(1.02);
-}
-.block-menu-header{
 
+.block-menu-item:hover {
+    transform: scale(1.02);
 }
+
+.block-menu-header {}

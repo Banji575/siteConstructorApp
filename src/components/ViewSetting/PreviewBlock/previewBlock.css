@@ -1,0 +1,16 @@
+.preview-block {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.border-rigth {
+    border-right: 1px solid black;
+}
+
+.preview-item {
+    cursor: pointer;
+    position: relative;
+    width: 50%;
+    padding-right: 1%;
+    text-align: center;
+}

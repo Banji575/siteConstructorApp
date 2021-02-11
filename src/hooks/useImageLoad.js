@@ -13,12 +13,12 @@ export default (file) => {
         if (!imageFile) return
 
         const fr = new FileReader()
-        fr.readAsDataURL(file)
+        fr.readAsDataURL(imageFile)
         fr.addEventListener('load', function () {
             setUrl(fr.result)
         /*     isLoading(true) */
         })
     },[imageFile])
 
-    return [url]
+    return [url,doLoad]
 }

@@ -17,10 +17,10 @@ const CaruselItem = ({ file, index, delHandler, urlFile }) => {
         <div className='carusel-item-index'>
             <p>{index}</p>
         </div>
-        {urlFile ? <img className='carusel-item-img' src = {`https://cloudsgoods.com/images${urlFile}`} /> : <img className='carusel-item-img' src={url} />}
+        {urlFile ? <img className='carusel-item-img' src={`https://cloudsgoods.com/images${urlFile}`} /> : <img className='carusel-item-img' src={url} />}
         <div className='icon-conteiner' /* onClick={delHandler} */ color='green'>
-                            <FontAwesomeIcon onClick = {()=>delHandler(file, index)} color={'red'} icon={faTrashAlt} />
-                        </div>
+            <FontAwesomeIcon onClick={() => delHandler(file, index)} color={'red'} icon={faTrashAlt} />
+        </div>
     </div>
 
     )

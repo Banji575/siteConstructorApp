@@ -45,7 +45,7 @@ const VideoVidjet = ({ body, id }) => {
 
     return (
         <div className='questions-container'>
-            <div className='container question-center'>
+            <div className='container question-center site-top-line'>
                 <div className='questions-header'>
                     <div className='questions-buttons'>
                         <div className='icon-conteiner'>

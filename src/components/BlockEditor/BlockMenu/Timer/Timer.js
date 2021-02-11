@@ -9,10 +9,11 @@ import useFetch from '../../../../hooks/useFetch'
 
 const dateFormat = date => date.toLocaleString('ru', { year: 'numeric', month: 'numeric', day: 'numeric' })
 const generateId = () => Math.random()
-const Timer = ({ closeEdit, content }) => {
-    const [timerParams, setTimerParams] = useState(content || { type: 'to_date', id: generateId(), body: { toDateDate: dateFormat(new Date), toDateTime: '12:00', onDateDatumPoint: 'firstView', onDateDuration: '0:00:00', cyclingDatePoint: '12:00', cyclingDuration: '0:00', test: 'test' } })
+const Timer = ({ closeEdit, content, setVidjetDataArray, vidjArray }) => {
+    const [timerParams, setTimerParams] = useState(content || { title:'timer', type: 'to_date', id: generateId(), body: { toDateDate: dateFormat(new Date), toDateTime: '12:00', onDateDatumPoint: 'firstView', onDateDuration: '0:00:00', cyclingDatePoint: '12:00', cyclingDuration: '0:00', test: 'test' } })
     const [setCurrentWidjet, setIsEditer] = useContext(ContextEditor)
     const [state, changeState, setState, catalogId] = useContext(Context)
+
     const [type, setType] = useState(content ? content.type : 'to_date')
     const [respEditTimer, doFetchEditTimer] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
     console.log(timerParams)
@@ -22,6 +23,8 @@ const Timer = ({ closeEdit, content }) => {
         } else
             setCurrentWidjet(null)
     }
+
+    console.log(content)
 
     const getTimerParametr = (obj) => {
         console.log(type)
@@ -56,8 +59,8 @@ const Timer = ({ closeEdit, content }) => {
             formData.set('on_date_duration', onDateDuration)
         }
         if (type === 'cycle') {
-            formData.set('cycle_datum_point',cyclingDatePoint )
-            formData.set('cycle_duration',cyclingDuration )
+            formData.set('cycle_datum_point', cyclingDatePoint)
+            formData.set('cycle_duration', cyclingDuration)
         }
 
 
@@ -68,7 +71,11 @@ const Timer = ({ closeEdit, content }) => {
     useEffect(() => {
         if (!respEditTimer) return
         if (respEditTimer.success === 'Успешно!') {
-            console.log(respEditTimer)
+            const list = [...vidjArray]
+            list.unshift(timerParams)
+            setVidjetDataArray(list)
+            console.log(vidjArray)
+            
         }
     }, [respEditTimer])
 

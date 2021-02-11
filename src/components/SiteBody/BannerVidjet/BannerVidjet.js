@@ -13,6 +13,9 @@ const BannerVidjet = ({ body, id, replaceVidj }) => {
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [respDelQuestion, doFetchDelQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
+
+    console.log(linkSite)
+
     const root = useRef()
     if (body.link && !link) {
         setLink(body.link)
@@ -67,9 +70,9 @@ const BannerVidjet = ({ body, id, replaceVidj }) => {
     }
 
     return (
-        <div className='questions-container'>
+        <div className='questions-container '>
             {viewEdit ? <Banner setViewEdit={setViewEdit} vidjArr={vidjArr} setVidjetData={setVidjetData} id={id} /* id={id} changeStateVidjet={changeStateVidjet} isNew={false} */ vidjetObj={body} /> : null}
-            <div className='container question-center'>
+            <div className='container question-center site-top-line'>
                 <div className='questions-header'>
                     <div className='questions-buttons'>
                         <div className='icon-conteiner'>

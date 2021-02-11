@@ -18,6 +18,7 @@ function App() {
   const [vidjecLoading, setVidjetLoading] = useState(false)
   const [stateApp, setStateApp] = useState('')
   const [vidjetData, setVidjetData] = useState(null)
+  const [mobileMenuIsOpen, setMobilemenuIsOpen] = useState(true)
 
   useEffect(() => {
     doFetch()
@@ -103,11 +104,14 @@ function App() {
     (<Context.Provider value={[state, changeState, setState, catalogId, setVidjetData, vidjetData]}>
       <div className="app">
         <ViewSetting />
-        <SiteHeader />
-        <Body background={state.backgroundColor}>
-          <MenuCreation />
-          <BlockEditor setVidjetData={setVidjetData} vidjArr={vidjetData} />
+        <SiteHeader changeViewMenu = {setMobilemenuIsOpen} />
+        <Body state={state}>
+          <MenuCreation menuIsView = {mobileMenuIsOpen} />
+          <div>
           {vidjetData ? <SiteBody replaceVidj={replaceVidj} setVidjetData={setVidjetData} vidjArr={vidjetData} /> : null}
+          <BlockEditor setVidjetData={setVidjetData} vidjArr={vidjetData} />
+          </div>
+        
         </Body>
       </div>
     </Context.Provider>

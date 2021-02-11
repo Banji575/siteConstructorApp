@@ -16,16 +16,18 @@ export default class Adapter {
     }
 
     createData() {
+        console.log(this.data, 'data from adapter')
         const catalogMenu = this.data.catalog_menu
         const menuTree = this.threeGenerate(catalogMenu)
         const backgroundColor = this.data.settings.background_color
         const colorTopTitle = this.data.settings.title_background
         const siteLogo = this.data.logo
         const siteTitle = this.data.title
+        console.log('siteitle', this.data)
 
         this.data.siteMenu = menuTree
         this.data.backgroundColor = backgroundColor ? `#${backgroundColor}` : '#fff'
-        this.data.settings.title_background = colorTopTitle ? `#${colorTopTitle}` : '#fff'
+        this.data.titleBackground = colorTopTitle ? `#${colorTopTitle}` : '#fff'
         this.data.siteLogo = siteLogo
         this.data.siteTitle = siteTitle
         this.data.siteVidjets = {
@@ -33,8 +35,8 @@ export default class Adapter {
         }
 
         delete this.data.catalog_menu
-        delete this.data.settings.background_color
-        delete this.data.settings.title_background
+            /*    delete this.data.settings.background_color
+               delete this.data.settings.title_background */
         delete this.data.logo
         delete this.data.title
         return this.data
@@ -43,46 +45,58 @@ export default class Adapter {
         const newData = this.data.map((el, i) => {
             console.log(el)
             switch (el.title) {
-                case 'Вопросы': return { title: 'question', id: el.id, body: this.createQuestions(el) }
-                case 'Текст': return { title: 'text', id: el.id, body: { title: el.settings.fields.title.value || '', discription: el.settings.fields.description.value || '' } }
-                case 'Баннер': return { title: 'banner', id: el.id, body: { link: el.settings.fields.banner_photo.value ? el.settings.fields.banner_photo.value : null, checked: (el.settings.fields.checkbox_banner.value == true), linkSite: el.settings.fields.checkbox_banner.children.fields.link.value || null } }
-                case 'Контакты': return { title: 'contacts', id: el.id, body: { address: { text: el.settings.fields.address.value, checked: el.settings.fields.show_address.value }, email: { text: el.settings.fields.email.value, checked: el.settings.fields.show_email.value }, fax: { text: el.settings.fields.fax.value, checked: el.settings.fields.show_fax.value }, phone: { text: el.settings.fields.phone.value, checked: el.settings.fields.show_phone.value } } }
-                case 'Соц сети, мессенджеры': return {
-                    title: 'social', id: el.id,
-                    body: {
-                        social: {
-                            title: el.settings.fields.social_title.value,
-                            vk: { checked: el.settings.fields.vk.value ? this.createBoolValue(el.settings.fields.vk.value) : this.createBoolValue(el.settings.fields.vk.default), link: el.settings.fields.vk.children.fields.vk_link.value },
-                            facebook: { checked: el.settings.fields.facebook.value ? this.createBoolValue(el.settings.fields.facebook.value) : this.createBoolValue(el.settings.fields.facebook.default), link: el.settings.fields.facebook.children.fields.facebook_link.value },
-                            twitter: { checked: el.settings.fields.twitter.value ? this.createBoolValue(el.settings.fields.twitter.value) : this.createBoolValue(el.settings.fields.twitter.default), link: el.settings.fields.twitter.children.fields.twitter_link.value },
-                            tiktok: { checked: el.settings.fields.tiktok.value ? this.createBoolValue(el.settings.fields.tiktok.value) : this.createBoolValue(el.settings.fields.tiktok.default), link: el.settings.fields.tiktok.children.fields.tiktok_link.value }
-                        },
-                        messeger: {
-                            title: el.settings.fields.messengers_title.value,
-                            whatsup: { checked: el.settings.fields.WhatsApp.value ? this.createBoolValue(el.settings.fields.WhatsApp.value) : this.createBoolValue(el.settings.fields.WhatsApp.default), link: el.settings.fields.WhatsApp.children.fields.WhatsApp_link.value },
-                            telegram: { checked: el.settings.fields.Telegram.value ? this.createBoolValue(el.settings.fields.Telegram.value) : this.createBoolValue(el.settings.fields.Telegram.default), link: el.settings.fields.Telegram.children.fields.Telegram_link.value },
-                            skype: { checked: el.settings.fields.skype.value ? this.createBoolValue(el.settings.fields.skype.value) : this.createBoolValue(el.settings.fields.skype.default), link: el.settings.fields.skype.children.fields.skype_link.value },
-                            viber: { checked: el.settings.fields.Viber.value ? this.createBoolValue(el.settings.fields.Viber.value) : this.createBoolValue(el.settings.fields.Viber.default), link: el.settings.fields.Viber.children.fields.Viber_link.value }
+                case 'Вопросы':
+                    return { title: 'question', id: el.id, body: this.createQuestions(el) }
+                case 'Текст':
+                    return { title: 'text', id: el.id, body: { title: el.settings.fields.title.value || '', discription: el.settings.fields.description.value || '' } }
+                case 'Баннер':
+                    return { title: 'banner', id: el.id, body: { link: el.settings.fields.banner_photo.value ? el.settings.fields.banner_photo.value : null, checked: (el.settings.fields.checkbox_banner.value == true), linkSite: el.settings.fields.checkbox_banner.children.fields.link.value || null } }
+                case 'Контакты':
+                    return { title: 'contacts', id: el.id, body: { address: { text: el.settings.fields.address.value, checked: el.settings.fields.show_address.value }, email: { text: el.settings.fields.email.value, checked: el.settings.fields.show_email.value }, fax: { text: el.settings.fields.fax.value, checked: el.settings.fields.show_fax.value }, phone: { text: el.settings.fields.phone.value, checked: el.settings.fields.show_phone.value } } }
+                case 'Соц сети, мессенджеры':
+                    return {
+                        title: 'social',
+                        id: el.id,
+                        body: {
+                            social: {
+                                title: el.settings.fields.social_title.value,
+                                vk: { checked: el.settings.fields.vk.value ? this.createBoolValue(el.settings.fields.vk.value) : this.createBoolValue(el.settings.fields.vk.default), link: el.settings.fields.vk.children.fields.vk_link.value },
+                                facebook: { checked: el.settings.fields.facebook.value ? this.createBoolValue(el.settings.fields.facebook.value) : this.createBoolValue(el.settings.fields.facebook.default), link: el.settings.fields.facebook.children.fields.facebook_link.value },
+                                twitter: { checked: el.settings.fields.twitter.value ? this.createBoolValue(el.settings.fields.twitter.value) : this.createBoolValue(el.settings.fields.twitter.default), link: el.settings.fields.twitter.children.fields.twitter_link.value },
+                                tiktok: { checked: el.settings.fields.tiktok.value ? this.createBoolValue(el.settings.fields.tiktok.value) : this.createBoolValue(el.settings.fields.tiktok.default), link: el.settings.fields.tiktok.children.fields.tiktok_link.value }
+                            },
+                            messeger: {
+                                title: el.settings.fields.messengers_title.value,
+                                whatsup: { checked: el.settings.fields.WhatsApp.value ? this.createBoolValue(el.settings.fields.WhatsApp.value) : this.createBoolValue(el.settings.fields.WhatsApp.default), link: el.settings.fields.WhatsApp.children.fields.WhatsApp_link.value },
+                                telegram: { checked: el.settings.fields.Telegram.value ? this.createBoolValue(el.settings.fields.Telegram.value) : this.createBoolValue(el.settings.fields.Telegram.default), link: el.settings.fields.Telegram.children.fields.Telegram_link.value },
+                                skype: { checked: el.settings.fields.skype.value ? this.createBoolValue(el.settings.fields.skype.value) : this.createBoolValue(el.settings.fields.skype.default), link: el.settings.fields.skype.children.fields.skype_link.value },
+                                viber: { checked: el.settings.fields.Viber.value ? this.createBoolValue(el.settings.fields.Viber.value) : this.createBoolValue(el.settings.fields.Viber.default), link: el.settings.fields.Viber.children.fields.Viber_link.value }
+                            }
                         }
                     }
-                }
-                case 'Обратная связь': return { title: 'feedback', id: el.id, body: { ourEmail: { text: el.settings.fields.our_email.value || el.settings.fields.our_email.default, show: true }, title: { text: el.settings.fields.title.value || el.settings.fields.title.default, show: this.createBoolValue(el.settings.fields.show_title) }, name: { text: el.settings.fields.name.value || el.settings.fields.name.default, show: this.createBoolValue(el.settings.fields.show_name.value) }, email: { text: el.settings.fields.email.value || el.settings.fields.email.default, show: this.createBoolValue(el.settings.fields.show_email.value) }, phone: { text: el.settings.fields.phone.value || el.settings.fields.phone.default, show: this.createBoolValue(el.settings.fields.show_phone.value) }, message: { text: el.settings.fields.message.value || el.settings.fields.message.default, show: this.createBoolValue(el.settings.fields.show_message.value) } } }
-                case 'Видео': return { title: 'video', id: el.id, body: { title: el.settings.fields.title.value || '', link: el.settings.fields.video_link.value } }
-                case 'Таймер': return {
-                    title: 'timer', id: el.id,
-                    body: {
-                        timerCreated: el.created_at,
-                        type: el.settings.fields.title.value || '',
-                        toDateDate: el.settings.fields.title.children.fields.to_date_date.value,
-                        toDateTime: el.settings.fields.title.children.fields.to_date_time.value,
-                        onDateDatumPoint: el.settings.fields.title.children.fields.on_date_datum_point.value,
-                        onDateDuration: el.settings.fields.title.children.fields.on_date_duration.value,
-                        cyclingDuration: el.settings.fields.title.children.fields.cycle_duration.value,
-                        cyclingDatePoint: el.settings.fields.title.children.fields.cycle_datum_point.value,
+                case 'Обратная связь':
+                    return { title: 'feedback', id: el.id, body: { ourEmail: { text: el.settings.fields.our_email.value || el.settings.fields.our_email.default, show: true }, title: { text: el.settings.fields.title.value || el.settings.fields.title.default, show: this.createBoolValue(el.settings.fields.show_title) }, name: { text: el.settings.fields.name.value || el.settings.fields.name.default, show: this.createBoolValue(el.settings.fields.show_name.value) }, email: { text: el.settings.fields.email.value || el.settings.fields.email.default, show: this.createBoolValue(el.settings.fields.show_email.value) }, phone: { text: el.settings.fields.phone.value || el.settings.fields.phone.default, show: this.createBoolValue(el.settings.fields.show_phone.value) }, message: { text: el.settings.fields.message.value || el.settings.fields.message.default, show: this.createBoolValue(el.settings.fields.show_message.value) } } }
+                case 'Видео':
+                    return { title: 'video', id: el.id, body: { title: el.settings.fields.title.value || '', link: el.settings.fields.video_link.value } }
+                case 'Таймер':
+                    return {
+                        title: 'timer',
+                        id: el.id,
+                        body: {
+                            timerCreated: el.created_at,
+                            type: el.settings.fields.title.value || '',
+                            toDateDate: el.settings.fields.title.children.fields.to_date_date.value,
+                            toDateTime: el.settings.fields.title.children.fields.to_date_time.value,
+                            onDateDatumPoint: el.settings.fields.title.children.fields.on_date_datum_point.value,
+                            onDateDuration: el.settings.fields.title.children.fields.on_date_duration.value,
+                            cyclingDuration: el.settings.fields.title.children.fields.cycle_duration.value,
+                            cyclingDatePoint: el.settings.fields.title.children.fields.cycle_datum_point.value,
+                        }
                     }
-                }
-                case 'Карусель картинок': return {title:'carusel', id:el.id,body:{images:el.settings ? el.settings.fields.slider_photo.value : null, interval: el.settings ? el.settings.fields.interval.value : null}}
-                default: return null
+                case 'Карусель картинок':
+                    return { title: 'carusel', id: el.id, body: { images: el.settings ? el.settings.fields.slider_photo.value : null, interval: el.settings ? el.settings.fields.interval.value : null } }
+                default:
+                    return null
             }
         })
         return newData

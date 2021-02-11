@@ -8,15 +8,17 @@ const ColorSetting = ({ title, leftBorder }) => {
     if (leftBorder) {
         classes.push('leftBorder')
     }
+
+        
     return (
         <div className={classes.join(' ')}>
-            <p className='color-setting-p'>{name}</p>
+            <p onClick = {()=>console.log('as;ldfj')} className='color-setting-p'>{name}</p>
             <div className='color-setting-button'>
                 {/*   <ColorChange propsName = {title} color = '#ffffff'/>
                 <ColorChange propsName = {title} color = '#0000FF'/>
                 <ColorChange propsName = {title} color = '#FF0000'/>
                 <ColorChange propsName = {title} color = '#000000'/> */}
-                <ColorPicker propsName={title} />
+                <ColorPicker  propsName={title} show ={true}/>
             </div>
         </div>
     )
