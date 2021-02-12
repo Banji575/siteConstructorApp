@@ -124,18 +124,18 @@ const Carusel = ({ body, id, setViewEdit, vidjArray, setVidjetDataArray }) => {
     return (
         <PopUp title = "Карусель картинок" closePopup={closeWindow} saveHandler={() => saveList()}>
             <div className='timer-conteiner d-flex'>
-                <div className='mx-auto my-0 p-3'>
+                <div className=' p-3 w-100 '>
+                    <h3 className='question-item-header mb-4'>Добавление слайдов</h3>
                     <div className='items-list'>
                         <CarouselList files={files} urls={body ? content : null} />
                     </div>
-                    <h3 className='question-item-header'>Добавление слайдов</h3>
                     <input ref={root} className='items-input-hidden' type='file' onChange={(evt) => addFile(evt.target.files[0])} />
-                    <Button disabled = {!isValidLimitSlide} onClick={clickHandler} title='+ новый слайд ' />
+                    <Button classes = {['w-100 mw-100 text-left new-slide-button']} disabled = {!isValidLimitSlide} onClick={clickHandler} title='+ новый слайд ' />
                 {!isValidLimitSlide ? <p className ='text-danger'>Не больше трех слайдов</p> : null}
-                    <div className='mt-3'>
-                        <h3 className='question-item-header'>Автоматическая смена слайдов</h3>
-                        <div className='d-flex w-25'>
-                            <input type='number' className=' question-item-input w-8' value={interval} onChange={(evt) => setInterval(evt.target.value)} />
+                    <div className='mt-4 carusel-input-duration-container'>
+                        <h3 className='question-item-header mb-4'>Автоматическая смена слайдов</h3>
+                        <div className='d-flex '>
+                            <input type='number' className=' question-item-input w-8 carusel-input-duration' value={interval} onChange={(evt) => setInterval(evt.target.value)} />
                             <p className='items-label m-0'>сек</p>
                         </div>
                     </div>

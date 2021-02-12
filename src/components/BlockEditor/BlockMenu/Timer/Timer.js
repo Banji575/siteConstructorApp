@@ -6,11 +6,12 @@ import TimerToDate from './TimerToDate/TimerToDate'
 import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
 import useFetch from '../../../../hooks/useFetch'
+import PopUp from '../../../../UI/PopUp/PopUp'
 
 const dateFormat = date => date.toLocaleString('ru', { year: 'numeric', month: 'numeric', day: 'numeric' })
 const generateId = () => Math.random()
 const Timer = ({ closeEdit, content, setVidjetDataArray, vidjArray }) => {
-    const [timerParams, setTimerParams] = useState(content || { title:'timer', type: 'to_date', id: generateId(), body: { toDateDate: dateFormat(new Date), toDateTime: '12:00', onDateDatumPoint: 'firstView', onDateDuration: '0:00:00', cyclingDatePoint: '12:00', cyclingDuration: '0:00', test: 'test' } })
+    const [timerParams, setTimerParams] = useState(content || { title: 'timer', type: 'to_date', id: generateId(), body: { toDateDate: dateFormat(new Date), toDateTime: '12:00', onDateDatumPoint: 'firstView', onDateDuration: '0:00:00', cyclingDatePoint: '12:00', cyclingDuration: '0:00', test: 'test' } })
     const [setCurrentWidjet, setIsEditer] = useContext(ContextEditor)
     const [state, changeState, setState, catalogId] = useContext(Context)
 
@@ -75,19 +76,20 @@ const Timer = ({ closeEdit, content, setVidjetDataArray, vidjArray }) => {
             list.unshift(timerParams)
             setVidjetDataArray(list)
             console.log(vidjArray)
-            
+
         }
     }, [respEditTimer])
 
     return (
-        <div className='block-question-conteiner'>
+        <PopUp title="Видео" closePopup={closeWindow} saveHandler={() => saveList()}>
+            {/*  <div className='block-question-conteiner'>
             <div className='block-menu-header'>
                 <h3>Таймер</h3>
                 <div onClick={closeWindow} className='block-header-close'></div>
-            </div>
+            </div> */}
             <div className='timer-conteiner'>
                 <div className='timer-type-block'>
-                    <p className='timer-p'>Тип таймера</p>
+                    <p className='question-item-header'>Тип таймера</p>
                     <p><select onChange={(evt) => changeSelectHandler(evt)} className='timer-select' name="timer">
                         <option defaultValue value='to_date'>До определенной даты</option>
                         <option value="on_date">На промежуток времени</option>
@@ -98,8 +100,8 @@ const Timer = ({ closeEdit, content, setVidjetDataArray, vidjArray }) => {
                     {timerTypeObj(type)}
                 </div>
             </div>
-            <div className='block-question-save'><p onClick={() => saveList()} className='block-question-button-save'>Сохранить</p></div>
-        </div>
+            {/* <div className='block-question-save'><p onClick={() => saveList()} className='block-question-button-save'>Сохранить</p></div> */}
+        </PopUp>
     )
 }
 export default Timer

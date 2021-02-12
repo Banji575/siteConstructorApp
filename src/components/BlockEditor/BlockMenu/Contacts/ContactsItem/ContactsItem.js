@@ -16,8 +16,8 @@ const ContactsItem = ({ title, inputType, inputCheckLabel, textValue, checkValue
 
     return (
         <div className='contacts-item'>
-            <p className='contact-item-p'>{title}</p>
-            <input onBlur={() => getContact({ title: renameTitle(title), text, checked })} className='w-100' type={inputType} value={text} onChange={(evt) => { setText(evt.target.value) }} />
+            <p className='question-item-header'>{title}</p>
+            <input onBlur={() => getContact({ title: renameTitle(title), text, checked })} className='w-100 input-text' type={inputType} value={text} onChange={(evt) => { setText(evt.target.value) }} />
             <div className='mt-3'>
                 <input onBlur={() => getContact({ title: renameTitle(title), text, checked })} className='mr-1' id={title} type='checkbox' checked={checked} onChange={() => setChecked(!checked)} />
                 <label className='contacts-item-label' htmlFor={title}>{inputCheckLabel}</label>

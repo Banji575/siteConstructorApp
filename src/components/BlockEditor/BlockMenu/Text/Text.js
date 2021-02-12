@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { CKEditor } from '@ckeditor/ckeditor5-react'
+/* import { CKEditor } from '@ckeditor/ckeditor5-react' */
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
 import useFetch from '../../../../hooks/useFetch'
+import PopUp from '../../../../UI/PopUp/PopUp'
+import CKEditor from 'ckeditor4-react-advanced'
+import Utils from '../../../../scripts/Utils'
 //import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
 
 import './text.css'
 import Body from '../../../../HOC/SiteBody'
 const randomId = () => Math.random()
 /* console.log(ClassicEditor.builtinPlugins.map(plugin => plugin.pluginName)); */
-const Text = ({ content, closeEdit, vidjArr, setVidjetData ,replaceVidj}) => {
+const Text = ({ content, closeEdit, vidjArr, setVidjetData, replaceVidj }) => {
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [setCurrentWidjet, setIsEditer] = useContext(ContextEditor)
     const [textContent, setTextContent] = useState(content || { id: randomId(), title: '', description: '' })
@@ -76,7 +79,7 @@ const Text = ({ content, closeEdit, vidjArr, setVidjetData ,replaceVidj}) => {
     }, [respEditText])
 
     const changeTitleHandler = evt => {
-        const title = evt.target.value
+        const title = evt.getData()
         setTextContent(state => {
             return {
                 ...state,
@@ -86,6 +89,7 @@ const Text = ({ content, closeEdit, vidjArr, setVidjetData ,replaceVidj}) => {
     }
 
     const changeTextHandler = editor => {
+        console.log(editor)
         const description = editor.getData()
         console.log(description)
         setTextContent(state => {
@@ -97,18 +101,32 @@ const Text = ({ content, closeEdit, vidjArr, setVidjetData ,replaceVidj}) => {
     }
 
     return (
-        <div className='block-question-conteiner'>
-            <div className='block-menu-header'>
-                <h3>Текст</h3>
-                <div onClick={closeWindow} className='block-header-close'></div>
-            </div>
-            <div className='text-title-conteiner  py-1 px-3'>
-                <h3 className='text-item-header'>Заголовок</h3>
-                <textarea onBlur={(evt) => changeTitleHandler(evt)} className='w-100' placeholder={content ? content.title : ''} />
+        <PopUp title="Текст" closePopup={closeWindow} saveHandler={() => saveList()}>
+            <div className='text-title-conteiner  py-1 px-3 '>
+                <h3 className='question-item-header'>Заголовок</h3>
+                <CKEditor
+                    data={content ? content.title : ''}
+                    onBlur={(evt) => changeTitleHandler(evt.editor)}
+                    /* onChange={(e,text)=>setTitle(e.editor.getData())} */
+                    config={{
+                        toolbar: [Utils.CKEditorTools],
+                        height:'60px'
+                    }}
+                />
+              {/*   <textarea onBlur={(evt) => changeTitleHandler(evt)} className='w-100' placeholder={content ? content.title : ''} /> */}
             </div>
             <div className='text-body-conteiner py-1 px-3'>
-                <h3 className='text-item-header'>Текст</h3>
+                <h3 className='question-item-header'>Текст</h3>
                 <CKEditor
+                    data={content ? content.discription : ''}
+                    onBlur={(event) => changeTextHandler(event.editor)}
+                    /* onChange={(e,text)=>setTitle(e.editor.getData())} */
+                    config={{
+                        toolbar: [Utils.CKEditorTools],
+                        height:'100px'
+                    }}
+                />
+               {/*  <CKEditor
                     editor={ClassicEditor}
                     data={content ? content.discription : ''}
                     config={{
@@ -125,11 +143,11 @@ const Text = ({ content, closeEdit, vidjArr, setVidjetData ,replaceVidj}) => {
                             shouldNotGroupWhenFull: true
                         }
                     }}
-                    onBlur={(event, editor) => changeTextHandler(editor)}
-                />
+                    onBlur={(event) => changeTextHandler(event.editor)}
+                /> */}
             </div>
-            <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div>
-        </div>
+            {/*     <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}
+        </PopUp>
     )
 }
 

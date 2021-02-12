@@ -17,13 +17,11 @@ const ColorPicker = ({ propsName, show }) => {
   }, [firstLoad])
 
   const fileChange = evt => {
-    console.log('change', state, propsName, state[propsName])
     if (typeof evt !== 'object') {
       return
     }
     if (state[propsName] == evt.hex) return
     /*     if (state[propsName] === undefined) return */
-    console.log('first', state[propsName], evt.hex)
     if (propsName === 'backgroundColor') {
       const color = evt.hex.slice(1, -2)
       const formData = new FormData()
@@ -33,7 +31,6 @@ const ColorPicker = ({ propsName, show }) => {
       doFetch(formData)
     }
     if (propsName === 'titleBackground') {
-      console.log('colorTopTitle')
       const color = '#' + evt.hex.slice(1, -2)
       setColor(color)
       const formData = new FormData()
@@ -45,9 +42,7 @@ const ColorPicker = ({ propsName, show }) => {
   }
   useEffect(() => {
     if (!resTitleColor) return
-    console.log(color)
     changeState({ titleBackground: color })
-    console.log()
 
   }, [resTitleColor])
 

@@ -3,6 +3,7 @@ import Context from '../../../../Context'
 import ContextEditor from '../../../../ContextEditor'
 import useFetch from '../../../../hooks/useFetch'
 import SocialBlock from './SocialBlock/SocialBlock'
+import PopUp from '../../../../UI/PopUp/PopUp'
 const itemArrSocial = [
     { title: 'Вконтакте', name: 'vk' },
     { title: 'Facebook', name: 'facebook' },
@@ -123,15 +124,12 @@ const Social = ({ content,setViewEdit ,id,setVidjetDataArray, vidjArray}) => {
     }
 
     return (
-        <div className='block-question-conteiner'>
-            <div className='block-menu-header'>
-                <h3>Соц. сети/ Месседжеры</h3>
-                <div onClick={closeWindow} className='block-header-close'></div>
-            </div>
+        <PopUp title="Соц сети / месседжеры" closePopup={closeWindow} saveHandler={() => saveList()}>
+
             <SocialBlock saveTitle = {saveTitle} itemArr={itemArrSocial} blockName = 'social' saveItem = {saveItem}  content = {data.social} blockTitle='Социальные сети' />
             <SocialBlock saveTitle = {saveTitle} itemArr={itemArrMessedger} blockName = 'messeger' saveItem = {saveItem} content = {data.messeger} blockTitle='Месседжеры' />
-            <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div>
-        </div>
+          {/*   <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}
+        </PopUp>
     )
 }
 

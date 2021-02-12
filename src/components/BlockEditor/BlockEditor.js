@@ -41,7 +41,7 @@ const BlockEditor = () => {
 
 
 
-    const changeStateVidjet = (obj) => {
+    const changeStateVidjet = (obj,questionTitle) => {
         const vidjetName = Object.keys(obj)[0]
         const newState = { ...state }
         newState.siteVidjets[vidjetName] = obj[vidjetName]
@@ -50,6 +50,7 @@ const BlockEditor = () => {
         const formData = new FormData()
         formData.set('landing_prop_id', 2)
         formData.set('catalog_id', catalogId)
+        formData.set('title', questionTitle)
         changeDataObjForBackend(formData, obj.questions)
         doFetch(changeDataObjForBackend(formData, obj.questions))
     }
@@ -84,7 +85,7 @@ const BlockEditor = () => {
         <ContextEditor.Provider value={[setCurrentWidjet, setIsEditer]}>
             <div className='container d-flex'>
                 {isEditer && <ButtonAddComponent onClick={() => setIsEditer(false)} />/*  <button  className='block-editor-button'>Добавить блок +</button> */}
-                {!isEditer && <PopUp closePopup ={setIsEditer} title = 'Добавить блок'> <BlockMenu setCurrentWidjet={(text) => changeWidget(text)} hideBlock={setIsEditer} /></PopUp>}
+                {!isEditer && <PopUp closePopup ={setIsEditer} editMode = {false} title = 'Добавить блок'> <BlockMenu setCurrentWidjet={(text) => changeWidget(text)} hideBlock={setIsEditer} /></PopUp>}
                 {openWidjet()}
             </div>
         </ContextEditor.Provider>

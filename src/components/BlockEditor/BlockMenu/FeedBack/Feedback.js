@@ -3,19 +3,21 @@ import FeedbackItem from './FeedbackItem/FeedbackItem'
 import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
 import useFetch from '../../../../hooks/useFetch'
+import PopUp from '../../../../UI/PopUp/PopUp'
+
 import './feedback.css'
 const feedbackList = [
     { title: 'Заголовок', isInput: true, fieldName: 'title' },
     { title: 'Имя', isInput: false, fieldName: 'name' },
     { title: 'Email', isInput: false, fieldName: 'email' },
     { title: 'Телефон', isInput: false, fieldName: 'phone' },
-    { title: 'Текст сообщения', isInput: false, fieldName: 'message' }
+    { title: 'Поле для текста', isInput: false, fieldName: 'message' }
 ]
 
 const isvalidEmail = (str) => str.search(/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/)
 const generateId = () => Math.random()
 
-const Feedback = ({ content, setViewEdit, id,setVidjetDataArray, vidjArray }) => {
+const Feedback = ({ content, setViewEdit, id, setVidjetDataArray, vidjArray }) => {
     const [data, setData] = useState(content || { title: 'feedback', id: generateId(), body: { ourEmail: { text: '', show: true }, title: { text: '', show: false }, name: { text: '', show: false }, email: { text: '', show: false }, phone: { text: '', show: false }, message: { text: '', show: false } } })
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [respEditFeedback, doFetchEditFeedback] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
@@ -38,14 +40,14 @@ const Feedback = ({ content, setViewEdit, id,setVidjetDataArray, vidjArray }) =>
     }
 
     const saveEmailHandler = (text) => {
-        console.log(isvalidEmail(text)+1)
+        console.log(isvalidEmail(text) + 1)
         if (isvalidEmail(text) + 1) {
             const list = { ...data }
             console.log(list.body.ourEmail)
             list.body.ourEmail.text = text
             setIsValid(true)
             setData(list)
-        }else{
+        } else {
             setIsValid(false)
         }
 
@@ -53,14 +55,14 @@ const Feedback = ({ content, setViewEdit, id,setVidjetDataArray, vidjArray }) =>
 
     const saveTitleHandler = (text) => {
 
-    
+
         const list = { ...data }
         list.body.title.text = text
         setData(list)
     }
 
     const saveList = () => {
-        if(!isValid){
+        if (!isValid) {
             return
         }
         const formData = new FormData()
@@ -98,7 +100,7 @@ const Feedback = ({ content, setViewEdit, id,setVidjetDataArray, vidjArray }) =>
                     }
                 })
 
-            }else{
+            } else {
                 const list = [...vidjArray]
                 list.unshift(data)
                 setVidjetDataArray(list)
@@ -109,19 +111,10 @@ const Feedback = ({ content, setViewEdit, id,setVidjetDataArray, vidjArray }) =>
     }, [respEditFeedback])
 
     return (
-        <div className='block-question-conteiner'>
-            <div className='block-menu-header'>
-                <h3>Обратная связь</h3>
-                <div onClick={closeWindow} className='block-header-close'></div>
-            </div>
-            <div className='feedback-email-conteiner p-3'>
-                <p className='feedback-p'>Введите ваш e-mail адрес куда будут приходить сообщения</p>
-                <input type='email' placeholder={data.body.ourEmail.text} onBlur={(evt) => saveEmailHandler(evt.target.value)} />
-                {!isValid && <p className='text-danger'>Не правильный формат записи</p>}
-            </div>
+        <PopUp title="Обратная связь" closePopup={closeWindow} saveHandler={() => saveList()}>
             <div className='feedback-option-conteiner p-3'>
-                <h3 className='feedback-option-h'> Форма антеты</h3>
                 <div className='feedback-option-list'>
+                    <h3 className='question-item-header'> Заголовок</h3>
                     {feedbackList.map((el, i) => {
                         return (
                             <FeedbackItem isInput={el.isInput} title={el.title} body={data.body[el.fieldName]} saveTitleHandler={saveTitleHandler} checkHandler={checkHandler} />
@@ -129,8 +122,13 @@ const Feedback = ({ content, setViewEdit, id,setVidjetDataArray, vidjArray }) =>
                     })}
                 </div>
             </div>
-            <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div>
-        </div>
+            <div className='feedback-email-conteiner p-3'>
+                <p className='question-item-header mb-1'>Введите ваш e-mail адрес куда будут приходить сообщения</p>
+                <input type='email' placeholder={data.body.ourEmail.text} onBlur={(evt) => saveEmailHandler(evt.target.value)} />
+                {!isValid && <p className='text-danger'>Не правильный формат записи</p>}
+            </div>
+            {/* <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}
+        </PopUp>
     )
 }
 

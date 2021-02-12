@@ -1,15 +1,15 @@
 import React from 'react'
-import carusel from '../../../../image/carusel.svg'
-import banner from '../../../../image/banner.svg'
-import callback from '../../../../image/callback.svg'
-import contacts from '../../../../image/contacts.svg'
+import carusel from '../../../../image/carusel.png'
+import banner from '../../../../image/banner.png'
+import callback from '../../../../image/callback.png'
+import contacts from '../../../../image/contacts.png'
 import map from '../../../../image/map.png'
-import items from '../../../../image/items.svg'
-import questions from '../../../../image/questions.svg'
-import social from '../../../../image/social.svg'
-import video from '../../../../image/video.svg'
-import timer from '../../../../image/timer.svg'
-import text from '../../../../image/text.svg'
+import items from '../../../../image/items.png'
+import questions from '../../../../image/questions.png'
+import social from '../../../../image/social.png'
+import video from '../../../../image/video.png'
+import timer from '../../../../image/timer.png'
+import text from '../../../../image/text.png'
 import {  FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCoffee} from '@fortawesome/free-solid-svg-icons'
 import './menuItem.css'
@@ -37,7 +37,7 @@ const MenuItem = ({ item,setCurrentWidjet }) => {
     return (
         <div onClick = {()=>setCurrentWidjet(item.src)} className='col-6 col-md-4 pr-3 pb-3'>
             <div className="block-menu-item ">
-                <div className='block-menu-icon'><img src={src()} /></div>
+                <div className='block-menu-icon d-flex'><img className = 'w-25 mx-auto my-0' src={src()} /></div>
                 <p className='block-menu-text'>{item.text}</p>
             </div>
         </div>

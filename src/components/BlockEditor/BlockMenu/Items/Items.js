@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import Button from '../../../../UI/Button/Button'
 import useImageLoad from '../../../../hooks/useImageLoad'
+import CKEditor from 'ckeditor4-react-advanced'
+import Utils from '../../../../scripts/Utils'
 import NewItem from './NewItems/NewItems'
 import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,8 +11,9 @@ import Context from '../../../../Context'
 import './items.css'
 import MyItem from './MyItem/MyItem'
 import ContextEditor from '../../../../ContextEditor'
+import PopUp from '../../../../UI/PopUp/PopUp'
 
-const Items = ({setViewEdit}) => {
+const Items = ({ setViewEdit }) => {
     const [url, doLoad] = useImageLoad(null)
     const [viewPopUp, setViewPopUp] = useState(false)
     const [file, setFile] = useState(null)
@@ -31,12 +34,12 @@ const Items = ({setViewEdit}) => {
 
     const delChangeItem = (el, i) => {
         const list = [...loadArr]
-        list.splice(i,1)
+        list.splice(i, 1)
         setLoadArr(list)
     }
 
-    const saveList = () =>{
-        console.log('saveList',loadArr)
+    const saveList = () => {
+        console.log('saveList', loadArr)
         const formData = new FormData()
         formData.set('catalog_id', catalogId)
         formData.set('title', '')
@@ -70,46 +73,55 @@ const Items = ({setViewEdit}) => {
         setViewPopUp(true)
     }, [url])
     return (
-        <div className='block-question-conteiner'>
-            <div className='block-menu-header'>
-                <h3>Товары</h3>
-                <div onClick={closeWindow} className='block-header-close'></div>
-            </div>
-
+        <React.Fragment>
+        <PopUp title="Товары" closePopup={closeWindow} saveHandler={() => saveList()}>
             <div className='timer-conteiner d-flex flex-column'>
-                <div className='mx-auto my-0 p-3'>
-                    <h3 className='question-item-header'>Заголовок</h3>
-                    <input type='text' className=' question-item-input' />
-                    <div className='mt-3'>
-                        <h3 className='question-item-header'>Загрузить товар</h3>
-                        <div className='items-buttons-block d-flex'>
-                            <div /* ref={root} */ className="items-input__wrapper items-input-wrapper-position" >
-                                <input disabled={viewPopUp} name="fileItem" type="file" name="file" id="input__file_item" className="input input__file" multiple onChange={(evt) => onLoadHandler(evt)}/* onChange={(evt) => fileChange(evt)} */ />
-                                <label htmlFor="input__file_item" className="input__file-button input-file-button--custom-height">
-                                    <span className="input__file-button-text">Загрузить новый</span>
+                <h3 className='question-item-header my-3'>Заголовок</h3>
+                <CKEditor
+                    /* data={content ? content.title : ''} */
+                    /* onBlur={(evt) => changeTitleHandler(evt.editor)} */
+                    /* onChange={(e,text)=>setTitle(e.editor.getData())} */
+                    config={{
+                        toolbar: [Utils.CKEditorTools],
+                        height: '60px'
+                    }}
+                />
+                {/*  <input type='text' className=' question-item-input' /> */}
+                <div className='mt-3'>
+                    <div className='items-buttons-block d-flex justify-content-between'>
+                        <div /* ref={root} */ className="items-input__wrapper items-input-wrapper-position" >
+                            <input disabled={viewPopUp} name="fileItem" type="file" name="file" id="input__file_item" className="input input__file" multiple onChange={(evt) => onLoadHandler(evt)}/* onChange={(evt) => fileChange(evt)} */ />
+                            <label htmlFor="input__file_item" className="input__file-button input-file-button--custom-height items-input__wrapper">
+                               <p className = 'mx-auto my-0'>Загрузить новый товар</p> 
                                 </label>
-                            </div>
-                            <div /* ref={root} */ className="items-input__wrapper items-input-wrapper-position" >
-                                <Button title='загрузить свой' onClick={() => setMyItemsPopup(true)} />
+                        </div>
+                        <div /* ref={root} */ onClick={() => setMyItemsPopup(true)} className="items-input__wrapper items-input-wrapper-position" >
+                            <label className="input__file-button input-file-button--custom-height items-input__wrapper">
+                                <p className = 'mx-auto my-0'>Выбрать из загруженных товаров</p>
+                                </label>
 
-                            </div>
+                            {/*  <Button title='Выбрать из загруженных товаров' onClick={() => setMyItemsPopup(true)} /> */}
+
                         </div>
                     </div>
-                    {viewPopUp ? <NewItem  createNewItem={createNewItem} img={url} setView={setViewPopUp} /> : null}
-                    {myItemsPopup ? <MyItem renderCheckImg = {setLoadArr} showMyItem = {setMyItemsPopup}/> : null}
                 </div>
-                <div className = 'd-flex flex-wrap' >
+                </div>
+                </PopUp>
+                    {viewPopUp ? <NewItem createNewItem={createNewItem} img={url} setView={setViewPopUp} /> : null}
+                    {myItemsPopup ? <MyItem renderCheckImg={setLoadArr} showMyItem={setMyItemsPopup} /> : null}
+                <div className='d-flex flex-wrap' >
 
-                    {loadArr.map((el,i)=>{
+                    {loadArr.map((el, i) => {
                         return (
-                        <div className= 'mr-3'><img  src = {el.src}/><div className='icon-conteiner'/*  onClick={delHandler} */ color='green'>
-                        <FontAwesomeIcon onClick = {()=>delChangeItem(el,i)} color={'red'} icon={faTrashAlt} />
-                    </div></div>)
+                            
+                            <div className='mr-3'><img src={el.src} /><div className='icon-conteiner'/*  onClick={delHandler} */ color='green'>
+                                <FontAwesomeIcon onClick={() => delChangeItem(el, i)} color={'red'} icon={faTrashAlt} />
+                            </div></div>)
                     })}
                 </div>
-            </div>
-            <div className='block-question-save'><p onClick={() => saveList()} className='block-question-button-save'>Сохранить</p></div>
-        </div>
+                </React.Fragment>
+           
+       
     )
 }
 

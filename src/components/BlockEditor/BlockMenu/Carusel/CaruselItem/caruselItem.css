@@ -1,16 +1,16 @@
-.carusel-item-img{
+.carusel-item-img {
     max-width: 18%;
     margin: 0 auto;
 }
-.carusel-index-conteiner{
+
+.carusel-index-conteiner {
     display: flex;
-   width: 30%;
+    width: 100%;
     margin: 0 auto;
     border-radius: 3px;
-  border: 0.75px solid #0258AE;
-  box-shadow: 0 1px 2px 0 #39F;
-  margin-bottom: 1%;
-
+    border: 0.75px solid #0258AE;
+    box-shadow: 0 1px 2px 0 #39F;
+    margin-bottom: 1%;
 }
 
 .carusel-item-index {
@@ -25,5 +25,4 @@
 
 .carusel-item-index p {
     font-size: 24px;
-    
 }

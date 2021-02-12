@@ -7,8 +7,11 @@ import ContextEditor from '../../../ContextEditor'
 import Context from '../../../Context'
 import useFetch from '../../../hooks/useFetch'
 import Button from '../../../UI/Button/Button'
+import Utils from '../../../scripts/Utils'
+import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 
 const changeDataObjForBackend = (formdata, arr) => {
+    console.log('aaarrr', arr)
     arr.forEach((el, i) => {
         formdata.set(`issue[${i}]`, `${el.answer}`)
         formdata.set(`answer[${i}]`, `${el.answer}`)
@@ -17,7 +20,7 @@ const changeDataObjForBackend = (formdata, arr) => {
 }
 
 
-const Question = ({ body, id,replaceVidj }) => {
+const Question = ({ body, id,replaceVidj, title}) => {
     const [questons, setQuestions] = useState(body)
     const [viewEdit, setViewEdit] = useState(null)
     const [viewFullList, setViewFullList] = useState(false)
@@ -56,7 +59,7 @@ const Question = ({ body, id,replaceVidj }) => {
 
 
 
-    const changeStateVidjet = (obj) => {
+    const changeStateVidjet = (obj,) => {
         setViewEdit(false)
         const list = [...vidjArr]
         list.map(el => {
@@ -72,12 +75,13 @@ const Question = ({ body, id,replaceVidj }) => {
         formData.set('landing_prop_id', 2)
         formData.set('catalog_id', catalogId)
         formData.set('landing_prop_data_id', id)
-        changeDataObjForBackend(formData, obj.questions)
+        changeDataObjForBackend(formData, obj.question)
         doFetchEditQuestion(changeDataObjForBackend(formData, obj.questions))
     }
 
     const elems = () => {
         if (!viewFullList) {
+            console.log('body',body)
             return body.map((el, i) => {
                 if (i == 0 || i == 1) {
                     return (
@@ -108,6 +112,7 @@ const Question = ({ body, id,replaceVidj }) => {
 
 
     return (body === null ? null :
+        <WidjetWrapper delHandler = {delHandler} isView = {viewEdit} setViewEdit={setViewEdit}  editWindow = { <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} />}>
         <div className='questions-container'>
             <div className='container question-center site-top-line'>
                 <div className='questions-header'>
@@ -127,7 +132,7 @@ const Question = ({ body, id,replaceVidj }) => {
                     </div>
                     <div className='questions-title'>
                         <h3 className='question-h3'>FAQ</h3>
-                        <p className='question-p'>Часто задаваемые вопросы</p>
+                        <p className='question-p'>{title}</p>
                     </div>
                 </div>
                 <div className='questions-body'>
@@ -136,8 +141,9 @@ const Question = ({ body, id,replaceVidj }) => {
 
                 {body.length > 2 && !viewFullList ? <Button /* disabled = {false} */ onClick={() => viewFillLisnHundler()} title='Еще' /> : null}
             </div>
-            {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} /> : null}
+        {/*     {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} /> : null} */}
         </div>
+        </WidjetWrapper>
     )
 }
 

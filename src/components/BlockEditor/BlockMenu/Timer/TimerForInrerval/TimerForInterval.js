@@ -42,7 +42,7 @@ const TimerForInterval = ({getParams}) => {
     return (
         <div className=''>
             <div className='date-picker-conteiner  mr-3'>
-                <p className='timer-p mb-3'>Начало отсчета</p>
+                <p className='question-item-header mb-3'>Начало отсчета</p>
                 <div className='d-flex flex-column'>
                     <label htmlFor='first_view' className='m-0 input-number-label'> <input onChange={(evt) => startCountHandler(evt.target)} id='first_view' defaultChecked="checked" name='test' type='radio' /> С первого посещения клиентом</label>
                     <label htmlFor='now' className='input-number-label'>  <input onChange={(evt) => startCountHandler(evt.target)} name='test' id='now' type='radio' /> Прямо сейчас </label>
@@ -50,7 +50,7 @@ const TimerForInterval = ({getParams}) => {
 
             </div>
             <div className='date-picker-conteiner'>
-                <p className='timer-p mb-3'>Длительность</p>
+                <p className='question-item-header mb-3'>Длительность</p>
                 <div className='timer-input-number-conteiner'>
                     <div className='timer-input-item'>
                         <input id='days' max={30} value={onDateDuration.split(':')[0]} onChange={(evt) => changeDateValue(0, evt.target.value)} className='timer-input-number' type='number' />

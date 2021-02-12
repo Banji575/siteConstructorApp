@@ -56,13 +56,14 @@
 
 .block-question-save {
     text-align: right;
-    padding-right: 1%;
+    padding-right: 4%;
     padding-bottom: 1%;
     display: flex;
     justify-content: flex-end;
 }
 
 .block-question-button-save {
+    color: #4F4F4F;
     cursor: pointer;
     width: fit-content;
     cursor: pointer;

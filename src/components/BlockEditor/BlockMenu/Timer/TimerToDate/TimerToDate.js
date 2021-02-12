@@ -17,13 +17,13 @@ const TimerToDate = ({getParams}) => {
 
     return (
         <div className = 'd-flex'>
-            <div className='date-picker-conteiner  mr-3'>
-                <p className='timer-p'>Дата</p>
+            <div className='date-picker-conteiner w-100  mr-3'>
+                <p className='question-item-header'>Дата</p>
                 <DatePicker className='date-picker' selected={toDateDate} onChange={date => setToDateDate(date)} />
                 <FontAwesomeIcon className='date-picker-icon' icon={faCalendar} />
             </div>
             <div className='date-picker-conteiner'>
-                <p className='timer-p'  >Время</p>
+                <p className='question-item-header'  >Время</p>
                 <input type= 'time' value = {toDateTime} onChange = {(evt)=> setToDateTime(evt.target.value)}/>
             </div>
         </div>

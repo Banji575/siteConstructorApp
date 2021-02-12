@@ -1,3 +1,6 @@
+import Utils from './Utils'
+import parse from 'html-react-parser'
+const createHTML = str => parse(str).props.children || ''
 export default class Adapter {
     constructor(response, responseVidjetData) {
         this.data = response.data
@@ -23,7 +26,7 @@ export default class Adapter {
         const colorTopTitle = this.data.settings.title_background
         const siteLogo = this.data.logo
         const siteTitle = this.data.title
-        console.log('siteitle', this.data)
+
 
         this.data.siteMenu = menuTree
         this.data.backgroundColor = backgroundColor ? `#${backgroundColor}` : '#fff'
@@ -42,11 +45,12 @@ export default class Adapter {
         return this.data
     }
     createVidjetData() {
+        console.log(createHTML('<p>Hello world</p>'))
         const newData = this.data.map((el, i) => {
             console.log(el)
             switch (el.title) {
                 case 'Вопросы':
-                    return { title: 'question', id: el.id, body: this.createQuestions(el) }
+                    return { title: 'question', id: el.id, blockTitle: el.settings.fields.title.value, body: this.createQuestions(el) }
                 case 'Текст':
                     return { title: 'text', id: el.id, body: { title: el.settings.fields.title.value || '', discription: el.settings.fields.description.value || '' } }
                 case 'Баннер':

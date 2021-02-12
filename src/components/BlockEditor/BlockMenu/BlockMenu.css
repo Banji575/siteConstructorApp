@@ -24,6 +24,9 @@
 
 .block-menu-header {
     border-bottom: 1px solid #BDBDBD;
+    color: #254768;
+    font-size: 22px;
+    font-weight: 300;
 }
 
 .block-menu-close {

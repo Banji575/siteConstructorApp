@@ -3,15 +3,18 @@ import ContextEditor from '../../../../ContextEditor'
 import './blockQuestion.css'
 import QuestionItem from './QuestionItem/QuestionItem'
 import PopUp from '../../../../UI/PopUp/PopUp'
+import CKEditor from 'ckeditor4-react-advanced'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 
 
 const randomId = () => Math.random()
-const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit }) => {
+const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit, title }) => {
     const mockQuest = [{ id: 1, question: 'test queston', answer: 'test answer' }]
 
     const [temporaryId, setTemporaryId] = useState('1')
     const [questonsList, setQuestionList] = useState(listArr ? listArr : [{ id: randomId(), answer: '', question: '' }])
-
+    const [blockTitle, setBlockTitle] = useState(title ? title : '')
     const [setCurrentWidjet, setIsEditer] = useContext(ContextEditor)
     const [tempoparyList, setTemoraryList] = useState(questonsList)
     const [isMoreOne, setIsMoreOne] = useState(() => questonsList.length > 1 ? true : false)
@@ -37,25 +40,27 @@ const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit }) => {
             console.log(changeStateVidjet)
             console.log('asl;fjdaslfkjdafjs')
         }
+        
         const list = [...questonsList]
         setQuestionList(list)
-        changeStateVidjet({ questions: list })
+        changeStateVidjet({ questions: list },blockTitle)
         setCurrentWidjet(null)
-        console.log('addNewVidjets')
     }
 
-    const saveInTemporary = ({ id, answer, question }) => {
+    //Пилу костыль для редактирования заголовка
 
+    const saveTemporaryTitle = text => setBlockTitle(text)
+
+    const saveInTemporary = ({ id, answer, question }) => {
         const newList = [...questonsList]
-        console.log(newList)
+        console.log('saveTemporary',newList)
+        console.log(blockTitle)
         newList.map(el => {
             console.log(el.id === id)
             if (el.id === id) {
                 el.question = question
                 el.answer = answer
             }
-
-
         })
         setQuestionList(newList)
 
@@ -74,23 +79,37 @@ const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit }) => {
     }
 
     return (
-        <PopUp title="Карусель картинок" closePopup={closeWindow} saveHandler={() => saveList()}>
-                {questonsList.map((el, i) => {
+        <PopUp title="Вопросы" closePopup={closeWindow} saveHandler={() => saveList()}>
+            <div className='block-question-title'>
+            <h3 className = 'question-item-header'>Заголовок</h3>
+                <CKEditor
+                    data={blockTitle}
+                    onChange={(e,text)=>saveTemporaryTitle(e.editor.getData())}
+                    
+                    config={{
+                        toolbar: [
+                            ['Bold', 'Italic', 'Underline', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','Font'],
+                        ],
 
-                    return <QuestionItem
-                        index={i}
-                        questCount={questonsList.length}
-                        key={i}
-                        propsAnswer={el.answer ? el.answer : ''}
-                        propsQuestion={el.question ? el.question : ''}
-                        id={el.id || 1}
-                        saveInTemporary={saveInTemporary}
-                        deleteItem={deleteItem}
-                    />
-                })}
+                        height:'60px'
+                    }}
+                />
+            </div>
+            {questonsList.map((el, i) => {
+                return <QuestionItem
+                    index={i}
+                    questCount={questonsList.length}
+                    key={i}
+                    propsAnswer={el.answer ? el.answer : ''}
+                    propsQuestion={el.question ? el.question : ''}
+                    id={el.id || 1}
+                    saveInTemporary={saveInTemporary}
+                    deleteItem={deleteItem}
+                />
+            })}
 
-                <button onClick={onBlackAnswer} className='block-question-button-add'>+Добавить новый вопрос</button>
-                {/* <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}
+            <button onClick={onBlackAnswer} className='block-question-button-add'>+Добавить новый вопрос</button>
+            {/* <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}
         </PopUp>
     )
 }

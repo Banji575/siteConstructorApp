@@ -4,8 +4,9 @@ import Context from '../../../../../Context'
 import useFetch from '../../../../../hooks/useFetch'
 import MyItemElem from './MyItemElem/MyItemElem'
 import Button from '../../../../../UI/Button/Button'
+import PopUp from '../../../../../UI/PopUp/PopUp'
 
-const MyItem = ({showMyItem,renderCheckImg}) => {
+const MyItem = ({ showMyItem, renderCheckImg }) => {
     const [imageLoad, setImageIsLoad] = useState(false)
     const [checkedImg, setCheckedImg] = useState([])
     const [fileArr, setFileArr] = useState(null)
@@ -45,20 +46,21 @@ const MyItem = ({showMyItem,renderCheckImg}) => {
             <span class="sr-only ">Loading...</span>
         </div></div> :
         (
-            <div className='my-items-conteiner'>
-                <ul className='my-items-list'>
-                    {fileArr.map((el, i) => {
-                        console.log(el)
-                        return <MyItemElem id = {el.id} addImgCheckArr = {setCheckedImg} showMyItem={showMyItem} key={i} src={el.default_look_preview_200} />
-                    })}
+            <PopUp title="Товары" closePopup={()=>showMyItem(false)} /* saveHandler={() => saveList()} */>
+                <div>
+                    <ul className='my-items-list'>
+                        {fileArr.map((el, i) => {
+                            console.log(el)
+                            return <MyItemElem id={el.id} addImgCheckArr={setCheckedImg} showMyItem={showMyItem} key={i} src={el.default_look_preview_200} />
+                        })}
 
-                </ul>
-                <div className = 'd-flex justify-content-end'>
-                <Button title='Загрузить' onClick = {()=>loadItemhandler()} />
-                <Button title='Отмена' onClick = {()=>showMyItem(false)} />
-                </div>
-                
-            </div>
+                    </ul>
+                    </div>
+                    <div className='d-flex justify-content-end'>
+                        <Button title='Загрузить' onClick={() => loadItemhandler()} />
+                        <Button title='Отмена' onClick={() => showMyItem(false)} />
+                    </div>
+            </PopUp>
         )
 
 }

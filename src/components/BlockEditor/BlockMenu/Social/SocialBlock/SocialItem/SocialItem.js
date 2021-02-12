@@ -34,9 +34,10 @@ const SocialItem = ({ title, isChecked, link, name, data, saveItem, blockName })
 
 
     const settingToggle = () => {
-        setIsEdit(state => !state)
+       
     }
     const check = (evt) => {
+        setIsEdit(state => !state)
         const newData = { checked: !checked, socialLink }
         setState({ [name]: newData })
         setChecked(state => !state)
@@ -56,20 +57,19 @@ const SocialItem = ({ title, isChecked, link, name, data, saveItem, blockName })
                     />
                     <p className='social-item-title'>{title}</p>
                 </div>
-                <div className='social-button-center'>
+              {/*   <div className='social-button-center'>
                     <Button disabled={!checked} title='настройки' onClick={settingToggle} />
-                </div>
+                </div> */}
 
             </div>
             {
                 isEdit && checked ? (
                     <div className='social-item-setting'>
-                        <p>Ссылка на страницу</p>
-                        <input className='w-100' type='text' value={socialLink} onChange={(evt) => setSocialLink(evt.target.value)} />
+                        <input placeholder='Ссылка на страницу' className='input-text w-100 py-1' type='text' onBlur ={saveSocialLink}  value={socialLink} onChange={(evt) => setSocialLink(evt.target.value)} />
                         {!isValidSocialLink ? <p className='text-danger'>Поле не дожно быть пустым</p> : null}
-                        <div className='social-button-right'>
+                       {/*  <div className='social-button-right'>
                             <Button title='Сохранить' onClick={saveSocialLink} />
-                        </div>
+                        </div> */}
 
                     </div>
                 )

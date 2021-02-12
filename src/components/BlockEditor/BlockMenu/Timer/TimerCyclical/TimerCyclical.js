@@ -24,15 +24,15 @@ useEffect(()=>{
 },[cyclingDatePoint, cyclingDuration])
 
     return (
-        <div className=''>
+        <div className='d-flex justify-content-between'>
         <div className='date-picker-conteiner  mr-3 mb-4'>
-            <p className='timer-p mb-3'>Начало отсчета</p>
+            <p className='question-item-header mb-3'>Начало отсчета</p>
             <div className = 'd-flex flex-column'>
             <label htmlFor = 'startCount' className='m-0 input-number-label'> Каждый день в <input id='startCount' onChange = {(evt)=> setCyclingDatePonit(evt.target.value)} value = {cyclingDatePoint}  name='timer-type' type='time' /></label>
             </div>
         </div>
         <div className='date-picker-conteiner'>
-            <p className='timer-p mb-3'>Длительность</p>
+            <p className='question-item-header mb-3'>Длительность</p>
             <div className='timer-input-number-conteiner'>
               <div className = 'timer-input-item'>
                 <input id = 'hours' onChange={(evt) => changeDateValue(0, evt.target.value)} max={23} value={cyclingDuration.split(':')[0]}  className = 'timer-input-number' type='number' />

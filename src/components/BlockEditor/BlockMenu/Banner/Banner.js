@@ -4,6 +4,7 @@ import { faAngleDown, faImage } from '@fortawesome/free-solid-svg-icons'
 import useFetch from '../../../../hooks/useFetch'
 import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
+import PopUp from '../../../../UI/PopUp/PopUp'
 import './banner.css'
 
 const convertBootToString = (bool) => {
@@ -142,42 +143,39 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
     }, [previewImage])
 
     return (
-        <div className='block-question-conteiner'>
-            <div className='block-menu-header'>
-                <h3>Баннер</h3>
-                <div onClick={closeWindow} className='block-header-close'></div>
-            </div>
+        <PopUp title="Баннер" closePopup={closeWindow} saveHandler={() => saveList()}>
 
             <div className='text-body-conteiner py-1 px-3'>
                 <div className='banner-upload-area-conteiner'>
-                    <FontAwesomeIcon className='banner-upload-logo' size='10x' icon={faImage} />
-                    <div ref={root} className="input__wrapper input-wrapper-position" >
+                    {/*   <FontAwesomeIcon className='banner-upload-logo' size='10x' icon={faImage} /> */}
+                    <div ref={root} className="input__wrapper input-wrapper-position input-wrapper-position--banner" >
                         <input name="file" type="file" name="file" id="input__file_banner" className="input input__file" multiple onChange={(evt) => onLoadHandler(evt)}/* onChange={(evt) => fileChange(evt)} */ />
                         <label htmlFor="input__file_banner" className="input__file-button input-file-button--custom-height">
                             <span className="input__file-button-text"></span>
+                            <p className='banner-load-img-label'>Загрузить картинку</p>
                         </label>
-                        <p>Загрузить картинку</p>
                     </div>
                     <div>
                     </div>
                 </div>
                 <div className='banner-upload-link-conteiner'>
-                    <div className='d-flex'>
+                    <div className='d-flex mb-3'>
                         <div className='mr-2'>
                             <input checked={isLink} onChange={() => { setIsLink(s => !s) }} id='upload-check' type='checkbox' />
                         </div>
-                        <div>
-                            <label htmlFor='upload-check'>Сделать баннер ссылкой</label>
-                        </div>
 
+                        <div>
+                            <label className='label-text' htmlFor='upload-check'>Сделать баннер ссылкой</label>
+                        </div>
                     </div>
-                    <input type='text' value={link} pattern='/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/' onChange={(evt) => setLink(evt.target.value)} />
+                        <h3 class="question-item-header">Ссылка</h3>
+                    <input className='input-text' type='text' value={link} pattern='/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/' onChange={(evt) => setLink(evt.target.value)} />
 
                     {!isValidUrl ? <p className='text-danger'>Не верный формат ссылки</p> : null}
                 </div>
             </div>
-            <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div>
-        </div>
+            {/* <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}
+        </PopUp>
     )
 }
 export default Banner

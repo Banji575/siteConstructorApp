@@ -3,6 +3,7 @@ import useFetch from '../../../../hooks/useFetch'
 import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
 import ContactsItem from './ContactsItem/ContactsItem'
+import PopUp from '../../../../UI/PopUp/PopUp'
 import './contacts.css'
 const genetrateObj = (contacts, id) => {
     console.log(contacts)
@@ -122,18 +123,14 @@ const Contacts = ({ content, setViewEdit, id, vidjArray, setVidjetDataArray }) =
     }
 
     return (
-        <div className='block-question-conteiner'>
-            <div className='block-menu-header'>
-                <h3>Контакты</h3>
-                <div onClick={closeWindow} className='block-header-close'></div>
-            </div>
+        <PopUp title="Контакты" closePopup={closeWindow} saveHandler={() => saveList()}>
+
             <div className='contacts-items-container'>
                 {contactsItemsFields.map((el, i) => {
                     return <ContactsItem  key={i} content={content} getContact={getContact} title={el.title} inputType={el.inputType} inputCheckLabel={el.inputCheckLabel} />
                 })}
             </div>
-            <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div>
-        </div>
+        </PopUp>
     )
 }
 

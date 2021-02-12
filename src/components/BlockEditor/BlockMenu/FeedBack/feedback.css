@@ -1,20 +1,23 @@
-.feedback-option-list{
+.feedback-option-list {
     display: flex;
     flex-direction: column;
 }
-.feedback-email-conteiner{
+
+.feedback-email-conteiner {
     display: flex;
     flex-direction: column;
     margin-bottom: 2%;
 }
-.feedback-p{
+
+.feedback-p {
     color: #4F4F4F;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 17px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
 }
-.feedback-option-h{
-    color: #4F4F4F;
+
+.feedback-option-h {
+    color: #254768;
     font-size: 18px;
     line-height: 22px;
     border-bottom: 1px solid #BDBDBD;

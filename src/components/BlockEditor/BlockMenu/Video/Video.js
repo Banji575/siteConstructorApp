@@ -3,6 +3,8 @@ import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
 import useFetch from '../../../../hooks/useFetch'
 import PopUp from '../../../../UI/PopUp/PopUp'
+import CKEditor from 'ckeditor4-react-advanced'
+import Utils from '../../../../scripts/Utils'
 
 import './video.css'
 
@@ -44,6 +46,8 @@ const Video = ({ content, setViewEdit, id, setVidjetDataArray, vidjArray }) => {
         doFetchEditVideo(formData)
     }
 
+    console.log(Utils.CKEditorTools)
+
     useEffect(() => {
         if (!respEditVideo) {
             return
@@ -75,10 +79,18 @@ const Video = ({ content, setViewEdit, id, setVidjetDataArray, vidjArray }) => {
     return (
         <PopUp title="Видео" closePopup={closeWindow} saveHandler={() => saveList()}>
                 <div className='video-body-conteiner p-3'>
-                    <p className='video-p'>Заголовок</p>
-                    <textarea className='video-textarea' value={title} onChange={(evt) => setTitle(evt.target.value)} />
-                    <p className='video-p'>Ссылка на видео</p>
-                    <input type='text' value={link} onChange={(evt) => checkLink(evt.target.value)} />
+                    <p className='question-item-header'>Заголовок</p>
+                    <CKEditor
+                    data={title}
+                    onChange={(e,text)=>setTitle(e.editor.getData())}
+                    config={{
+                        toolbar: [Utils.CKEditorTools],
+                        height:'35px'
+                    }}
+                />
+                    {/* <textarea className='video-textarea' value={title} onChange={(evt) => setTitle(evt.target.value)} /> */}
+                    <p className='question-item-header mt-3'>Ссылка на видео</p>
+                    <input className = 'input-text' type='text' value={link} onChange={(evt) => checkLink(evt.target.value)} />
                     {!validLink ? <p className='text-danger'>Поле не должно быть пустым</p> : null}
                 </div>
                 {/* <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}

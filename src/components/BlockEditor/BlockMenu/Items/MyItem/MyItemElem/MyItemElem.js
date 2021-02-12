@@ -29,7 +29,7 @@ const MyItemElem = ({src,addImgCheckArr,id}) => {
 
 
     return (
-    <li onClick = {()=>checkImgHandler()} className={classes.join(' ')}><img  src={src} /></li>
+    <li onClick = {()=>checkImgHandler()} className={classes.join(' ')}><img   src={src} /></li>
     )
 }
 export default MyItemElem

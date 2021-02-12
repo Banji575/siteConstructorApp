@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SocialItem from './SocialItem/SocialItem'
+import CKEditor from 'ckeditor4-react-advanced'
+import Utils from '../../../../../scripts/Utils'
 import './socialBlock.css'
 
 
@@ -13,10 +15,19 @@ const SocialBlock = ({ blockTitle, itemArr, content, saveItem, blockName, saveTi
 
     return (
         <div className='social-block-container'>
-            <h3 className='social-block-h'>{blockTitle}</h3>
+            <h3 className='social-block-h mb-3'>{blockTitle}</h3>
             <div className='social-block-header'>
-                <p className='social-block-p'>Заголовок </p>
-                <input type='text' value={customTitle} placeholder={title} onChange={(evt) => setCustomTitle(evt.target.value)} onBlur={()=>saveTitle(blockName, customTitle)} />
+                <p className='question-item-header'>Заголовок </p>
+                <CKEditor
+                    data={title}
+                    onBlur={()=>saveTitle(blockName, customTitle)}
+                    onChange={(e)=>setCustomTitle(e.editor.getData())}
+                    config={{
+                        toolbar: [Utils.CKEditorTools],
+                        height:'35px'
+                    }}
+                />
+               {/*  <input type='text' value={customTitle} placeholder={title} onChange={(evt) => setCustomTitle(evt.target.value)} onBlur={()=>saveTitle(blockName, customTitle)} /> */}
                 {itemArr.map((el, i) => {
                     return <SocialItem blockName={blockName} saveItem={saveItem} data={content[el.name]} title={el.title} name={el.name} key={i} />
                 })}
