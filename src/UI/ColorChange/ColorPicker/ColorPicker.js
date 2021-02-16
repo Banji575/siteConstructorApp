@@ -60,7 +60,7 @@ const ColorPicker = ({ propsName, show }) => {
         initialValue={state[propsName] || "#5e72e4"}
         onChange={fileChange}
         placement="right"
-        
+        className = 'input-color-widjet'
       />
     </div>
   );

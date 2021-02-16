@@ -4,11 +4,11 @@
 }
 
 .add-menu-item {
-    background-color: rgba(51, 153, 255, 0.55);
-    max-height: 30px;
-    border: 0;
-    color: #4F4F4F;
-    margin-left: 1%;
+    box-sizing: border-box;
+    border-radius: 5px;
+    background-color: #FFF;
+    border: 0.2px solid #254768;
+    box-shadow: 0 1px 2px 0 #E0E0E0;
 }
 
 @media(max-width:1024px) {

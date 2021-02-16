@@ -4,6 +4,8 @@ import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-so
 import useFetch from '../../../hooks/useFetch'
 import Text from '../../BlockEditor/BlockMenu/Text/Text'
 import ContextEditor from '../../../ContextEditor'
+import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
+
 import Context from '../../../Context'
 import parse from 'html-react-parser'
 import './textContent.css'
@@ -16,7 +18,7 @@ const TextContent = ({ body, id, replaceVidj }) => {
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [respDelQuestion, doFetchDelQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
-
+    const [backgroundColor, setBackgroundColor] = useState('')
     const closeEdit = () => setViewEdit(false)
 
     body.id = id
@@ -45,27 +47,15 @@ const TextContent = ({ body, id, replaceVidj }) => {
 
 
     return (
-        <div className='text-container'>
-            <div className='container site-top-line'>
+        <div className='text-container' style = {{backgroundColor:[backgroundColor]}}>
+            <div className='container '>
                 <div className='text-header'>
-                    <div className='text-buttons'>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={() => replaceVidj('up', id)} icon={faAngleUp} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={() => replaceVidj('down', id)} icon={faAngleDown} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={() => setViewEdit(true)} icon={faEdit} />
-                        </div>
-                        <div className='icon-conteiner' /* onClick = {delHandler} */ color='green'>
-                            <FontAwesomeIcon onClick={deleteHandler} color={'red'} icon={faTrashAlt} />
-                        </div>
-                    </div>
-                    <div className='text-title'>
+                    <WidjetWrapper setBackground = {setBackgroundColor} id={id} replaceVidj = {replaceVidj} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {deleteHandler} editWindow={ <Text setVidjetData={setVidjetData} vidjArr={vidjArr} content={body} closeEdit={() => setViewEdit(false)} />} >
+                    <div className='text-title' >
                         <h3 className='text-h3'>{body.title}</h3>
                         <p className='text-p'>{createHTML(body.discription)}</p>
                     </div>
+                    </WidjetWrapper>
                 </div>
                 {/*  <div className='questions-body'>
                 { elems()}

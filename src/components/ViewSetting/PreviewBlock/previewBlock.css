@@ -1,10 +1,12 @@
 .preview-block {
     display: flex;
     justify-content: flex-end;
+    flex-direction: column;
+    position: relative;
 }
 
 .border-rigth {
-    border-right: 1px solid black;
+    border-right: 1px solid #808080;
 }
 
 .preview-item {
@@ -13,4 +15,35 @@
     width: 50%;
     padding-right: 1%;
     text-align: center;
+}
+
+.preview-item-next {
+    cursor: pointer;
+}
+
+.preview-item-next::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+    top: 39%;
+    right: 2%;
+    background-image: url('../../../image/arrowRight.png');
+}
+
+.preview-item-save {
+    width: 23%;
+    text-align: left;
+}
+
+.preview-item-save::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -38%;
+    top: 13%;
+    background-repeat: no-repeat;
+    background-image: url('../../../image/save.png');
 }

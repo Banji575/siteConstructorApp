@@ -1,6 +1,9 @@
 .view-setting {
     padding-left: 5%;
     padding-right: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 63px;
 }
 
 .view-setting-left-block {
@@ -9,6 +12,8 @@
 
 .view-setting-right-block {
     width: 40%;
+    justify-content: flex-end;
+    margin-right: 2%;
 }
 
 @media(max-width:1024px) {

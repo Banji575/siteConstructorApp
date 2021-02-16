@@ -1,10 +1,10 @@
 import React from 'react'
 import './feedbackVidjetItem.css'
 const changeNameObj = {
-    name:'Введите имя',
-    email: 'Введите email',
-    phone:'Введите телефон',
-    message: 'Чем мы можем вам помочь'
+    name:'Имя',
+    email: 'E-mail',
+    phone:'Тел',
+    message: 'Комментарий'
 }
 
 const FeedbackVidjetItem = ({ data, title }) => {
@@ -13,8 +13,8 @@ const FeedbackVidjetItem = ({ data, title }) => {
     return null
     const Elem = () => (
         <div className = 'feedback-vidjet-item mb-3'>
-            <label className = 'feedback-item-label' htmlFor={title}>{changeNameObj[title]}</label>
-          {title==='message' ? <textarea/> :  <input className = 'question-item-input' id='title' type='text' />} 
+            {/* <label className = 'feedback-item-label' htmlFor={title}>{changeNameObj[title]}</label> */}
+          {title==='message' ? <textarea placeholder = {changeNameObj[title]}/> :  <input className = 'question-item-input' id='title' type='text' placeholder = {changeNameObj[title]} />} 
         </div>
     )
     return (

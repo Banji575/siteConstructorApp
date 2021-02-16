@@ -6,6 +6,7 @@ import Video from '../../BlockEditor/BlockMenu/Video/Video'
 import ContextEditor from '../../../ContextEditor'
 import Context from '../../../Context'
 import useFetch from '../../../hooks/useFetch'
+import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 
 const getVideoLink = (link) => {
     console.log(link.replace(/.+\?v=/, "https://www.youtube.com/embed/"))
@@ -17,6 +18,7 @@ const VideoVidjet = ({ body, id }) => {
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [viewEdit, setViewEdit] = useState(false)
+    const [backgroundColor, setBackgroundColor] = useState('')
     const editHandler = () => {
         setViewEdit(true)
     }
@@ -44,15 +46,15 @@ const VideoVidjet = ({ body, id }) => {
 
 
     return (
-        <div className='questions-container'>
-            <div className='container question-center site-top-line'>
-                <div className='questions-header'>
+        <div className='questions-container' style = {{backgroundColor: [backgroundColor]}}>
+            <div className='container question-center'>
+               {/*  <div className='questions-header'>
                     <div className='questions-buttons'>
                         <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('up', id)} */ icon={faAngleUp} />
+                            <FontAwesomeIcon onClick = {()=>replaceVidj('up', id)} icon={faAngleUp} />
                         </div>
                         <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('down', id)} */ icon={faAngleDown} />
+                            <FontAwesomeIcon onClick = {()=>replaceVidj('down', id)} icon={faAngleDown} />
                         </div>
                         <div className='icon-conteiner'>
                             <FontAwesomeIcon onClick={editHandler} icon={faEdit} />
@@ -61,11 +63,13 @@ const VideoVidjet = ({ body, id }) => {
                             <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
                         </div>
                     </div>
-                </div>
+                </div> */}
+                <WidjetWrapper setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {delHandler} editWindow={ <Video  setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} />} >
                 <div className='questions-body'>
                     <p>{body.title}</p>
                     <iframe src={getVideoLink(body.link)} />
                 </div>
+                </WidjetWrapper>
             </div>
             {viewEdit ? <Video setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} /> : null}
         </div>

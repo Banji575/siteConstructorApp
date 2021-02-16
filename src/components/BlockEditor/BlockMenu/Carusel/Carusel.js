@@ -4,7 +4,7 @@ import './carusel.css'
 import Context from '../../../../Context'
 import ContextEditor from '../../../../ContextEditor'
 import CaruselItem from './CaruselItem/CaruselItem'
-import useFetch from '../../../../hooks/useFetch' 
+import useFetch from '../../../../hooks/useFetch'
 import PopUp from '../../../../UI/PopUp/PopUp'
 
 
@@ -23,17 +23,17 @@ const Carusel = ({ body, id, setViewEdit, vidjArray, setVidjetDataArray }) => {
     const [isValidLimitSlide, setIsValidLimitSlide] = useState(true)
     const [limitSlide, setLimitSlide] = useState(3)
 
-    useEffect(()=>{
-        if(files.length === limitSlide){
+    useEffect(() => {
+        if (files.length === limitSlide) {
             setIsValidLimitSlide(false)
-        }else{
+        } else {
             setIsValidLimitSlide(true)
         }
-    },[files])
+    }, [files])
     console.log('filelist', files)
     const root = useRef()
     const clickHandler = () => {
-      if(!isValidLimitSlide) return
+        if (!isValidLimitSlide) return
         root.current.click()
     }
     const addFile = (val) => {
@@ -51,6 +51,16 @@ const Carusel = ({ body, id, setViewEdit, vidjArray, setVidjetDataArray }) => {
     }
 
     const saveList = () => {
+        console.log('carusel body',body, id)
+        if(body){
+            const list= [...vidjArr]
+            list.forEach(el=>{
+                if(el.id===id){
+                    console.log(el)
+                }
+            })
+            return
+        }
         console.log('save list')
         const formData = new FormData()
         const list = [...files]
@@ -67,13 +77,16 @@ const Carusel = ({ body, id, setViewEdit, vidjArray, setVidjetDataArray }) => {
 
     useEffect(() => {
         if (!respCarusel) return
-        const list = [...vidjArray]
-        const url = respCarusel.$fields.slider_photo.value
-        content.body.images = url
-        list.unshift(content)
-        setVidjetDataArray(list)
-        closeWindow()
-
+        if (respCarusel.success === 'Успешно!') {
+            console.log(respCarusel)
+            const list = [...vidjArray]
+            const url = respCarusel.$fields.slider_photo.value
+            content.id = respCarusel.landing_prop_data_id
+            content.body.images = url
+            list.unshift(content)
+            setVidjetDataArray(list)
+            closeWindow()
+        }
     }, [respCarusel])
 
 
@@ -122,7 +135,7 @@ const Carusel = ({ body, id, setViewEdit, vidjArray, setVidjetDataArray }) => {
     }
 
     return (
-        <PopUp title = "Карусель картинок" closePopup={closeWindow} saveHandler={() => saveList()}>
+        <PopUp title="Карусель картинок" closePopup={closeWindow} saveHandler={() => saveList()}>
             <div className='timer-conteiner d-flex'>
                 <div className=' p-3 w-100 '>
                     <h3 className='question-item-header mb-4'>Добавление слайдов</h3>
@@ -130,20 +143,20 @@ const Carusel = ({ body, id, setViewEdit, vidjArray, setVidjetDataArray }) => {
                         <CarouselList files={files} urls={body ? content : null} />
                     </div>
                     <input ref={root} className='items-input-hidden' type='file' onChange={(evt) => addFile(evt.target.files[0])} />
-                    <Button classes = {['w-100 mw-100 text-left new-slide-button']} disabled = {!isValidLimitSlide} onClick={clickHandler} title='+ новый слайд ' />
-                {!isValidLimitSlide ? <p className ='text-danger'>Не больше трех слайдов</p> : null}
+                    <Button classes={['w-100 mw-100 text-left new-slide-button']} disabled={!isValidLimitSlide} onClick={clickHandler} title='+ новый слайд ' />
+                    {!isValidLimitSlide ? <p className='text-danger'>Не больше трех слайдов</p> : null}
                     <div className='mt-4 carusel-input-duration-container'>
                         <h3 className='question-item-header mb-4'>Автоматическая смена слайдов</h3>
                         <div className='d-flex '>
                             <input type='number' className=' question-item-input w-8 carusel-input-duration' value={interval} onChange={(evt) => setInterval(evt.target.value)} />
-                            <p className='items-label m-0'>сек</p>
+                            <p className='items-label m-0'>Cек</p>
                         </div>
                     </div>
                 </div>
             </div>
-          {/*   <div className='block-question-save'><p onClick={() => saveList()} className='block-question-button-save'>Сохранить</p></div> */}
+            {/*   <div className='block-question-save'><p onClick={() => saveList()} className='block-question-button-save'>Сохранить</p></div> */}
         </PopUp>
-       
+
     )
 }
 

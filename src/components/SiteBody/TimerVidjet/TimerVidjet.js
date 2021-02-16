@@ -5,10 +5,11 @@ import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-so
 import TimerNumber from './TimerNumber/TimerNumber'
 import useFetch from '../../../hooks/useFetch'
 import Context from '../../../Context'
+import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
+import Timer from '../../BlockEditor/BlockMenu/Timer/Timer'
 const dateFormat = date => date.toLocaleString('ru', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
 const createTime = (type, value = {}) => {
     const { toDateDate, toDateTime, onDateDatumPoint, onDateDuration, cyclingDuration, cyclingDatePoint, timerCreated } = value
-    /*     console.log(toDateDate, toDateTime) */
 
     let currentDate;
     let expirationDate;
@@ -58,6 +59,12 @@ const TimerVidjet = ({ body, id }) => {
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [type, setType] = useState(body.type)
     const { days, hours, minutes, seconds } = createTime(type, body)
+    const [backgrounColor, setBackgroundColor] = useState('')
+    const [viewEdit, setViewEdit] = useState(false)
+    /*     console.log(toDateDate, toDateTime) */
+    const editHandler = () => {
+        setViewEdit(true)
+    }
     const [second, setSecond] = useState(() => {
         if(body.type === 'cycle' ){
             console.log('попал в условие')
@@ -89,6 +96,7 @@ const TimerVidjet = ({ body, id }) => {
         return days < 0 ? 0 : days
     })
     const delHandler = () => {
+
         const formData = new FormData()
         formData.set('landing_prop_id', 4)
         formData.set('catalog_id', catalogId)
@@ -123,25 +131,10 @@ const TimerVidjet = ({ body, id }) => {
     }, [second])
 
     return (
-        <div className='questions-container '>
-            <div className='container question-center site-top-line'>
-                <div className='questions-header'>
-                    <div className='questions-buttons'>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('up', id)} */ icon={faAngleUp} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('down', id)} */ icon={faAngleDown} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick={editHandler} */ icon={faEdit} />
-                        </div>
-                        <div className='icon-conteiner' onClick={delHandler} color='green'>
-                            <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
-                        </div>
-                    </div>
-                </div>
-                <div className='questions-body '>
+        <div className='questions-container ' style = {{backgroundColor: [backgrounColor]}}>
+            <div className='container question-center '>
+                <WidjetWrapper setBackground = {setBackgroundColor} delHandler = {delHandler} editWindow={ <Timer setViewEdit={editHandler}  id={id} content={{ id: id, title: 'video', body: body }} />} /* isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Banner setViewEdit={setViewEdit} vidjArr={vidjArr} setVidjetData={setVidjetData} id={id}  vidjetObj={body} />} */ >
+                <div className='questions-body' >
                     <h3 className='question-h3 mb-3 text-center'>До конца акции </h3>
                     <div className='timer-number-conteiner'>
                         <ul className='timer-number-list pl-0'>
@@ -173,6 +166,7 @@ const TimerVidjet = ({ body, id }) => {
                         </ul>
                     </div>
                 </div>
+            </WidjetWrapper>
             </div>
             {/* {viewEdit ? <Video setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} /> : null} */}
         </div>

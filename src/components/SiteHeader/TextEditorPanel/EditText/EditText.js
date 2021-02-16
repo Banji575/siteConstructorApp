@@ -6,6 +6,7 @@ import PopUp from '../../../../UI/PopUp/PopUp'
 import Text from '../../Text/Text'
 import Context from '../../../../Context'
 import useFetch from '../../../../hooks/useFetch'
+import EditButton from '../../../../UI/EditButton/EditButton'
 
 const EditText = ({content}) => {
     const [isEdit, setIsEdit] = useState(false)
@@ -39,7 +40,8 @@ const EditText = ({content}) => {
     return (
         <div>
             <div className='edit-text'>
-                <FontAwesomeIcon fontWeight = 'light' onClick={() => setIsEdit(state => !state)} icon={faEdit} size='2x' />
+                <EditButton openEdit = {setIsEdit}/>
+             {/*    <FontAwesomeIcon fontWeight = 'light' onClick={() => setIsEdit(state => !state)} icon={faEdit} size='2x' /> */}
             </div>
             {isEdit ?
                 <PopUp title='Текст' saveHandler={changeText} closePopup={closePopUp} >

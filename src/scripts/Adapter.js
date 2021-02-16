@@ -29,7 +29,7 @@ export default class Adapter {
 
 
         this.data.siteMenu = menuTree
-        this.data.backgroundColor = backgroundColor ? `#${backgroundColor}` : '#fff'
+        this.data.backgroundColor = /*  backgroundColor ? `#${backgroundColor}` : */ '#fff'
         this.data.titleBackground = colorTopTitle ? `#${colorTopTitle}` : '#fff'
         this.data.siteLogo = siteLogo
         this.data.siteTitle = siteTitle

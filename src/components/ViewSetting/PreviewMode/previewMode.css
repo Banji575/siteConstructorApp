@@ -5,7 +5,7 @@
 }
 
 .preview-item {
-    width: 38%;
+    width: 100%;
 }
 
 
@@ -14,5 +14,17 @@
 } */
 
 .preview-mode-icon-block {
-    width: 60%;
+    width: 44%;
+}
+
+.preview-item-prev::before {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-repeat: no-repeat;
+    top: 19%;
+    left: -12%;
+    transform: rotate(180deg);
+    background-image: url('../../../image/arrowRight.png');
 }

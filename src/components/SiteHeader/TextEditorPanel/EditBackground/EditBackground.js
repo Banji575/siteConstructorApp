@@ -6,7 +6,7 @@ import ColorSetting from '../../../ViewSetting/ColorSetting/ColorSetting'
 
 const EditBackground = () => {
     return (
-        <div className = 'edit-background mr-3'><p className = 'edit-background-text'>Фон</p> <ColorPicker  propsName='titleBackground'/></div>
+        <div className = 'edit-background mr-3'><p className = 'edit-background-text'>Фон</p> <ColorPicker className = 'input-color-widjet'  propsName='titleBackground'/></div>
     )
 }
 

@@ -32,4 +32,29 @@
 .icon-conteiner {
     margin-right: 5px;
     cursor: pointer;
+    border-radius: 3px;
+    background-color: #FFF;
+    box-shadow: 0 1px 2px 0 #BDBDBD;
+    /*  padding: 4px 10px; */
+}
+
+.icon-conteiner--double-icon {
+    width: 9%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-conteiner--middle-line {
+    position: relative;
+}
+
+.icon-conteiner--middle-line::after {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: 35px;
+    background-color: #808080;
+    right: 50%;
+    transform: translateX(-50%);
+    top: 8%;
 }

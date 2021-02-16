@@ -3,7 +3,6 @@ import './button.css'
 
 const Button = ({ onClick, title, disabled, classes }) => {
     const nativeCkasses = ['button']
-    console.log(classes)
     if(classes){
         classes.forEach(el=>nativeCkasses.push(el))
     }

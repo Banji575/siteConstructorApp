@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import './feedbackVidjet.css'
 import FeedbackVidjetItem from './FeedbackVidjetItem/FeedbackVidjetItem'
+import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 import Button from '../../../UI/Button/Button'
 import Context from '../../../Context'
 import ContextEditor from '../../../ContextEditor'
@@ -14,6 +15,7 @@ const FeedbackVidject = ({ body , id}) => {
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [respDelFeedback, doFetchDelFeedback] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
+    const [backgroundColor, setBackgroundColor] = useState('')
     const editHandler = () => setViewEdit(true)
 
     const delHandler = () => {
@@ -40,36 +42,16 @@ const FeedbackVidject = ({ body , id}) => {
     },[respDelFeedback])
 
     return (
-        <div className='questions-container '>
-            <div className='container question-center site-top-line'>
-                <div className='questions-header'>
-                    <div className='questions-buttons'>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('up', id)} */ icon={faAngleUp} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('down', id)} */ icon={faAngleDown} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={editHandler} icon={faEdit} />
-                        </div>
-                        <div className='icon-conteiner' onClick={delHandler} color='green'>
-                            <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
-                        </div>
-                    </div>
-                </div>
-                <div className='questions-body feedback-body'>
+                <WidjetWrapper delHandler = {delHandler} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/>} >
+                <div className='questions-body feedback-body' style = {{backgroundColor:[backgroundColor]}}>
                     <h3 className='feedback-vidjet-h3 text-center'>{body.title.text}</h3>
                     {Object.keys(body).map((el, i) => {
                         return <FeedbackVidjetItem  key = {i} title = {el} data = {body[el]}/>
                     })} 
-                    <Button  title = 'Отправить'/>
+                    <Button classes = {['d-flex', 'my-0', 'mx-auto']}   title = 'Отправить'/>
                 </div>
-                    
-
-            </div>
-             {viewEdit ?<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/> :  null}
-        </div>
+                </WidjetWrapper>    
+             /* {viewEdit ?<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/> :  null} */
     )
 }
 

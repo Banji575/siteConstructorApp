@@ -11,7 +11,7 @@
 }
 
 .questions-container {
-    margin-bottom: 3%;
+    padding-bottom: 3%;
 }
 
 .block-menu-header {
@@ -67,4 +67,20 @@
     cursor: pointer;
     width: fit-content;
     cursor: pointer;
+    background-color: #254768;
+    color: #FFF;
+    box-shadow: 0 1px 2px 0 #39F;
+    padding: 0.2% 4.5%;
+    border-radius: 3px;
 }
+
+
+/*   max-width: fit-content;
+    padding: 0.2% 4.5%;
+    border-radius: 3px;
+    background-color: #254768;
+    border: none;
+    box-shadow: 0 1px 2px 0 #39F;
+    transition-property: filter;
+    transition-duration: .2s;
+    color: #FFF; */

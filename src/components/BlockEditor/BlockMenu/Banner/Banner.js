@@ -105,8 +105,6 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
                         return el
                     }
                 })
-
-
                 console.log(list, 'new')
                 setVidjetData(list)
                 closeWindow()
@@ -144,7 +142,6 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
 
     return (
         <PopUp title="Баннер" closePopup={closeWindow} saveHandler={() => saveList()}>
-
             <div className='text-body-conteiner py-1 px-3'>
                 <div className='banner-upload-area-conteiner'>
                     {/*   <FontAwesomeIcon className='banner-upload-logo' size='10x' icon={faImage} /> */}

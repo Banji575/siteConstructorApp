@@ -6,9 +6,11 @@ import logo from '../../../src/image/siteLogo.png'
 import './viewSetting.css'
 import PreviewBlock from './PreviewBlock/PreviewBlock';
 import PreviewMode from './PreviewMode/PreviewMode';
+import SaveSetting from './SaveSetting/SaveSetting';
+
 const ViewSetting = () => {
     const [viewMode, setViewMode] = useState(false)
-    const changeViewMode = () => setViewMode(state=>!state)
+    const changeViewMode = () => setViewMode(state => !state)
 
 
     return (
@@ -17,19 +19,21 @@ const ViewSetting = () => {
                 <React.Fragment>
                     <div className='view-setting-left-block d-flex'>
                         <SiteLogo img={logo} link={'https://cloudsgoods.com/'} />
-                        <DirectionSetting />
-                        <ColorSetting leftBorder={false} title='backgroundColor' />
+                        {/* <DirectionSetting /> */}
+                        {/*  <ColorSetting leftBorder={false} title='backgroundColor' /> */}
                         {/*  <ColorSetting leftBorder = {false} title = 'titleBackground'/> */}
                     </div>
-                    <div className='view-setting-right-block'>
+                    <div className='view-setting-right-block d-flex'>
                         <PreviewBlock changeViewMode={changeViewMode} />
                     </div>
                 </React.Fragment>
             ) : (
-                <React.Fragment>
-                    <PreviewMode changeViewMode={changeViewMode} />
-                </React.Fragment>
-            )}
+                    <React.Fragment>
+                        <PreviewMode changeViewMode={changeViewMode} />
+                    </React.Fragment>
+
+                )}
+            <SaveSetting />
         </div>
     )
 }

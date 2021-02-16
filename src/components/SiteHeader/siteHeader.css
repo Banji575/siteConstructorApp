@@ -1,10 +1,9 @@
 .site-header {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    margin-top: 1%;
+    /*  border-top: 1px solid black;
+    border-bottom: 1px solid black; */
     display: flex;
-    padding-top: 1.1%;
-    padding-bottom: 1.1%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     position: relative;
 }
 

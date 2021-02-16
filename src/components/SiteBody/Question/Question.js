@@ -1,13 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './question.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import BlockQueston from '../../BlockEditor/BlockMenu/BlockQuestion/BlockQuestion'
 import ContextEditor from '../../../ContextEditor'
 import Context from '../../../Context'
 import useFetch from '../../../hooks/useFetch'
 import Button from '../../../UI/Button/Button'
-import Utils from '../../../scripts/Utils'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 
 const changeDataObjForBackend = (formdata, arr) => {
@@ -28,12 +25,11 @@ const Question = ({ body, id,replaceVidj, title}) => {
     const [respEditQuestion, doFetchEditQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
     const [respDelQuestion, doFetchDelQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
-
+    const [backgroundColor, setBackgroundColor] = useState('')
 
     const editHandler = () => {
         setViewEdit(true)
     }
-
 
     const delHandler = () => {
         console.log(id)
@@ -110,39 +106,13 @@ const Question = ({ body, id,replaceVidj, title}) => {
         setViewFullList(true)
     }
 
-
     return (body === null ? null :
-        <WidjetWrapper delHandler = {delHandler} isView = {viewEdit} setViewEdit={setViewEdit}  editWindow = { <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} />}>
-        <div className='questions-container'>
-            <div className='container question-center site-top-line'>
-                <div className='questions-header'>
-                    <div className='questions-buttons'>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick = {()=>replaceVidj('up', id)} icon={faAngleUp} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick = {()=>replaceVidj('down', id)} icon={faAngleDown} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={editHandler} icon={faEdit} />
-                        </div>
-                        <div className='icon-conteiner' onClick={delHandler} color='green'>
-                            <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
-                        </div>
-                    </div>
-                    <div className='questions-title'>
-                        <h3 className='question-h3'>FAQ</h3>
-                        <p className='question-p'>{title}</p>
-                    </div>
-                </div>
-                <div className='questions-body'>
+        <WidjetWrapper setBackground = {setBackgroundColor} delHandler = {delHandler} isView = {viewEdit} setViewEdit={setViewEdit}  editWindow = { <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} />}>
+                <div className='questions-body' style = {{backgroundColor:[backgroundColor]}}>
                     {elems()}
                 </div>
-
                 {body.length > 2 && !viewFullList ? <Button /* disabled = {false} */ onClick={() => viewFillLisnHundler()} title='Еще' /> : null}
-            </div>
-        {/*     {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} /> : null} */}
-        </div>
+            {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} /> : null}
         </WidjetWrapper>
     )
 }

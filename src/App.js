@@ -19,7 +19,7 @@ function App() {
   const [stateApp, setStateApp] = useState('')
   const [vidjetData, setVidjetData] = useState(null)
   const [mobileMenuIsOpen, setMobilemenuIsOpen] = useState(true)
-
+  console.log(vidjetData)
   useEffect(() => {
     doFetch()
   }, [])
@@ -64,19 +64,28 @@ function App() {
 
   const replaceVidj = (direction, id) => {
     const list = [...vidjetData]
-
-    list.forEach((el, i) => {
+    /*   console.log(direction, id) */
+    console.log(list)
+    let i;
+    list.forEach((el, index) => {
       if (!el) return
 
       if (el.id == id) {
-        direction === 'up' ? [list[i], list[i-1]] = [list[i-1], list[i]] :  [list[i], list[i+1]] = [list[i+1], list[i]]
+        console.log(direction)
+        /*  direction === 'up' ? [list[i], list[i - 1]] = [list[i - 1], list[i]] : [list[i], list[i + 1]] = [list[i + 1], list[i]] */
+       i =index
       }
     })
+    direction === 'up' ? [list[i], list[i + 1]] = [list[i + 1], list[i]] : [list[i], list[i + 1]] = [list[i + 1], list[i]]
+    /*  console.log([list[0], list[1]] = [list[1], list[0]])
+     console.log(list) */
+
     console.log(list)
+
     setVidjetData(list)
   }
 
-   // Для Header сайта
+  // Для Header сайта
   const changeState = (props) => {
     if (typeof props === 'object') {
       const propsName = Object.keys(props)[0]
@@ -104,14 +113,14 @@ function App() {
     (<Context.Provider value={[state, changeState, setState, catalogId, setVidjetData, vidjetData]}>
       <div className="app">
         <ViewSetting />
-        <SiteHeader changeViewMenu = {setMobilemenuIsOpen} />
+        <SiteHeader changeViewMenu={setMobilemenuIsOpen} />
+        {/*  <MenuCreation menuIsView={mobileMenuIsOpen} /> */}
         <Body state={state}>
-          <MenuCreation menuIsView = {mobileMenuIsOpen} />
           <div>
-          {vidjetData ? <SiteBody replaceVidj={replaceVidj} setVidjetData={setVidjetData} vidjArr={vidjetData} /> : null}
-          <BlockEditor setVidjetData={setVidjetData} vidjArr={vidjetData} />
+            {vidjetData ? <SiteBody replaceVidj={replaceVidj} setVidjetData={setVidjetData} vidjArr={vidjetData} /> : null}
+            <BlockEditor setVidjetData={setVidjetData} vidjArr={vidjetData} />
           </div>
-        
+
         </Body>
       </div>
     </Context.Provider>

@@ -8,12 +8,14 @@ import Social from '../../BlockEditor/BlockMenu/Social/Social'
 import useFetch from '../../../hooks/useFetch'
 import Context from '../../../Context'
 import ContextEditor from '../../../ContextEditor'
+import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 
 const SocialVidjet = ({ body ,id}) => {
     const [viewEdit, setViewEdit] = useState(false)
     const [respDelSocial, doFetchDelSocial] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
+    const [backgroundColor, setBackgroundColor] = useState('')
     const editHandler = () => {
         setViewEdit(true)
     }
@@ -41,24 +43,9 @@ const SocialVidjet = ({ body ,id}) => {
     }, [respDelSocial])
     const socialSection = Object.keys(body)
     return (
-        <div className='questions-container'>
+        <div className='questions-container' style = {{backgroundColor:[backgroundColor]}}>
             <div className='container question-center'>
-                <div className='questions-header'>
-                    <div className='questions-buttons'>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('up', id)} */ icon={faAngleUp} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon /* onClick = {()=>replaceVidj('down', id)} */ icon={faAngleDown} />
-                        </div>
-                        <div className='icon-conteiner'>
-                            <FontAwesomeIcon onClick={editHandler}  icon={faEdit} />
-                        </div>
-                        <div className='icon-conteiner' onClick={delHandler} color='green'>
-                            <FontAwesomeIcon color={'red'} icon={faTrashAlt} />
-                        </div>
-                    </div>
-                </div>
+                <WidjetWrapper delHandler = {delHandler} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={ <Social content = {body} setViewEdit={setViewEdit} id={id} /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ />} >
                 <div className='questions-body'>
                     <div className='social-vidjet-list-container'>
                         {socialSection.map((el, i) => {
@@ -67,7 +54,7 @@ const SocialVidjet = ({ body ,id}) => {
                     </div>
                 </div>
 
-
+                </WidjetWrapper>
             </div>
              {viewEdit ? <Social content = {body} setViewEdit={setViewEdit} id={id} /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ /> : null}
         </div>
