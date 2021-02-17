@@ -13,6 +13,7 @@ const catalogId = 1118
 
 function App() {
   const [response, doFetch] = useFetch(`https://cloudsgoods.com/api/CatalogController.php?mode=get_catalog&catalog_id=${catalogId}`)
+  const [respReplace, doFetchReplace] = useFetch(`https://cloudsgoods.com/api/CatalogController.php?mode=replace_order_landing_prop_data&catalog_id=${catalogId}`)
   const [responseVidjetData, doFetchVidjetData] = useFetch(`https://cloudsgoods.com/api/CatalogController.php?mode=get_catalog_landing_props_data_in_catalog&catalog_id=${catalogId}`)
   const [dataLoading, setDataLoading] = useState(false)
   const [vidjecLoading, setVidjetLoading] = useState(false)
@@ -64,26 +65,37 @@ function App() {
 
   const replaceVidj = (direction, id) => {
     const list = [...vidjetData]
-    /*   console.log(direction, id) */
     console.log(list)
     let i;
+    let elId;
     list.forEach((el, index) => {
       if (!el) return
-
+      if (direction === 'up' && index == 0) return
+      if (direction !== 'up' && index == list.length - 1) return
+      console.log(index)
       if (el.id == id) {
-        console.log(direction)
-        /*  direction === 'up' ? [list[i], list[i - 1]] = [list[i - 1], list[i]] : [list[i], list[i + 1]] = [list[i + 1], list[i]] */
-       i =index
+        elId = el.id
+        i = index
       }
     })
-    direction === 'up' ? [list[i], list[i + 1]] = [list[i + 1], list[i]] : [list[i], list[i + 1]] = [list[i + 1], list[i]]
-    /*  console.log([list[0], list[1]] = [list[1], list[0]])
-     console.log(list) */
+    direction === 'up' ? [list[i], list[i - 1]] = [list[i - 1], list[i]] : [list[i], list[i + 1]] = [list[i + 1], list[i]]
 
-    console.log(list)
-
+    console.log(i)
+    const formData = new FormData()
+    formData.set('landing_prop_data_id', elId)
+    formData.set('order_num',direction === 'up' ? i : i+2)
+    doFetchReplace(formData)
     setVidjetData(list)
   }
+
+  useEffect(() => {
+    if (!respReplace) return
+    if (respReplace.success) {
+      
+    }
+  }, [respReplace])
+
+
 
   // Для Header сайта
   const changeState = (props) => {

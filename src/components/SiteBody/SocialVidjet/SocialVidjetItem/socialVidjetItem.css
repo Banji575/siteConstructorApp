@@ -1,6 +1,7 @@
 .social-vidjet-item-buttons {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .social-vidjet-button {

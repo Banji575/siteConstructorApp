@@ -13,7 +13,7 @@ const getVideoLink = (link) => {
     return link.replace(/.+\?v=/, "https://www.youtube.com/embed/")
 }
 
-const VideoVidjet = ({ body, id }) => {
+const VideoVidjet = ({ body, id,replaceVidj }) => {
     const [respDelVideo, doFetchDelVideo] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [state, changeState, setState, catalogId] = useContext(Context)
@@ -47,7 +47,6 @@ const VideoVidjet = ({ body, id }) => {
 
     return (
         <div className='questions-container' style = {{backgroundColor: [backgroundColor]}}>
-            <div className='container question-center'>
                {/*  <div className='questions-header'>
                     <div className='questions-buttons'>
                         <div className='icon-conteiner'>
@@ -64,13 +63,12 @@ const VideoVidjet = ({ body, id }) => {
                         </div>
                     </div>
                 </div> */}
-                <WidjetWrapper setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {delHandler} editWindow={ <Video  setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} />} >
+                <WidjetWrapper id={id} replaceVidj = {replaceVidj} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {delHandler} editWindow={ <Video  setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} />} >
                 <div className='questions-body'>
                     <p>{body.title}</p>
                     <iframe src={getVideoLink(body.link)} />
                 </div>
                 </WidjetWrapper>
-            </div>
             {viewEdit ? <Video setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} /> : null}
         </div>
     )

@@ -8,6 +8,7 @@
 .questions-header {
     /*  margin: 0 auto; */
     text-align: center;
+    margin-bottom: 3%;
 }
 
 .questions-body {
@@ -39,7 +40,8 @@
 }
 
 .icon-conteiner--double-icon {
-    width: 9%;
+    /*     width: 9%; */
+    width: 90px;
     display: flex;
     justify-content: space-between;
 }

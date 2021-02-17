@@ -10,7 +10,7 @@ import ContextEditor from '../../../ContextEditor'
 import Feedback from '../../BlockEditor/BlockMenu/FeedBack/Feedback'
 import useFetch from '../../../hooks/useFetch'
 
-const FeedbackVidject = ({ body , id}) => {
+const FeedbackVidject = ({ body , id, replaceVidj}) => {
     const [viewEdit, setViewEdit] = useState(false)
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [respDelFeedback, doFetchDelFeedback] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
@@ -42,15 +42,17 @@ const FeedbackVidject = ({ body , id}) => {
     },[respDelFeedback])
 
     return (
-                <WidjetWrapper delHandler = {delHandler} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/>} >
-                <div className='questions-body feedback-body' style = {{backgroundColor:[backgroundColor]}}>
+        <div className='questions-container' style = {{backgroundColor:[backgroundColor]}}>
+                <WidjetWrapper id={id} replaceVidj = {replaceVidj} delHandler = {delHandler} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/>} >
+                <div className='questions-body feedback-body' /* style = {{backgroundColor:[backgroundColor]}} */>
                     <h3 className='feedback-vidjet-h3 text-center'>{body.title.text}</h3>
                     {Object.keys(body).map((el, i) => {
                         return <FeedbackVidjetItem  key = {i} title = {el} data = {body[el]}/>
                     })} 
                     <Button classes = {['d-flex', 'my-0', 'mx-auto']}   title = 'Отправить'/>
                 </div>
-                </WidjetWrapper>    
+                </WidjetWrapper>  
+            </div>  
              /* {viewEdit ?<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/> :  null} */
     )
 }

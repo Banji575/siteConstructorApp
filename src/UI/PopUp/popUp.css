@@ -29,5 +29,25 @@
 }
 
 .popup-body {
-    padding: 4% 2%
+    padding: 4% 2%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@media(max-width:1024px) {
+    .popup-container {
+        width: 50%;
+    }
+}
+
+@media(max-width:768px) {
+    .popup-container {
+        width: 65%;
+    }
+}
+
+@media(max-width:425px) {
+    .popup-container {
+        width: 95%;
+    }
 }

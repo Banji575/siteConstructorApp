@@ -3,3 +3,9 @@
     padding-left: 2%;
     border-left: 1px solid #808080;
 }
+
+@media(max-width:425px) {
+    .preview-item-save {
+        padding-left: 6%;
+    }
+}

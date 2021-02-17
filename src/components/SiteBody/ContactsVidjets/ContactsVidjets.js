@@ -41,22 +41,20 @@ const ContactsVidjets = ({ body, id, replaceVidj }) => {
             setVidjetData(list)
         }
     }, [respDelContacts])
-
+    console.log('contactsVidjet', replaceVidj)
     return (
         <div className='questions-container' style={{ backgroundColor: [backgroundColor] }}>
-            <div className='container question-center'>
-                <WidjetWrapper delHandler={delHandler} setBackground={setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Contacts content={body} setViewEdit={setViewEdit} id={id}  /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ />} >
+                <WidjetWrapper id={id} replaceVidj = {replaceVidj} delHandler={delHandler} setBackground={setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Contacts content={body} setViewEdit={setViewEdit} id={id}  /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ />} >
                     <div className='d-flex flex-column justify-content-center'>
-                        <div className='questions-title '>
+                        <div className='questions-title mb-3 '>
                             <h3 className='question-h3 text-center'>Контакты</h3>
                         </div>
-                        {address.checked ? <p className='contacts-p text-center'>{address.text}</p> : null}
-                        {email.checked ? <p className='contacts-p text-center'>{email.text}</p> : null}
-                        {phone.checked ? <p className='contacts-p text-center'>{phone.text}</p> : null}
-                        {fax.checked ? <p className='contacts-p text-center'>{fax.text}</p> : null}
+                        {address.checked ? <p className='m-1 contacts-p text-center'>{address.text}</p> : null}
+                        {email.checked ? <p className='m-1 contacts-p text-center'>{email.text}</p> : null}
+                        {phone.checked ? <p className='m-1 contacts-p text-center'>{phone.text}</p> : null}
+                        {fax.checked ? <p className='m-1 contacts-p text-center'>{fax.text}</p> : null}
                     </div>
                 </WidjetWrapper>
-            </div>
 
             {/*    {body.length > 2 && !viewFullList ? <Button onClick={() => viewFillLisnHundler()} title='Еще' /> : null} */}
             {viewEdit ? <Contacts content={body} setViewEdit={setViewEdit} id={id}  /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ /> : null}

@@ -33,6 +33,7 @@
     height: 2px;
     background-color: grey;
     top: 42%;
+    left: -28%;
 }
 
 .block-header-close::before {
@@ -43,6 +44,7 @@
     height: 2px;
     background-color: grey;
     top: 42%;
+    left: -28%;
 }
 
 .block-question-button-add {

@@ -48,7 +48,6 @@ const TextContent = ({ body, id, replaceVidj }) => {
 
     return (
         <div className='text-container' style = {{backgroundColor:[backgroundColor]}}>
-            <div className='container '>
                 <div className='text-header'>
                     <WidjetWrapper setBackground = {setBackgroundColor} id={id} replaceVidj = {replaceVidj} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {deleteHandler} editWindow={ <Text setVidjetData={setVidjetData} vidjArr={vidjArr} content={body} closeEdit={() => setViewEdit(false)} />} >
                     <div className='text-title' >
@@ -62,7 +61,7 @@ const TextContent = ({ body, id, replaceVidj }) => {
             </div> */}
 
                 {/* {body.length>2 && !viewFullList ? <Button onClick = {()=>viewFillLisnHundler()} title = 'Еще'/> : null}  */}
-            </div>
+
             {viewEdit ? <Text setVidjetData={setVidjetData} vidjArr={vidjArr} content={body} closeEdit={() => setViewEdit(false)} /* setViewEdit = {setViewEdit} id = {id}  changeStateVidjet = {changeStateVidjet}  isNew = {false} listArr = {body} */ /> : null}
         </div>
     )

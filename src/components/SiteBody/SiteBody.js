@@ -25,7 +25,7 @@ const SiteBody = ({ vidjArr,setVidjetData,replaceVidj }) => {
             case 'question': return <Question key = {i}  body={el.body} title = {el.blockTitle} id = {el.id} replaceVidj = {replaceVidj} />
             case 'text': return <TextContent key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
             case 'banner' : return <BannerVidjet key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj} />
-            case 'contacts' : return <ContactsVidjets key = {i} body = {el.body} id = {el.id} renderVidjet = {replaceVidj}/>
+            case 'contacts' : return <ContactsVidjets key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
             case 'social' : return <SocialVidjet key = {i} body = {el.body} id ={el.id} replaceVidj = {replaceVidj}/>
             case 'feedback': return <FeedbackVidject key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
             case 'video' : return <VideoVidjet key = {i} body = {el.body} id = {el.id}  replaceVidj = {replaceVidj}/>

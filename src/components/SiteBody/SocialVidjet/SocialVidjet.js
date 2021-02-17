@@ -10,7 +10,7 @@ import Context from '../../../Context'
 import ContextEditor from '../../../ContextEditor'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 
-const SocialVidjet = ({ body ,id}) => {
+const SocialVidjet = ({ body ,id, replaceVidj}) => {
     const [viewEdit, setViewEdit] = useState(false)
     const [respDelSocial, doFetchDelSocial] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
@@ -44,18 +44,15 @@ const SocialVidjet = ({ body ,id}) => {
     const socialSection = Object.keys(body)
     return (
         <div className='questions-container' style = {{backgroundColor:[backgroundColor]}}>
-            <div className='container question-center'>
-                <WidjetWrapper delHandler = {delHandler} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={ <Social content = {body} setViewEdit={setViewEdit} id={id} /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ />} >
+                <WidjetWrapper id={id} replaceVidj = {replaceVidj} delHandler = {delHandler} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={ <Social content = {body} setViewEdit={setViewEdit} id={id} /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ />} >
                 <div className='questions-body'>
-                    <div className='social-vidjet-list-container'>
+                    <div className='social-vidjet-list-container  d-md-flex'>
                         {socialSection.map((el, i) => {
                             return <SocialVidjetItem key={i} data={body[el]} />
                         })}
                     </div>
                 </div>
-
                 </WidjetWrapper>
-            </div>
              {viewEdit ? <Social content = {body} setViewEdit={setViewEdit} id={id} /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ /> : null}
         </div>
     )

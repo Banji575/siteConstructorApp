@@ -107,7 +107,7 @@ const Question = ({ body, id,replaceVidj, title}) => {
     }
 
     return (body === null ? null :
-        <WidjetWrapper setBackground = {setBackgroundColor} delHandler = {delHandler} isView = {viewEdit} setViewEdit={setViewEdit}  editWindow = { <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} />}>
+        <WidjetWrapper id={id} replaceVidj = {replaceVidj} setBackground = {setBackgroundColor} delHandler = {delHandler} isView = {viewEdit} setViewEdit={setViewEdit}  editWindow = { <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} />}>
                 <div className='questions-body' style = {{backgroundColor:[backgroundColor]}}>
                     {elems()}
                 </div>

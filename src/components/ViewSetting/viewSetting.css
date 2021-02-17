@@ -21,3 +21,16 @@
         justify-content: space-evenly;
     }
 }
+
+@media(max-width:425px) {
+    .view-setting-left-block {
+        width: 30%;
+        margin-top: 10px;
+    }
+    .view-setting {
+        padding-right: 0;
+    }
+    .view-setting-right-block {
+        width: 45%;
+    }
+}

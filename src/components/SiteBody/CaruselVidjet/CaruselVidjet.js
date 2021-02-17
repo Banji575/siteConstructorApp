@@ -9,7 +9,7 @@ import Carousel from 'react-elastic-carousel'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 import ContextEditor from '../../../ContextEditor'
 
-const CaruselVidjet = ({ body, id }) => {
+const CaruselVidjet = ({ body, id , replaceVidj}) => {
     const [respDelCarusel, doFetchDelCarusel] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
@@ -45,7 +45,7 @@ const CaruselVidjet = ({ body, id }) => {
 
     const SimpleSlider = () => (
         <div className='questions-container' style = {{backgroundColor:[backgroundColor]}} >
-            <WidjetWrapper delHandler={delHandler} setBackground={setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Carusel body={body} setViewEdit={setViewEdit} id={id} />} >
+            <WidjetWrapper id={id} replaceVidj = {replaceVidj} delHandler={delHandler} setBackground={setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Carusel body={body} setViewEdit={setViewEdit} id={id} />} >
                 <div className='questions-body'>
                     <Carousel
                         itemsToShow={1}
