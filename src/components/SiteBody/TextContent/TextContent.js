@@ -5,23 +5,45 @@ import useFetch from '../../../hooks/useFetch'
 import Text from '../../BlockEditor/BlockMenu/Text/Text'
 import ContextEditor from '../../../ContextEditor'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
+import {ContextAddBlock} from '../../../ContextAddBlock'
 
 import Context from '../../../Context'
 import parse from 'html-react-parser'
 import './textContent.css'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
 const createHTML = str => parse(str) || ''
 
 
-const TextContent = ({ body, id, replaceVidj }) => {
+const TextContent = ({ body, id, replaceVidj,bgColor }) => {
     const [description, setDescription] = useState(body.discription || '')
     const [viewEdit, setViewEdit] = useState(false)
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [respDelQuestion, doFetchDelQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
-    const [backgroundColor, setBackgroundColor] = useState('')
+    const [respColor, doFetchColor] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=landing_prop_data_update_background_color')
+    const [backgroundColor, setBackgroundColor] = useState(bgColor)
+    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
+    
+    console.log(backgroundColor, 'as;ljdasflkjadsfkljadsfkljadskljadsfkljadskljdaskljdasflkj')
+
     const closeEdit = () => setViewEdit(false)
 
+    useState(()=>{
+        console.log('backgroundColor', bgColor)
+    },[backgroundColor])
+
     body.id = id
+
+
+    useEffect(()=>{
+        if(backgroundColor === '#'+bgColor) return
+        console.log(backgroundColor, bgColor)
+        const formData = new FormData()
+        formData.set('landing_prop_data_id', id)
+        formData.set('background_color', backgroundColor.substring(1))
+        doFetchColor(formData)
+    },[backgroundColor])
+
 
     const deleteHandler = () => {
         const formData = new FormData()
@@ -30,6 +52,11 @@ const TextContent = ({ body, id, replaceVidj }) => {
         formData.set('landing_prop_data_id', id)
         doFetchDelQuestion(formData)
     }
+
+    useEffect(()=>{
+        if(!respColor) return
+        console.log(respColor,'lkjdasfkjhadsfkjhsd')
+    },[respColor])
 
     useEffect(() => {
         if (!respDelQuestion || respDelQuestion.success != 'Успешно!') return
@@ -47,13 +74,14 @@ const TextContent = ({ body, id, replaceVidj }) => {
 
 
     return (
-        <div className='text-container' style = {{backgroundColor:[backgroundColor]}}>
+        <div className='text-container' style = {{backgroundColor:backgroundColor}}>
                 <div className='text-header'>
-                    <WidjetWrapper setBackground = {setBackgroundColor} id={id} replaceVidj = {replaceVidj} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {deleteHandler} editWindow={ <Text setVidjetData={setVidjetData} vidjArr={vidjArr} content={body} closeEdit={() => setViewEdit(false)} />} >
+                    <WidjetWrapper  setBackground = {setBackgroundColor} backgroundColor = {bgColor} id={id} replaceVidj = {replaceVidj} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {deleteHandler} editWindow={ <Text setVidjetData={setVidjetData} vidjArr={vidjArr} content={body} closeEdit={() => setViewEdit(false)} />} >
                     <div className='text-title' >
-                        <h3 className='text-h3'>{body.title}</h3>
+                        <h3 className='text-h3'>{createHTML(body.title)}</h3>
                         <p className='text-p'>{createHTML(body.discription)}</p>
                     </div>
+                    <ButtonAddComponent isVidjetButton = {true} onClick={() => setIsOpenEditBlock(false)}/>
                     </WidjetWrapper>
                 </div>
                 {/*  <div className='questions-body'>
@@ -63,6 +91,7 @@ const TextContent = ({ body, id, replaceVidj }) => {
                 {/* {body.length>2 && !viewFullList ? <Button onClick = {()=>viewFillLisnHundler()} title = 'Еще'/> : null}  */}
 
             {viewEdit ? <Text setVidjetData={setVidjetData} vidjArr={vidjArr} content={body} closeEdit={() => setViewEdit(false)} /* setViewEdit = {setViewEdit} id = {id}  changeStateVidjet = {changeStateVidjet}  isNew = {false} listArr = {body} */ /> : null}
+            
         </div>
     )
 }

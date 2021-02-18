@@ -50,17 +50,18 @@ export default class Adapter {
             console.log(el)
             switch (el.title) {
                 case 'Вопросы':
-                    return { title: 'question', id: el.id, blockTitle: el.settings.fields.title.value, body: this.createQuestions(el) }
+                    return { title: 'question', id: el.id, bgColor: el.background_color, blockTitle: el.settings.fields.title.value, body: this.createQuestions(el) }
                 case 'Текст':
-                    return { title: 'text', id: el.id, body: { title: el.settings.fields.title.value || '', discription: el.settings.fields.description.value || '' } }
+                    return { title: 'text', id: el.id, bgColor: '#' + el.background_color, body: { title: el.settings.fields.title.value || '', discription: el.settings.fields.description.value || '' } }
                 case 'Баннер':
-                    return { title: 'banner', id: el.id, body: { link: el.settings.fields.banner_photo.value ? el.settings.fields.banner_photo.value : null, checked: (el.settings.fields.checkbox_banner.value == true), linkSite: el.settings.fields.checkbox_banner.children.fields.link.value || null } }
+                    return { title: 'banner', id: el.id, bgColor: el.background_color, body: { link: el.settings.fields.banner_photo.value ? el.settings.fields.banner_photo.value : null, checked: (el.settings.fields.checkbox_banner.value == true), linkSite: el.settings.fields.checkbox_banner.children.fields.link.value || null } }
                 case 'Контакты':
-                    return { title: 'contacts', id: el.id, body: { address: { text: el.settings.fields.address.value, checked: el.settings.fields.show_address.value }, email: { text: el.settings.fields.email.value, checked: el.settings.fields.show_email.value }, fax: { text: el.settings.fields.fax.value, checked: el.settings.fields.show_fax.value }, phone: { text: el.settings.fields.phone.value, checked: el.settings.fields.show_phone.value } } }
+                    return { title: 'contacts', id: el.id, bgColor: el.background_color, body: { address: { text: el.settings.fields.address.value, checked: el.settings.fields.show_address.value }, email: { text: el.settings.fields.email.value, checked: el.settings.fields.show_email.value }, fax: { text: el.settings.fields.fax.value, checked: el.settings.fields.show_fax.value }, phone: { text: el.settings.fields.phone.value, checked: el.settings.fields.show_phone.value } } }
                 case 'Соц сети, мессенджеры':
                     return {
                         title: 'social',
                         id: el.id,
+                        bgColor: el.background_color,
                         body: {
                             social: {
                                 title: el.settings.fields.social_title.value,
@@ -79,13 +80,15 @@ export default class Adapter {
                         }
                     }
                 case 'Обратная связь':
-                    return { title: 'feedback', id: el.id, body: { ourEmail: { text: el.settings.fields.our_email.value || el.settings.fields.our_email.default, show: true }, title: { text: el.settings.fields.title.value || el.settings.fields.title.default, show: this.createBoolValue(el.settings.fields.show_title) }, name: { text: el.settings.fields.name.value || el.settings.fields.name.default, show: this.createBoolValue(el.settings.fields.show_name.value) }, email: { text: el.settings.fields.email.value || el.settings.fields.email.default, show: this.createBoolValue(el.settings.fields.show_email.value) }, phone: { text: el.settings.fields.phone.value || el.settings.fields.phone.default, show: this.createBoolValue(el.settings.fields.show_phone.value) }, message: { text: el.settings.fields.message.value || el.settings.fields.message.default, show: this.createBoolValue(el.settings.fields.show_message.value) } } }
+                    return { title: 'feedback', id: el.id, bgColor: el.background_color, body: { ourEmail: { text: el.settings.fields.our_email.value || el.settings.fields.our_email.default, show: true }, title: { text: el.settings.fields.title.value || el.settings.fields.title.default, show: this.createBoolValue(el.settings.fields.show_title) }, name: { text: el.settings.fields.name.value || el.settings.fields.name.default, show: this.createBoolValue(el.settings.fields.show_name.value) }, email: { text: el.settings.fields.email.value || el.settings.fields.email.default, show: this.createBoolValue(el.settings.fields.show_email.value) }, phone: { text: el.settings.fields.phone.value || el.settings.fields.phone.default, show: this.createBoolValue(el.settings.fields.show_phone.value) }, message: { text: el.settings.fields.message.value || el.settings.fields.message.default, show: this.createBoolValue(el.settings.fields.show_message.value) } } }
                 case 'Видео':
-                    return { title: 'video', id: el.id, body: { title: el.settings.fields.title.value || '', link: el.settings.fields.video_link.value } }
+                    return { title: 'video', id: el.id, bgColor: el.background_color, body: { title: el.settings.fields.title.value || '', link: el.settings.fields.video_link.value } }
+
                 case 'Таймер':
                     return {
                         title: 'timer',
                         id: el.id,
+                        bgColor: el.background_color,
                         body: {
                             timerCreated: el.created_at,
                             type: el.settings.fields.title.value || '',
@@ -98,7 +101,7 @@ export default class Adapter {
                         }
                     }
                 case 'Карусель картинок':
-                    return { title: 'carusel', id: el.id, body: { images: el.settings ? el.settings.fields.slider_photo.value : null, interval: el.settings ? el.settings.fields.interval.value : null } }
+                    return { title: 'carusel', id: el.id, bgColor: el.background_color, body: { images: el.settings ? el.settings.fields.slider_photo.value : null, interval: el.settings ? el.settings.fields.interval.value : null } }
                 default:
                     return null
             }

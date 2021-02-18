@@ -7,6 +7,10 @@
     position: relative;
 }
 
+.site-header-preview-mode {
+    padding-top: 2% !important;
+}
+
 @media(max-width:1024px) {
     .site-header {
         padding-top: 5%;

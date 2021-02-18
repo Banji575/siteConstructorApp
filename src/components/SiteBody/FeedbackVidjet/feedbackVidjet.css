@@ -8,3 +8,9 @@
     width: 50%;
     margin: 0 auto;
 }
+
+@media(max-width:425px) {
+    .feedback-body {
+        width: 100%;
+    }
+}

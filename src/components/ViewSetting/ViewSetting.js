@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import SiteLogo from '../../UI/SiteLogo/SiteLogo';
 import ColorSetting from './ColorSetting/ColorSetting';
 import DirectionSetting from './DirectionSetting/DirectionSetting';
@@ -7,10 +7,15 @@ import './viewSetting.css'
 import PreviewBlock from './PreviewBlock/PreviewBlock';
 import PreviewMode from './PreviewMode/PreviewMode';
 import SaveSetting from './SaveSetting/SaveSetting';
+import Context from '../../Context'
 
 const ViewSetting = () => {
+    const [state, changeState, setState, catalogId, setVidjetData, vidjArr,decktopMode,setDecktopMode] = useContext(Context)
     const [viewMode, setViewMode] = useState(false)
-    const changeViewMode = () => setViewMode(state => !state)
+    const changeViewMode = () => {
+        setDecktopMode(s=>!s)
+        setViewMode(state => !state)
+    }
 
 
     return (

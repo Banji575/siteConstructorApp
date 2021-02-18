@@ -8,6 +8,9 @@ import LinkWrapper from '../../../UI/LinkWrapper/LinkWrapper'
 import Banner from '../../BlockEditor/BlockMenu/Banner/Banner'
 import Context from '../../../Context'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
+import {ContextAddBlock} from '../../../ContextAddBlock'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
+
 const BannerVidjet = ({ body, id, replaceVidj }) => {
     const [link, setLink] = useState(null)
     const [viewEdit, setViewEdit] = useState(false)
@@ -16,6 +19,7 @@ const BannerVidjet = ({ body, id, replaceVidj }) => {
     const [respDelQuestion, doFetchDelQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [backgroundColor, setBackgroundColor] = useState('')
+    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
     console.log(backgroundColor)
 
     const root = useRef()
@@ -78,6 +82,7 @@ const BannerVidjet = ({ body, id, replaceVidj }) => {
                 {linkSite ? <LinkWrapper link={linkSite}> <img ref={root} /></LinkWrapper> : <img ref={root} />}
             </div>
         </WidjetWrapper>
+        <ButtonAddComponent isVidjetButton = {true} onClick={() => setIsOpenEditBlock(false)}/>
         </div>
     )
 }

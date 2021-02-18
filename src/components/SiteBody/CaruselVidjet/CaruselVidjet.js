@@ -9,6 +9,9 @@ import Carousel from 'react-elastic-carousel'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 import ContextEditor from '../../../ContextEditor'
 
+import {ContextAddBlock} from '../../../ContextAddBlock'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
+
 const CaruselVidjet = ({ body, id , replaceVidj}) => {
     const [respDelCarusel, doFetchDelCarusel] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
@@ -17,7 +20,8 @@ const CaruselVidjet = ({ body, id , replaceVidj}) => {
     const [data, setData] = useState(body)
     const [slideSpeed, setSlideSpeed] = useState(null)
     const [backgroundColor, setBackgroundColor] = useState('')
-    console.log('render background', backgroundColor)
+    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
+
     const delHandler = () => {
         const formData = new FormData()
         formData.set('landing_prop_id', 1)
@@ -58,6 +62,8 @@ const CaruselVidjet = ({ body, id , replaceVidj}) => {
                         })}
                     </Carousel>
                 </div>
+                    <ButtonAddComponent isVidjetButton = {true} onClick={() => setIsOpenEditBlock(false)}/>
+                    
             </WidjetWrapper>
             {/*    {body.length > 2 && !viewFullList ? <Button onClick={() => viewFillLisnHundler()} title='Еще' /> : null} */}
         </div>

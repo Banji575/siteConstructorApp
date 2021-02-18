@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import './MenuItem.css'
 import MenuItemOption from './menuItemOption/MenuItemOptions'
 
-const MenuItem = ({ children, isList, data, deletItem, editItem }) => {
+const MenuItem = ({ children, isList, data, deletItem, editItem, id }) => {
     const root = useRef()
     const [shoeOpion, setShowOption] = useState(false)
     const [showInput, setShowInput] = useState(false)
@@ -34,6 +34,7 @@ const MenuItem = ({ children, isList, data, deletItem, editItem }) => {
             <ul className='menu-list'>
                 <li className='menu-item'>{data.text}<MenuItemOption editItem={editItemInput} id={data.id} show={shoeOpion} setShow={setShowOption} deletItem={deletItem} />
                     <div className='menu-list-opions' onClick={() => setShowOption(!shoeOpion)} >...</div>
+                    {/* Сделать добавлятор меню использую id */}
                     <input autoFocus={true} ref={root} onBlur={editText} onChange={inputChangeHandler} placeholder={data.text} className={inputClasses.join(' ')} text />
                 </li>
 

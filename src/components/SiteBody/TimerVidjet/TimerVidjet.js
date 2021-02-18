@@ -7,6 +7,9 @@ import useFetch from '../../../hooks/useFetch'
 import Context from '../../../Context'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 import Timer from '../../BlockEditor/BlockMenu/Timer/Timer'
+import {ContextAddBlock} from '../../../ContextAddBlock'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
+
 const dateFormat = date => date.toLocaleString('ru', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
 const createTime = (type, value = {}) => {
     const { toDateDate, toDateTime, onDateDatumPoint, onDateDuration, cyclingDuration, cyclingDatePoint, timerCreated } = value
@@ -61,6 +64,7 @@ const TimerVidjet = ({ body, id ,replaceVidj}) => {
     const { days, hours, minutes, seconds } = createTime(type, body)
     const [backgrounColor, setBackgroundColor] = useState('')
     const [viewEdit, setViewEdit] = useState(false)
+    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
     /*     console.log(toDateDate, toDateTime) */
     const editHandler = () => {
         setViewEdit(true)
@@ -167,6 +171,7 @@ const TimerVidjet = ({ body, id ,replaceVidj}) => {
                     </div>
                 </div>
             </WidjetWrapper>
+            <ButtonAddComponent isVidjetButton = {true} onClick={() => setIsOpenEditBlock(false)}/>
             </div>
             {/* {viewEdit ? <Video setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} /> : null} */}
         </div>

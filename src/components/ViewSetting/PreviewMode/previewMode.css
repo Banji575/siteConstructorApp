@@ -23,8 +23,8 @@
     width: 15px;
     height: 15px;
     background-repeat: no-repeat;
-    top: 19%;
-    left: -12%;
+    top: 8%;
+    left: -16%;
     transform: rotate(180deg);
     background-image: url('../../../image/arrowRight.png');
 }

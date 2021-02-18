@@ -6,6 +6,9 @@ import Context from '../../../Context'
 import useFetch from '../../../hooks/useFetch'
 import Button from '../../../UI/Button/Button'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
+import { ContextAddBlock } from '../../../ContextAddBlock'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
+import Utils from '../../../scripts/Utils'
 
 const changeDataObjForBackend = (formdata, arr) => {
     console.log('aaarrr', arr)
@@ -17,7 +20,8 @@ const changeDataObjForBackend = (formdata, arr) => {
 }
 
 
-const Question = ({ body, id,replaceVidj, title}) => {
+const Question = ({ body, id, replaceVidj, title, bgColor }) => {
+    console.log('question')
     const [questons, setQuestions] = useState(body)
     const [viewEdit, setViewEdit] = useState(null)
     const [viewFullList, setViewFullList] = useState(false)
@@ -25,7 +29,8 @@ const Question = ({ body, id,replaceVidj, title}) => {
     const [respEditQuestion, doFetchEditQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
     const [respDelQuestion, doFetchDelQuestion] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
-    const [backgroundColor, setBackgroundColor] = useState('')
+    const [backgroundColor, setBackgroundColor] = useState(bgColor || '')
+    const { isOpenEditBlock, setIsOpenEditBlock } = useContext(ContextAddBlock)
 
     const editHandler = () => {
         setViewEdit(true)
@@ -45,7 +50,7 @@ const Question = ({ body, id,replaceVidj, title}) => {
         }
         const list = [...vidjArr]
         list.forEach((el, i) => {
-            if(!el) return
+            if (!el) return
             if (el.id === id) {
                 list.splice(i, 1)
             }
@@ -77,13 +82,12 @@ const Question = ({ body, id,replaceVidj, title}) => {
 
     const elems = () => {
         if (!viewFullList) {
-            console.log('body',body)
             return body.map((el, i) => {
                 if (i == 0 || i == 1) {
                     return (
                         <React.Fragment key={i}>
-                            <h4>{el.question}</h4>
-                            <p>{el.answer}</p>
+                            <h4>{Utils.createHTML(el.question)}</h4>
+                            <p>{Utils.createHTML(el.answer)}</p>
                         </React.Fragment>
                     )
                 }
@@ -93,8 +97,8 @@ const Question = ({ body, id,replaceVidj, title}) => {
                 body.map(el => {
                     return (
                         <React.Fragment>
-                            <h4>{el.question}</h4>
-                            <p>{el.answer}</p>
+                            <h4>{Utils.createHTML(el.question)}</h4>
+                            <p>{Utils.createHTML(el.answer)}</p>
                         </React.Fragment>
                     )
                 })
@@ -107,13 +111,16 @@ const Question = ({ body, id,replaceVidj, title}) => {
     }
 
     return (body === null ? null :
-        <WidjetWrapper id={id} replaceVidj = {replaceVidj} setBackground = {setBackgroundColor} delHandler = {delHandler} isView = {viewEdit} setViewEdit={setViewEdit}  editWindow = { <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} />}>
-                <div className='questions-body' style = {{backgroundColor:[backgroundColor]}}>
+        <div className='questions-container' style={{ backgroundColor: [backgroundColor] }}>
+            <WidjetWrapper id={id} replaceVidj={replaceVidj} backgroundColor={bgColor} setBackground={setBackgroundColor} delHandler={delHandler} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title={title} />}>
+                <div className='questions-body'>
                     {elems()}
                 </div>
                 {body.length > 2 && !viewFullList ? <Button /* disabled = {false} */ onClick={() => viewFillLisnHundler()} title='Еще' /> : null}
-            {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} /> : null}
-        </WidjetWrapper>
+                {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title={title} /> : null}
+            </WidjetWrapper>
+                <ButtonAddComponent isVidjetButton={true} onClick={() => setIsOpenEditBlock(false)} />
+        </div>
     )
 }
 

@@ -7,6 +7,8 @@ import Context from '../../../Context'
 import ContextEditor from '../../../ContextEditor'
 import './contactsVidjets.css'
 import Contacts from '../../BlockEditor/BlockMenu/Contacts/Contacts'
+import {ContextAddBlock} from '../../../ContextAddBlock'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
 
 const ContactsVidjets = ({ body, id, replaceVidj }) => {
     const [viewEdit, setViewEdit] = useState(false)
@@ -14,6 +16,7 @@ const ContactsVidjets = ({ body, id, replaceVidj }) => {
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [backgroundColor, setBackgroundColor] = useState('')
+    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
     const { address, email, phone, fax } = body
     const editHandler = () => {
         setViewEdit(true)
@@ -55,6 +58,7 @@ const ContactsVidjets = ({ body, id, replaceVidj }) => {
                         {fax.checked ? <p className='m-1 contacts-p text-center'>{fax.text}</p> : null}
                     </div>
                 </WidjetWrapper>
+                        <ButtonAddComponent isVidjetButton = {true} onClick={() => setIsOpenEditBlock(false)}/>
 
             {/*    {body.length > 2 && !viewFullList ? <Button onClick={() => viewFillLisnHundler()} title='Еще' /> : null} */}
             {viewEdit ? <Contacts content={body} setViewEdit={setViewEdit} id={id}  /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ /> : null}

@@ -9,6 +9,7 @@ import useFetch from './hooks/useFetch'
 import Adapter from './scripts/Adapter';
 import BlockEditor from './components/BlockEditor/BlockEditor';
 import SiteBody from './components/SiteBody/SiteBody';
+import { VidjetAddWrapper } from './ContextAddBlock';
 const catalogId = 1118
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
   const [stateApp, setStateApp] = useState('')
   const [vidjetData, setVidjetData] = useState(null)
   const [mobileMenuIsOpen, setMobilemenuIsOpen] = useState(true)
-  console.log(vidjetData)
+  const [decktopMode, setDecktopMode] = useState(true)
+
   useEffect(() => {
     doFetch()
   }, [])
@@ -37,7 +39,6 @@ function App() {
     const adapter = new Adapter(responseVidjetData)
     const data = adapter.createVidjetData()
     setVidjetData(data)
-    console.log(data)
   }, [responseVidjetData])
 
   useEffect(() => {
@@ -65,14 +66,14 @@ function App() {
 
   const replaceVidj = (direction, id) => {
     const list = [...vidjetData]
-    console.log(list)
+
     let i;
     let elId;
     list.forEach((el, index) => {
       if (!el) return
       if (direction === 'up' && index == 0) return
       if (direction !== 'up' && index == list.length - 1) return
-      console.log(index)
+
       if (el.id == id) {
         elId = el.id
         i = index
@@ -80,10 +81,10 @@ function App() {
     })
     direction === 'up' ? [list[i], list[i - 1]] = [list[i - 1], list[i]] : [list[i], list[i + 1]] = [list[i + 1], list[i]]
 
-    console.log(i)
+
     const formData = new FormData()
     formData.set('landing_prop_data_id', elId)
-    formData.set('order_num',direction === 'up' ? i : i+2)
+    formData.set('order_num', direction === 'up' ? i : i + 2)
     doFetchReplace(formData)
     setVidjetData(list)
   }
@@ -91,7 +92,7 @@ function App() {
   useEffect(() => {
     if (!respReplace) return
     if (respReplace.success) {
-      
+
     }
   }, [respReplace])
 
@@ -122,15 +123,17 @@ function App() {
       <span class="sr-only ">Loading...</span>
     </div></div>)
     :
-    (<Context.Provider value={[state, changeState, setState, catalogId, setVidjetData, vidjetData]}>
+    (<Context.Provider value={[state, changeState, setState, catalogId, setVidjetData, vidjetData, decktopMode, setDecktopMode]}>
       <div className="app">
         <ViewSetting />
         <SiteHeader changeViewMenu={setMobilemenuIsOpen} />
-        {/*  <MenuCreation menuIsView={mobileMenuIsOpen} /> */}
+        {/* <MenuCreation menuIsView={mobileMenuIsOpen} /> */}
         <Body state={state}>
           <div>
-            {vidjetData ? <SiteBody replaceVidj={replaceVidj} setVidjetData={setVidjetData} vidjArr={vidjetData} /> : null}
-            <BlockEditor setVidjetData={setVidjetData} vidjArr={vidjetData} />
+            <VidjetAddWrapper>
+              {vidjetData ? <SiteBody replaceVidj={replaceVidj} setVidjetData={setVidjetData} vidjArr={vidjetData} /> : null}
+              <BlockEditor setVidjetData={setVidjetData} vidjArr={vidjetData} />
+            </VidjetAddWrapper>
           </div>
 
         </Body>

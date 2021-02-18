@@ -22,15 +22,15 @@ const SiteBody = ({ vidjArr,setVidjetData,replaceVidj }) => {
 /*         console.log(el) */
 
         switch (el.title) {
-            case 'question': return <Question key = {i}  body={el.body} title = {el.blockTitle} id = {el.id} replaceVidj = {replaceVidj} />
-            case 'text': return <TextContent key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
-            case 'banner' : return <BannerVidjet key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj} />
-            case 'contacts' : return <ContactsVidjets key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
-            case 'social' : return <SocialVidjet key = {i} body = {el.body} id ={el.id} replaceVidj = {replaceVidj}/>
-            case 'feedback': return <FeedbackVidject key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
-            case 'video' : return <VideoVidjet key = {i} body = {el.body} id = {el.id}  replaceVidj = {replaceVidj}/>
-            case 'timer' : return <TimerVidjet key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
-            case 'carusel': return <CaruselVidjet key = {i} body = {el.body} id = {el.id} replaceVidj = {replaceVidj}/>
+            case 'question': return <Question key = {i}  body={el.body} bgColor = {el.bgColor} title = {el.blockTitle} id = {el.id} replaceVidj = {replaceVidj} />
+            case 'text': return <TextContent key = {i} body = {el.body} bgColor = {el.bgColor} id = {el.id} replaceVidj = {replaceVidj}/>
+            case 'banner' : return <BannerVidjet key = {i} body = {el.body} bgColor = {el.bgColor} id = {el.id} replaceVidj = {replaceVidj} />
+            case 'contacts' : return <ContactsVidjets key = {i} body = {el.body} bgColor = {el.bgColor} id = {el.id} replaceVidj = {replaceVidj}/>
+            case 'social' : return <SocialVidjet key = {i} body = {el.body} bgColor = {el.bgColor} id ={el.id} replaceVidj = {replaceVidj}/>
+            case 'feedback': return <FeedbackVidject key = {i} body = {el.body} bgColor = {el.bgColor} id = {el.id} replaceVidj = {replaceVidj}/>
+            case 'video' : return <VideoVidjet key = {i} body = {el.body} bgColor = {el.bgColor} id = {el.id}  replaceVidj = {replaceVidj}/>
+            case 'timer' : return <TimerVidjet key = {i} body = {el.body} bgColor = {el.bgColor} id = {el.id} replaceVidj = {replaceVidj}/>
+            case 'carusel': return <CaruselVidjet key = {i} body = {el.body} bgColor = {el.bgColor} id = {el.id} replaceVidj = {replaceVidj}/>
             default:
                 break;
         }

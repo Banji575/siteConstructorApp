@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react'
 import './videoVidjet.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import Utils from '../../../scripts/Utils'
 import Video from '../../BlockEditor/BlockMenu/Video/Video'
 import ContextEditor from '../../../ContextEditor'
 import Context from '../../../Context'
 import useFetch from '../../../hooks/useFetch'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
+import {ContextAddBlock} from '../../../ContextAddBlock'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
 
 const getVideoLink = (link) => {
     console.log(link.replace(/.+\?v=/, "https://www.youtube.com/embed/"))
@@ -19,6 +20,7 @@ const VideoVidjet = ({ body, id,replaceVidj }) => {
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [viewEdit, setViewEdit] = useState(false)
     const [backgroundColor, setBackgroundColor] = useState('')
+    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
     const editHandler = () => {
         setViewEdit(true)
     }
@@ -65,10 +67,11 @@ const VideoVidjet = ({ body, id,replaceVidj }) => {
                 </div> */}
                 <WidjetWrapper id={id} replaceVidj = {replaceVidj} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} delHandler = {delHandler} editWindow={ <Video  setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} />} >
                 <div className='questions-body'>
-                    <p>{body.title}</p>
+                    {Utils.createHTML(body.title)}
                     <iframe src={getVideoLink(body.link)} />
                 </div>
                 </WidjetWrapper>
+                <ButtonAddComponent isVidjetButton = {true} onClick={() => setIsOpenEditBlock(false)}/>
             {viewEdit ? <Video setViewEdit={setViewEdit} id={id} content={{ id: id, title: 'video', body: body }} /> : null}
         </div>
     )

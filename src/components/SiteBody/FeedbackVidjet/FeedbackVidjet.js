@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import Utils from '../../../scripts/Utils'
 import './feedbackVidjet.css'
 import FeedbackVidjetItem from './FeedbackVidjetItem/FeedbackVidjetItem'
 import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
@@ -9,6 +8,9 @@ import Context from '../../../Context'
 import ContextEditor from '../../../ContextEditor'
 import Feedback from '../../BlockEditor/BlockMenu/FeedBack/Feedback'
 import useFetch from '../../../hooks/useFetch'
+import {ContextAddBlock} from '../../../ContextAddBlock'
+import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
+
 
 const FeedbackVidject = ({ body , id, replaceVidj}) => {
     const [viewEdit, setViewEdit] = useState(false)
@@ -16,6 +18,7 @@ const FeedbackVidject = ({ body , id, replaceVidj}) => {
     const [respDelFeedback, doFetchDelFeedback] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=delete_catalog_landing_prop_data')
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [backgroundColor, setBackgroundColor] = useState('')
+    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
     const editHandler = () => setViewEdit(true)
 
     const delHandler = () => {
@@ -45,13 +48,14 @@ const FeedbackVidject = ({ body , id, replaceVidj}) => {
         <div className='questions-container' style = {{backgroundColor:[backgroundColor]}}>
                 <WidjetWrapper id={id} replaceVidj = {replaceVidj} delHandler = {delHandler} setBackground = {setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/>} >
                 <div className='questions-body feedback-body' /* style = {{backgroundColor:[backgroundColor]}} */>
-                    <h3 className='feedback-vidjet-h3 text-center'>{body.title.text}</h3>
+                    <h3 className='feedback-vidjet-h3 text-center'>{Utils.createHTML(body.title.text)}</h3>
                     {Object.keys(body).map((el, i) => {
                         return <FeedbackVidjetItem  key = {i} title = {el} data = {body[el]}/>
                     })} 
                     <Button classes = {['d-flex', 'my-0', 'mx-auto']}   title = 'Отправить'/>
                 </div>
                 </WidjetWrapper>  
+                <ButtonAddComponent isVidjetButton = {true} onClick={() => setIsOpenEditBlock(false)}/>
             </div>  
              /* {viewEdit ?<Feedback setViewEdit = {setViewEdit} content = {{id:id, title:'feedback',body:body}}/> :  null} */
     )

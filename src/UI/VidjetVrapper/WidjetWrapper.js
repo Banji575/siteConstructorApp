@@ -1,25 +1,36 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAngleUp, faAngleDown, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import React, { useContext, useMemo } from 'react'
 import InputColor from 'react-input-color';
 import EditButton from '../../UI/EditButton/EditButton'
 import ArrowDown from '../../UI/ArrowButton/ArrowButton'
-
+import ContextEditor from '../../ContextEditor'
+import Context from '../../Context'
 import './widjetWrapper.css'
 import DeleteButton from '../DeleteButton/DeleteButton';
-const WidjetWrapper = ({ children, editWindow, isView, setViewEdit, delHandler, setBackground ,replaceVidj,id}) => {
-    return (
-        <div className='questions-container '>
-            <div className='container question-center '>
-                <div className='questions-header'>
-                    <div className='questions-buttons'>
+import Utils from '../../scripts/Utils';
+const WidjetWrapper = ({ children, editWindow, isView, setViewEdit, delHandler, setBackground, backgroundColor, replaceVidj, id, changeBackground }) => {
+    const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
+    const [state, changeState, setState, catalogId, setVidjetDataasdf, vidjetData, decktopMode] = useContext(Context)
+    console.log(backgroundColor, 'backgroundColor')
+    const index = useMemo(() => {
+        let i;
+        vidjArr.forEach((el, ind) => el.id == id ? i = ind : null)
+        return i
+    }, [vidjArr])
+
+
+    const setBg = (evt) => {
+        const col = evt.hex.substring(0, evt.hex.length - 2)
+        setBackground(col)
+    }
+
+    const buttonBlock = (
+        <div className='questions-buttons'>
                         <div className='icon-conteiner'>
-                            {/*    <FontAwesomeIcon onClick = {()=>replaceVidj('up', id)} size='2x' icon={faAngleUp} /> */}
-                            <ArrowDown id={id} replaceVidj = {replaceVidj}/>
+                            {vidjArr.length - 1 == index ? null : <ArrowDown id={id} replaceVidj={replaceVidj} />}
                         </div>
                         <div className='icon-conteiner'>
-                            {/*  <FontAwesomeIcon onClick = {()=>replaceVidj('down', id)} size='2x' icon={faAngleDown} /> */}
-                            <ArrowDown id={id} replaceVidj={replaceVidj} direction='up' />
+
+                            {index != 0 ? <ArrowDown id={id} replaceVidj={replaceVidj} direction='up' /> : null}
                         </div>
                         <div className='d-flex  icon-conteiner px-2 icon-container-padding'>
                             <div>
@@ -27,24 +38,28 @@ const WidjetWrapper = ({ children, editWindow, isView, setViewEdit, delHandler, 
                             </div>
                             <InputColor
                                 className='input-color-widjet input-color-margin'
-                                initialValue={"#f0f1f7"}
-                                onChange={(evt) => setBackground(evt.rgba)}
+                                initialValue={backgroundColor || "#f0f1f7"}
+                                onChange={(evt) =>setBg(evt)}
                                 placement="right"
 
                             />
                         </div>
                         <div className='icon-conteiner icon-conteiner--middle-line icon-conteiner--double-icon' color='green'>
                             <DeleteButton onDelete={delHandler} />
-                            {/*   <FontAwesomeIcon color={'red'} icon={faTrashAlt} size='2x' onClick={delHandler} /> */}
                             <EditButton openEdit={setViewEdit} />
-                            {/* <FontAwesomeIcon onClick={setViewEdit} icon={faEdit} size='2x' /> */}
                         </div>
                     </div>
+    )
+
+    return (
+
+            <div className='container question-center '>
+                <div className='questions-header'>
+                    {decktopMode ? buttonBlock : null}
                 </div>
                 <div className='questions-body'>
                     {children}
                 </div>
-            </div>
             {isView ? editWindow : null}
             {/*  {viewEdit ? <BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title = {title} /> : null} */}
         </div>

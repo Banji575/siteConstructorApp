@@ -1,4 +1,6 @@
-.questions-container {}
+.questions-container {
+    position: relative;
+}
 
 .question-center {
     display: flex;

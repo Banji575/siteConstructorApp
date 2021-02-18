@@ -94,10 +94,10 @@ const MenuCreation = ({ menuIsView }) => {
         }
     }, [respEditText])
 
-    const addMenuItemHandler = () => {
+    const addMenuItemHandler = (parent_id = 0) => {
 
         const formData = new FormData()
-        formData.set('parent_id', 0)
+        formData.set('parent_id', parent_id)
         formData.set('catalog_id', calalogId)
         formData.set('text', 'Новый раздел')
 
@@ -111,7 +111,7 @@ const MenuCreation = ({ menuIsView }) => {
                 <p className='block-question-button-save'>Главная</p>
                 {drawMenu(state.siteMenu)}
                 <div>
-                    <button onClick={addMenuItemHandler} className='add-menu-item '>Добавить раздел</button>
+                    <button onClick={() => addMenuItemHandler()} className='add-menu-item '>Добавить раздел</button>
                 </div>
             </div>
         </React.Fragment>
