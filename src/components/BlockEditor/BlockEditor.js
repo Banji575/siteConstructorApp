@@ -17,7 +17,7 @@ import Items from './BlockMenu/Items/Items'
 import Carusel from './BlockMenu/Carusel/Carusel'
 import PopUp from '../../UI/PopUp/PopUp'
 import ButtonAddComponent from '../../UI/ButtonAddComponent/ButtonAddComponent'
-import {ContextAddBlock} from '../../ContextAddBlock'
+import { ContextAddBlock } from '../../ContextAddBlock'
 
 const changeDataObjForBackend = (formdata, arr) => {
     console.log(arr)
@@ -29,19 +29,19 @@ const changeDataObjForBackend = (formdata, arr) => {
 }
 
 const BlockEditor = () => {
-   /*  const [isOpenEditBlock, setIsOpenEditBlock] = useState(true) */
+    /*  const [isOpenEditBlock, setIsOpenEditBlock] = useState(true) */
     const [objNewQuestion, setObjNewQuestion] = useState(null)
     const [currentWidjet, setCurrentWidjet] = useState(null)
     const [state, changeState, setState, catalogId, setVidjetData, vidjArr] = useContext(Context)
     const [response, doFetch] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
-    const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
+    const { isOpenEditBlock, setIsOpenEditBlock } = useContext(ContextAddBlock)
     console.log('context add block', isOpenEditBlock)
     const changeWidget = (text) => {
         setIsOpenEditBlock(true)
         setCurrentWidjet(text)
     }
 
-    const changeStateVidjet = (obj,questionTitle) => {
+    const changeStateVidjet = (obj, questionTitle) => {
         const vidjetName = Object.keys(obj)[0]
         const newState = { ...state }
         newState.siteVidjets[vidjetName] = obj[vidjetName]
@@ -72,7 +72,7 @@ const BlockEditor = () => {
             case 'contacts': return <Contacts setVidjetDataArray={setVidjetData} vidjArray={vidjArr} />
             case 'social': return <Social setVidjetDataArray={setVidjetData} vidjArray={vidjArr} />
             case 'callback': return <Feedback setVidjetDataArray={setVidjetData} vidjArray={vidjArr} />
-            case 'timer': return <Timer  setVidjetDataArray={setVidjetData} vidjArray={vidjArr} />
+            case 'timer': return <Timer setVidjetDataArray={setVidjetData} vidjArray={vidjArr} />
             case 'video': return <Video setVidjetDataArray={setVidjetData} vidjArray={vidjArr} />
             /* case 'map': return <Maps /> */
             case 'items': return <Items />
@@ -84,8 +84,8 @@ const BlockEditor = () => {
     return (
         <ContextEditor.Provider value={[setCurrentWidjet, setIsOpenEditBlock]}>
             <div className='container d-flex'>
-                {isOpenEditBlock && /* vidjArr.length===0 ? */  <ButtonAddComponent countVidj = {vidjArr.length} onClick={() => setIsOpenEditBlock(false)} />}
-                {!isOpenEditBlock && <PopUp closePopup ={setIsOpenEditBlock} editMode = {false} title = 'Добавить блок'> <BlockMenu setCurrentWidjet={(text) => changeWidget(text)} hideBlock={setIsOpenEditBlock} /></PopUp>}
+                {(isOpenEditBlock && vidjArr.length===0) ? <ButtonAddComponent countVidj={vidjArr.length} onClick={() => setIsOpenEditBlock(false)}/> : null}
+                {!isOpenEditBlock && <PopUp closePopup={setIsOpenEditBlock} editMode={false} title='Добавить блок'> <BlockMenu setCurrentWidjet={(text) => changeWidget(text)} hideBlock={setIsOpenEditBlock} /></PopUp>}
                 {openWidjet()}
             </div>
         </ContextEditor.Provider>

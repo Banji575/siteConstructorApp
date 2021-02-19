@@ -10,9 +10,11 @@ import Adapter from './scripts/Adapter';
 import BlockEditor from './components/BlockEditor/BlockEditor';
 import SiteBody from './components/SiteBody/SiteBody';
 import { VidjetAddWrapper } from './ContextAddBlock';
-const catalogId = 1118
+
+const catalogId = window.location.href.split('?').slice(1).map(i => i.split('='))[0][1]
 
 function App() {
+  console.log(window.location.href.split('?').slice(1).map(i => i.split('='))[0][1])
   const [response, doFetch] = useFetch(`https://cloudsgoods.com/api/CatalogController.php?mode=get_catalog&catalog_id=${catalogId}`)
   const [respReplace, doFetchReplace] = useFetch(`https://cloudsgoods.com/api/CatalogController.php?mode=replace_order_landing_prop_data&catalog_id=${catalogId}`)
   const [responseVidjetData, doFetchVidjetData] = useFetch(`https://cloudsgoods.com/api/CatalogController.php?mode=get_catalog_landing_props_data_in_catalog&catalog_id=${catalogId}`)
@@ -127,7 +129,7 @@ function App() {
       <div className="app">
         <ViewSetting />
         <SiteHeader changeViewMenu={setMobilemenuIsOpen} />
-        {/* <MenuCreation menuIsView={mobileMenuIsOpen} /> */}
+        <MenuCreation menuIsView={mobileMenuIsOpen} />
         <Body state={state}>
           <div>
             <VidjetAddWrapper>
