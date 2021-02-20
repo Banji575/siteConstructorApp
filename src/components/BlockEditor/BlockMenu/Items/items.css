@@ -25,3 +25,11 @@
     margin-top: 16%;
     opacity: .5;
 }
+
+.item-card {
+    min-width: 80px
+}
+
+.items-card-conteiner {
+    overflow-x: auto;
+}

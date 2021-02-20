@@ -5,11 +5,11 @@ import QuestionItem from './QuestionItem/QuestionItem'
 import PopUp from '../../../../UI/PopUp/PopUp'
 import CKEditor from 'ckeditor4-react-advanced'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-
+import Utils from '../../../../scripts/Utils'
 
 
 const randomId = () => Math.random()
-const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit, title }) => {
+const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit, title, setVidjetData,vidjArr }) => {
     const mockQuest = [{ id: 1, question: 'test queston', answer: 'test answer' }]
 
     const [temporaryId, setTemporaryId] = useState('1')
@@ -19,7 +19,7 @@ const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit, title }) =>
     const [tempoparyList, setTemoraryList] = useState(questonsList)
     const [isMoreOne, setIsMoreOne] = useState(() => questonsList.length > 1 ? true : false)
 
-
+    console.log(vidjArr, 'VIDJET ARR')
 
     const onBlackAnswer = () => {
         const list = [...questonsList]
@@ -40,11 +40,14 @@ const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit, title }) =>
             console.log(changeStateVidjet)
             console.log('asl;fjdaslfkjdafjs')
         }
-        
         const list = [...questonsList]
+        console.log({ questions: list },blockTitle)
         setQuestionList(list)
         changeStateVidjet({ questions: list },blockTitle)
         setCurrentWidjet(null)
+        
+
+
     }
 
     //Пилу костыль для редактирования заголовка
@@ -87,9 +90,7 @@ const BlockQueston = ({ changeStateVidjet, listArr, id, setViewEdit, title }) =>
                     onChange={(e,text)=>saveTemporaryTitle(e.editor.getData())}
                     
                     config={{
-                        toolbar: [
-                            ['Bold', 'Italic', 'Underline', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','Font'],
-                        ],
+                        toolbar: [Utils.CKEditorTools],
 
                         height:'60px'
                     }}

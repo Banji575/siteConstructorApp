@@ -8,8 +8,9 @@
 
 .my-items-list {
     display: flex;
-    flex-wrap: wrap;
+    /*  flex-wrap: wrap; */
     list-style: none;
+    overflow-x: auto;
 }
 
 .my-items-item {
@@ -21,6 +22,10 @@
     transform: scale(1.1);
 }
 
+.my-items-elem-img {
+    min-width: 80px;
+}
+
 .my-items-check {
-    border: 1px solid yellow;
+    border: 1px solid brown;
 }

@@ -7,6 +7,7 @@ import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
 import useFetch from '../../../../hooks/useFetch'
 import PopUp from '../../../../UI/PopUp/PopUp'
+import Adapter from '../../../../scripts/Adapter'
 
 const dateFormat = date => date.toLocaleString('ru', { year: 'numeric', month: 'numeric', day: 'numeric' })
 const generateId = () => Math.random()
@@ -17,7 +18,8 @@ const Timer = ({ closeEdit, content, setVidjetDataArray, vidjArray }) => {
 
     const [type, setType] = useState(content ? content.type : 'to_date')
     const [respEditTimer, doFetchEditTimer] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
-    console.log(timerParams)
+    console.log(timerParams, 'a;ljdaslkjdsaflkjdsfkljdaskljdas')
+  /*   console.log(setIsEditer, 'closeEdit') */
     const closeWindow = () => {
         if (closeEdit) {
             closeEdit()
@@ -74,14 +76,18 @@ const Timer = ({ closeEdit, content, setVidjetDataArray, vidjArray }) => {
         if (respEditTimer.success === 'Успешно!') {
             const list = [...vidjArray]
             list.unshift(timerParams)
-            setVidjetDataArray(list)
-            console.log(vidjArray)
 
+            setVidjetDataArray(list)
+          
+
+            console.log(respEditTimer)
+            window.location.reload()
+            closeWindow()
         }
     }, [respEditTimer])
 
     return (
-        <PopUp title="Видео" closePopup={closeWindow} saveHandler={() => saveList()}>
+        <PopUp title="Таймер" closePopup={closeWindow} saveHandler={() => saveList()}>
             {/*  <div className='block-question-conteiner'>
             <div className='block-menu-header'>
                 <h3>Таймер</h3>

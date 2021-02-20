@@ -20,7 +20,6 @@ import ButtonAddComponent from '../../UI/ButtonAddComponent/ButtonAddComponent'
 import { ContextAddBlock } from '../../ContextAddBlock'
 
 const changeDataObjForBackend = (formdata, arr) => {
-    console.log(arr)
     arr.forEach((el, i) => {
         formdata.set(`issue[${i}]`, `${el.answer}`)
         formdata.set(`answer[${i}]`, `${el.answer}`)
@@ -35,7 +34,6 @@ const BlockEditor = () => {
     const [state, changeState, setState, catalogId, setVidjetData, vidjArr] = useContext(Context)
     const [response, doFetch] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
     const { isOpenEditBlock, setIsOpenEditBlock } = useContext(ContextAddBlock)
-    console.log('context add block', isOpenEditBlock)
     const changeWidget = (text) => {
         setIsOpenEditBlock(true)
         setCurrentWidjet(text)
@@ -44,8 +42,9 @@ const BlockEditor = () => {
     const changeStateVidjet = (obj, questionTitle) => {
         const vidjetName = Object.keys(obj)[0]
         const newState = { ...state }
-        newState.siteVidjets[vidjetName] = obj[vidjetName]
-        setState(newState)
+     /*    newState.siteVidjets[vidjetName] = obj[vidjetName]
+        console.log(newState, 'newState')
+        setState(newState) */
         setObjNewQuestion(obj)
         const formData = new FormData()
         formData.set('landing_prop_id', 2)
@@ -64,9 +63,8 @@ const BlockEditor = () => {
         setVidjetData(list)
     }, [response])
     const openWidjet = () => {
-        console.log(currentWidjet)
         switch (currentWidjet) {
-            case 'questions': return <BlockQueston changeStateVidjet={changeStateVidjet} />
+            case 'questions': return <BlockQueston setVidjetData={setVidjetData} vidjArr={vidjArr} changeStateVidjet={changeStateVidjet} />
             case 'text': return <Text setVidjetData={setVidjetData} vidjArr={vidjArr} />
             case 'banner': return <Banner setVidjetData={setVidjetData} vidjArr={vidjArr} />
             case 'contacts': return <Contacts setVidjetDataArray={setVidjetData} vidjArray={vidjArr} />
@@ -84,7 +82,7 @@ const BlockEditor = () => {
     return (
         <ContextEditor.Provider value={[setCurrentWidjet, setIsOpenEditBlock]}>
             <div className='container d-flex'>
-                {(isOpenEditBlock && vidjArr.length===0) ? <ButtonAddComponent countVidj={vidjArr.length} onClick={() => setIsOpenEditBlock(false)}/> : null}
+                {isOpenEditBlock &&  <ButtonAddComponent  onClick={() => setIsOpenEditBlock(false)}/>}
                 {!isOpenEditBlock && <PopUp closePopup={setIsOpenEditBlock} editMode={false} title='Добавить блок'> <BlockMenu setCurrentWidjet={(text) => changeWidget(text)} hideBlock={setIsOpenEditBlock} /></PopUp>}
                 {openWidjet()}
             </div>

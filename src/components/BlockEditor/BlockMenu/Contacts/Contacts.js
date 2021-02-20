@@ -58,10 +58,9 @@ const Contacts = ({ content, setViewEdit, id, vidjArray, setVidjetDataArray }) =
         if (respEditContacts.success === 'Успешно!') {
 
             if (!content) {
-                console.log('new')
                 console.log(contacts, vidjArray, id)
                 const list = [...vidjArray]
-                const newObj = genetrateObj(contacts, respEditContacts.id)
+                const newObj = genetrateObj(contacts, respEditContacts.landing_prop_data_id)
                 list.unshift(newObj)
                 setVidjetDataArray(list)
             } else {

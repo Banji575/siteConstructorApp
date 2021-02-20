@@ -10,6 +10,7 @@ import VideoVidjet from './VideoVidjet/VideoVidjet'
 import TimerVidjet from './TimerVidjet/TimerVidjet'
 import CaruselVidjet from './CaruselVidjet/CaruselVidjet'
 import './siteBody.css';
+import ItemsVidjet from './ItemsVidjet/ItemVIdjet'
 const SiteBody = ({ vidjArr, setVidjetData, replaceVidj }) => {
     const [isEditer, setIsEditer] = useState(true)
     const [currentWidjet, setCurrentWidjet] = useState(null)
@@ -19,7 +20,6 @@ const SiteBody = ({ vidjArr, setVidjetData, replaceVidj }) => {
         if (!el) {
             return
         }
-        /*         console.log(el) */
 
         switch (el.title) {
             case 'question': return <Question key={i} body={el.body} bgColor={el.bgColor} title={el.blockTitle} id={el.id} replaceVidj={replaceVidj} />
@@ -31,6 +31,7 @@ const SiteBody = ({ vidjArr, setVidjetData, replaceVidj }) => {
             case 'video': return <VideoVidjet key={i} body={el.body} bgColor={el.bgColor} id={el.id} replaceVidj={replaceVidj} />
             case 'timer': return <TimerVidjet key={i} body={el.body} bgColor={el.bgColor} id={el.id} replaceVidj={replaceVidj} />
             case 'carusel': return <CaruselVidjet key={i} body={el.body} bgColor={el.bgColor} id={el.id} replaceVidj={replaceVidj} />
+            case 'items' :return <ItemsVidjet key={i} body={el} bgColor={el.bgColor} id={el.id} replaceVidj={replaceVidj} />
             default:
                 break;
         }

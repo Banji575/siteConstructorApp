@@ -4,7 +4,11 @@ import Utils from '../../../../../scripts/Utils'
 import './feedbackItem.css'
 const FeedbackItem = ({ title, isInput, body, checkHandler, saveTitleHandler }) => {
     /* const [checked, setChecked] = useState(body.show) */
-    console.log(title)
+    const clasess = ['feedback-item-label']
+    if(body.show){
+        clasess.push('input-label-checked')
+    }
+
     const clases = []
     if (title === 'Заголовок') {
         clases.push('d-none')
@@ -13,8 +17,8 @@ const FeedbackItem = ({ title, isInput, body, checkHandler, saveTitleHandler }) 
         <div className='feedback-item'>
             {/* <p className='m-0 feedback-p'>{title}</p> */}
             <div className={clases.join(' ')}>
-                <input id={title} type='checkbox' onChange={() => { checkHandler(title) }} checked={body.show} className='mr-0' />
-                <label className='feedback-item-label' htmlFor={title}>{title}</label>
+                <input id={title} type='checkbox'  onChange={() => { checkHandler(title) }} checked={body.show} className='mr-0 input-hide' />
+                <label  className={clasess.join(' ')} htmlFor={title}>{title}</label>
             </div>
             {isInput && (
                 <React.Fragment>
@@ -26,7 +30,7 @@ const FeedbackItem = ({ title, isInput, body, checkHandler, saveTitleHandler }) 
                             height: '40px'
                         }}
                     />
-                     <h3 className='feedback-option-h mt-5'> Форма антеты</h3>
+                     <h3 className='feedback-option-h mt-5'> Форма анкеты</h3>
                 </React.Fragment>
                 /*  <input type = 'text' placeholder = {body.text} onBlur = {(evt)=>saveTitleHandler(evt.target.value)} className = 'w-100'/> */
             )}

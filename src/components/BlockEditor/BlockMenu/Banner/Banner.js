@@ -6,6 +6,7 @@ import ContextEditor from '../../../../ContextEditor'
 import Context from '../../../../Context'
 import PopUp from '../../../../UI/PopUp/PopUp'
 import './banner.css'
+import Utils from '../../../../scripts/Utils'
 
 const convertBootToString = (bool) => {
     return bool === true ? 1 : 0
@@ -36,7 +37,12 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
     const [link, setLink] = useState(null)
     const [respEditBanner, doFetchEditBanner] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
 
-    console.log(isLink)
+    //класс для скрывания надписи загрузить картинку
+    const clasess = ['banner-load-img-label']
+    if(previewImage){
+        clasess.push('hide')
+    }
+
 
     if (vidjetObj && !oneLoad) {
 
@@ -82,7 +88,7 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
             if (!vidjetObj) {
                 const id = respEditBanner.landing_prop_data_id
                 const list = [...vidjArr]
-                const newObj = { title: 'banner', id, body: { checked: isLink, link: [respEditBanner.$fields.banner_photo.value[0]], linkSite: link } }
+                const newObj = { title: 'banner', id, body: { checked: isLink, link: [respEditBanner.$fields.banner_photo.value[0]], linkSite: Utils.checkEntry(link, 'https://') } }
                 list.unshift(newObj)
                 setVidjetData(list)
                 closeWindow()
@@ -149,7 +155,7 @@ const Banner = ({ vidjetObj, setViewEdit, setVidjetData, vidjArr, id }) => {
                         <input name="file" type="file" name="file" id="input__file_banner" className="input input__file" multiple onChange={(evt) => onLoadHandler(evt)}/* onChange={(evt) => fileChange(evt)} */ />
                         <label htmlFor="input__file_banner" className="input__file-button input-file-button--custom-height">
                             <span className="input__file-button-text"></span>
-                            <p className='banner-load-img-label'>Загрузить картинку</p>
+                            <p className={clasess.join(' ')}>Загрузить картинку</p>
                         </label>
                     </div>
                     <div>

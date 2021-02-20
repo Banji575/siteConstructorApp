@@ -9,7 +9,7 @@ import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 import Timer from '../../BlockEditor/BlockMenu/Timer/Timer'
 import {ContextAddBlock} from '../../../ContextAddBlock'
 import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
-
+import ContextEditor from '../../../ContextEditor'
 const dateFormat = date => date.toLocaleString('ru', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric' })
 const createTime = (type, value = {}) => {
     const { toDateDate, toDateTime, onDateDatumPoint, onDateDuration, cyclingDuration, cyclingDatePoint, timerCreated } = value
@@ -64,8 +64,9 @@ const TimerVidjet = ({ body, id ,replaceVidj}) => {
     const { days, hours, minutes, seconds } = createTime(type, body)
     const [backgrounColor, setBackgroundColor] = useState('')
     const [viewEdit, setViewEdit] = useState(false)
+    const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
-    /*     console.log(toDateDate, toDateTime) */
+        console.log(body, 'body timer')
     const editHandler = () => {
         setViewEdit(true)
     }
@@ -106,7 +107,22 @@ const TimerVidjet = ({ body, id ,replaceVidj}) => {
         formData.set('catalog_id', catalogId)
         formData.set('landing_prop_data_id', id)
         doFetchDelVideo(formData)
+
     }
+
+    useEffect(()=>{
+        if(!respDelVideo) return
+        
+        const list = [...vidjArr]
+        list.map((el, i) => {
+            if (!el) return
+            if (el.id === id) {
+                list.splice(i, 1)
+            }
+        })
+        setVidjetData(list)
+
+    },[respDelVideo])
 
 
     useEffect(() => {
@@ -137,7 +153,7 @@ const TimerVidjet = ({ body, id ,replaceVidj}) => {
     return (
         <div className='questions-container ' style = {{backgroundColor: [backgrounColor]}}>
             <div className='container question-center '>
-                <WidjetWrapper id={id} replaceVidj = {replaceVidj} setBackground = {setBackgroundColor} delHandler = {delHandler} editWindow={ <Timer setViewEdit={editHandler}  id={id} content={{ id: id, title: 'video', body: body }} />} /* isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Banner setViewEdit={setViewEdit} vidjArr={vidjArr} setVidjetData={setVidjetData} id={id}  vidjetObj={body} />} */ >
+                <WidjetWrapper id={id} replaceVidj = {replaceVidj} setBackground = {setBackgroundColor} delHandler = {delHandler} editWindow={ <Timer setViewEdit={editHandler}  id={id} content={{ id: id, title: 'video', body: body }} />} >
                 <div className='questions-body' >
                     <h3 className='question-h3 mb-3 text-center'>До конца акции </h3>
                     <div className='timer-number-conteiner'>

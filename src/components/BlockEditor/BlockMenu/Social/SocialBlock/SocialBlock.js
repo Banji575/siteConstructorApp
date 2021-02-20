@@ -5,17 +5,17 @@ import Utils from '../../../../../scripts/Utils'
 import './socialBlock.css'
 
 
-const SocialBlock = ({ blockTitle, itemArr, content, saveItem, blockName, saveTitle }) => {
+const SocialBlock = ({ blockTitle, itemArr, content, saveItem, blockName, saveTitle, isValid }) => {
     const [firstLoad, setFirstLoad] = useState(false)
     const [customTitle, setCustomTitle] = useState('')
 
     const [title, setTitle] = useState(!firstLoad ? content.title : customTitle)
 
 
-
+    
     return (
         <div className='social-block-container'>
-            <h3 className='social-block-h mb-3'>{blockTitle}</h3>
+            <h3 className='social-block-h mb-3'>{Utils.createHTML(blockTitle)}</h3>
             <div className='social-block-header'>
                 <p className='question-item-header'>Заголовок </p>
                 <CKEditor
@@ -29,7 +29,7 @@ const SocialBlock = ({ blockTitle, itemArr, content, saveItem, blockName, saveTi
                 />
                {/*  <input type='text' value={customTitle} placeholder={title} onChange={(evt) => setCustomTitle(evt.target.value)} onBlur={()=>saveTitle(blockName, customTitle)} /> */}
                 {itemArr.map((el, i) => {
-                    return <SocialItem blockName={blockName} saveItem={saveItem} data={content[el.name]} title={el.title} name={el.name} key={i} />
+                    return <SocialItem isValid = {isValid} blockName={blockName} saveItem={saveItem} data={content[el.name]} title={el.title} name={el.name} key={i} />
                 })}
             </div>
         </div>

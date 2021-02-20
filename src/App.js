@@ -129,7 +129,7 @@ function App() {
       <div className="app">
         <ViewSetting />
         <SiteHeader changeViewMenu={setMobilemenuIsOpen} />
-        <MenuCreation menuIsView={mobileMenuIsOpen} />
+       {/*  <MenuCreation menuIsView={mobileMenuIsOpen} /> */}
         <Body state={state}>
           <div>
             <VidjetAddWrapper>

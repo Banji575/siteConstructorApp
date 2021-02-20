@@ -10,7 +10,6 @@ import Utils from '../../scripts/Utils';
 const WidjetWrapper = ({ children, editWindow, isView, setViewEdit, delHandler, setBackground, backgroundColor, replaceVidj, id, changeBackground }) => {
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
     const [state, changeState, setState, catalogId, setVidjetDataasdf, vidjetData, decktopMode] = useContext(Context)
-    console.log(backgroundColor, 'backgroundColor')
 
     const index = useMemo(() => {
         let i;

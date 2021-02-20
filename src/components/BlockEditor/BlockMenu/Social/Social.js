@@ -24,8 +24,9 @@ const Social = ({ content,setViewEdit ,id,setVidjetDataArray, vidjArray}) => {
     const [data, setData] = useState(content ? content : { title: 'social', id: genetateId(), social: { title: 'Социальные сети и месседжеры', vk: { checked: false, link: '' }, facebook: { checked: false, link: '' }, twitter: { checked: false, link: '' }, tiktok: { checked: false, link: '' } }, messeger: { title: 'Месседжеры', whatsup: { checked: false, link: '' }, telegram: { checked: false, link: '' }, skype: { checked: false, link: '' }, viber: { chedked: false, link: '' } } })
     const [respEditSocial, doFetchEditSocial] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
     const [state, changeState, setState, catalogId] = useContext(Context)
-    const getParams = () => {
-    }
+    const [isValid, setIsValid] = useState(false)
+
+    console.log('social', isValid)
 
     const closeWindow = () => {
         if (setViewEdit) {
@@ -42,39 +43,42 @@ const Social = ({ content,setViewEdit ,id,setVidjetDataArray, vidjArray}) => {
         if(content){
             formData.set('landing_prop_data_id', id)
         }
-   
+        
         formData.set('social_title', data.social.title)
         formData.set('messengers_title', data.messeger.title)
 
-        formData.set('vk_link', data.social.vk.socialLink)
+        formData.set('vk_link', data.social.vk.link)
         formData.set('vk', data.social.vk.checked === true ? 1 : false)
-        formData.set('facebook_link', data.social.facebook.socialLink)
+        formData.set('facebook_link', data.social.facebook.link)
         formData.set('facebook', data.social.facebook.checked === true ? 1 : false)
-        formData.set('twitter_link', data.social.twitter.socialLink)
+        formData.set('twitter_link', data.social.twitter.link)
         formData.set('twitter', data.social.twitter.checked === true ? 1 : false)
-         formData.set('tiktok_link', data.social.tiktok.socialLink)
+         formData.set('tiktok_link', data.social.tiktok.link)
         formData.set('tiktok', data.social.tiktok.checked === true ? 1 : false)
 
-        formData.set('WhatsApp_link', data.messeger.whatsup.socialLink)
+        formData.set('WhatsApp_link', data.messeger.whatsup.link)
         formData.set('WhatsApp', data.messeger.whatsup.checked === true ? 1 : false)
-        formData.set('Telegram_link', data.messeger.telegram.socialLink)
+        formData.set('Telegram_link', data.messeger.telegram.link)
         formData.set('Telegram', data.messeger.telegram.checked === true ? 1 : false)
-        formData.set('Viber_link', data.messeger.viber.socialLink)
+        formData.set('Viber_link', data.messeger.viber.link)
         formData.set('Viber', data.messeger.viber.checked === true ? 1 : false)
-        formData.set('skype_link', data.messeger.skype.socialLink)
+        formData.set('skype_link', data.messeger.skype.link)
         formData.set('skype', data.messeger.skype.checked === true ? 1 : false)
+
 
         doFetchEditSocial(formData)
     }
+
+
 
     useEffect(()=>{
         if(!respEditSocial)
         return
         if(respEditSocial.success === 'Успешно!'){
-           
+           console.log(respEditSocial)
             if(!content){
                 const list = [...vidjArray]
-                const body = {title: 'social', id: data.id, body:{social:data.social, messeger:data.messeger}}
+                const body = {title: 'social', id: respEditSocial.landing_prop_data_id, body:{social:data.social, messeger:data.messeger}}
                 console.log(data)
                 list.unshift(body)
 
@@ -124,10 +128,10 @@ const Social = ({ content,setViewEdit ,id,setVidjetDataArray, vidjArray}) => {
     }
 
     return (
-        <PopUp title="Соц сети / месседжеры" closePopup={closeWindow} saveHandler={() => saveList()}>
+        <PopUp buttonDisable = {isValid} title="Соц сети / месседжеры" closePopup={closeWindow}  saveHandler={() => saveList()}>
 
-            <SocialBlock saveTitle = {saveTitle} itemArr={itemArrSocial} blockName = 'social' saveItem = {saveItem}  content = {data.social} blockTitle='Социальные сети' />
-            <SocialBlock saveTitle = {saveTitle} itemArr={itemArrMessedger} blockName = 'messeger' saveItem = {saveItem} content = {data.messeger} blockTitle='Месседжеры' />
+            <SocialBlock isValid = {setIsValid} saveTitle = {saveTitle} itemArr={itemArrSocial} blockName = 'social' saveItem = {saveItem}  content = {data.social} blockTitle='Социальные сети' />
+            <SocialBlock isValid = {setIsValid} saveTitle = {saveTitle} itemArr={itemArrMessedger} blockName = 'messeger' saveItem = {saveItem} content = {data.messeger} blockTitle='Месседжеры' />
           {/*   <div className='block-question-save'><p onClick={saveList} className='block-question-button-save'>Сохранить</p></div> */}
         </PopUp>
     )

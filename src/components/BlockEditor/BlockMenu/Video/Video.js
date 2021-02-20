@@ -46,13 +46,12 @@ const Video = ({ content, setViewEdit, id, setVidjetDataArray, vidjArray }) => {
         doFetchEditVideo(formData)
     }
 
-    console.log(Utils.CKEditorTools)
-
     useEffect(() => {
         if (!respEditVideo) {
             return
         }
         if (respEditVideo.success === 'Успешно!') {
+            console.log(respEditVideo, 'resEditVideo')
             if (content) {
                 const list = [...vidjArr]
                 list.map((el, i) => {
@@ -67,8 +66,9 @@ const Video = ({ content, setViewEdit, id, setVidjetDataArray, vidjArray }) => {
                 setVidjetData(list)
             } else {
                 const list = [...vidjArray]
-                const elem = { title: 'video', id: generateId(), body: { title, link } }
+                const elem = { title: 'video', id: respEditVideo.landing_prop_data_id, body: { title, link } }
                 list.unshift(elem)
+                console.log(vidjArray)
                 setVidjetDataArray(list)
             }
             closeWindow()

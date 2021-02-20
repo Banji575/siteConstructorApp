@@ -11,7 +11,6 @@ import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponen
 import Utils from '../../../scripts/Utils'
 
 const changeDataObjForBackend = (formdata, arr) => {
-    console.log('aaarrr', arr)
     arr.forEach((el, i) => {
         formdata.set(`issue[${i}]`, `${el.answer}`)
         formdata.set(`answer[${i}]`, `${el.answer}`)
@@ -21,7 +20,6 @@ const changeDataObjForBackend = (formdata, arr) => {
 
 
 const Question = ({ body, id, replaceVidj, title, bgColor }) => {
-    console.log('question')
     const [questons, setQuestions] = useState(body)
     const [viewEdit, setViewEdit] = useState(null)
     const [viewFullList, setViewFullList] = useState(false)
@@ -31,13 +29,11 @@ const Question = ({ body, id, replaceVidj, title, bgColor }) => {
     const [state, changeState, setState, catalogId] = useContext(Context)
     const [backgroundColor, setBackgroundColor] = useState(bgColor || '')
     const { isOpenEditBlock, setIsOpenEditBlock } = useContext(ContextAddBlock)
-
     const editHandler = () => {
         setViewEdit(true)
     }
-
+    console.log('question', body, title)
     const delHandler = () => {
-        console.log(id)
         const formData = new FormData()
         formData.set('landing_prop_id', 2)
         formData.set('catalog_id', catalogId)
@@ -109,11 +105,13 @@ const Question = ({ body, id, replaceVidj, title, bgColor }) => {
     const viewFillLisnHundler = () => {
         setViewFullList(true)
     }
-
+    console.log('title', title)
+    
     return (body === null ? null :
         <div className='questions-container' style={{ backgroundColor: [backgroundColor] }}>
             <WidjetWrapper id={id} replaceVidj={replaceVidj} backgroundColor={bgColor} setBackground={setBackgroundColor} delHandler={delHandler} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<BlockQueston setViewEdit={setViewEdit} id={id} changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} title={title} />}>
                 <div className='questions-body'>
+                    <h1 className = 'question-vidjet-title'>{title}{/* {Utils.createHTML(title)} */}</h1>
                     {elems()}
                 </div>
                 {body.length > 2 && !viewFullList ? <Button /* disabled = {false} */ onClick={() => viewFillLisnHundler()} title='Еще' /> : null}

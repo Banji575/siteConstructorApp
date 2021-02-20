@@ -102,7 +102,8 @@ const Feedback = ({ content, setViewEdit, id, setVidjetDataArray, vidjArray }) =
 
             } else {
                 const list = [...vidjArray]
-                list.unshift(data)
+                console.log('feedback data', data)
+                list.unshift({...data, id:respEditFeedback.landing_prop_data_id})
                 setVidjetDataArray(list)
 
             }

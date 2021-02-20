@@ -23,7 +23,6 @@ const Items = ({ setViewEdit }) => {
     const [resAddData, doFetchAddItem] = useFetch(`https://cloudsgoods.com/api/actionsAdmin.php?mode=object_add_product`)
     const [resAddVidjetItem, doFetchAddVidjetItem] = useFetch('https://cloudsgoods.com/api/CatalogController.php?mode=set_landing_prop_data')
     const [setCurrentWidjet, setIsEditer, setVidjetData, vidjArr] = useContext(ContextEditor)
-    console.log(';ljasf;ljasdfklkjasdf')
     const closeWindow = () => {
         if (setViewEdit) {
             setViewEdit(false)
@@ -31,6 +30,7 @@ const Items = ({ setViewEdit }) => {
         }
         setCurrentWidjet(null)
     }
+    
 
     const delChangeItem = (el, i) => {
         const list = [...loadArr]
@@ -39,12 +39,26 @@ const Items = ({ setViewEdit }) => {
     }
 
     const saveList = () => {
-        console.log('saveList', loadArr)
+        console.log(loadArr)
+        const itemsIdArr = new Array(loadArr.length)
+        .fill('')
+        .map((el,i)=>{
+            return loadArr[i].id
+        })
+
+        console.log(itemsIdArr)
         const formData = new FormData()
         formData.set('catalog_id', catalogId)
+        formData.set('landing_prop_id',5)
         formData.set('title', '')
-        formData.set('')
+        itemsIdArr.forEach(el=>formData.append('object_id[]', el))
+        doFetchAddVidjetItem(formData)
     }
+
+    useEffect(()=>{
+        if(!resAddVidjetItem) return
+        console.log(resAddVidjetItem)
+    },[resAddVidjetItem])
 
     const onLoadHandler = (evt) => {
         const file = evt.target.files[0]
@@ -78,9 +92,6 @@ const Items = ({ setViewEdit }) => {
             <div className='timer-conteiner d-flex flex-column'>
                 <h3 className='question-item-header my-3'>Заголовок</h3>
                 <CKEditor
-                    /* data={content ? content.title : ''} */
-                    /* onBlur={(evt) => changeTitleHandler(evt.editor)} */
-                    /* onChange={(e,text)=>setTitle(e.editor.getData())} */
                     config={{
                         toolbar: [Utils.CKEditorTools],
                         height: '60px'
@@ -99,29 +110,24 @@ const Items = ({ setViewEdit }) => {
                             <label className="input__file-button input-file-button--custom-height items-input__wrapper">
                                 <p className = 'mx-auto my-0'>Выбрать из загруженных товаров</p>
                                 </label>
-
-                            {/*  <Button title='Выбрать из загруженных товаров' onClick={() => setMyItemsPopup(true)} /> */}
-
                         </div>
                     </div>
                 </div>
                 </div>
-                </PopUp>
-                    {viewPopUp ? <NewItem createNewItem={createNewItem} img={url} setView={setViewPopUp} /> : null}
-                    {myItemsPopup ? <MyItem renderCheckImg={setLoadArr} showMyItem={setMyItemsPopup} /> : null}
-                <div className='d-flex flex-wrap' >
-
-                    {loadArr.map((el, i) => {
-                        return (
-                            
-                            <div className='mr-3'><img src={el.src} /><div className='icon-conteiner'/*  onClick={delHandler} */ color='green'>
+                <div className = 'd-flex items-card-conteiner'>
+                {loadArr.map((el, i) => {
+                        return (                         
+                            <div className='mr-3 item-card d-flex'><img src={el.src} /><div className='icon-conteiner'/*  onClick={delHandler} */ color='green'>
                                 <FontAwesomeIcon onClick={() => delChangeItem(el, i)} color={'red'} icon={faTrashAlt} />
                             </div></div>)
                     })}
+                    </div>
+                </PopUp>
+                    {viewPopUp ?<PopUp title="Загрузить товар" closePopup={closeWindow} saveHandler={() => saveList()}> <NewItem createNewItem={createNewItem} img={url} setView={setViewPopUp} /></PopUp> : null}
+                    {myItemsPopup ? <MyItem renderCheckImg={setLoadArr} showMyItem={setMyItemsPopup} /> : null}
+                <div className='d-flex flex-wrap' >
                 </div>
-                </React.Fragment>
-           
-       
+                </React.Fragment> 
     )
 }
 

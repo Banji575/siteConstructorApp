@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import CKEditor from 'ckeditor4-react-advanced'
+import Utils from '../../../../../scripts/Utils'
 
 import './questionItem.css'
 const QuestionItem = ({propsAnswer, propsQuestion, index,id,questCount,saveInTemporary,deleteItem}) => {
     const [answer, setAnswer] = useState(propsAnswer || '')
     const [question, setQuestion] = useState(propsQuestion || '')
-    console.log(answer, question)
     return(
         <div className = 'question-item-conteiner'>
             <div className ='d-flex justify-content-between'>
@@ -21,9 +21,7 @@ const QuestionItem = ({propsAnswer, propsQuestion, index,id,questCount,saveInTem
                     onBlur = {()=>saveInTemporary({id, answer, question})}
                     rows = {12} 
                     config={{
-                        toolbar: [
-                            ['Bold', 'Italic', 'Underline', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','Font'],
-                        ],
+                        toolbar: [Utils.CKEditorTools],
                         height:'100px',
                         rows:56
                     }}
@@ -36,9 +34,7 @@ const QuestionItem = ({propsAnswer, propsQuestion, index,id,questCount,saveInTem
                     onBlur = {()=>saveInTemporary({id, answer, question})}
                     rows = {12} 
                     config={{
-                        toolbar: [
-                            ['Bold', 'Italic', 'Underline', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock','Font'],
-                        ],
+                        toolbar: [ Utils.CKEditorTools],
                         height:'100px',
                         rows:56
                     }}

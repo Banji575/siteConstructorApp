@@ -44,7 +44,6 @@ const ContactsVidjets = ({ body, id, replaceVidj }) => {
             setVidjetData(list)
         }
     }, [respDelContacts])
-    console.log('contactsVidjet', replaceVidj)
     return (
         <div className='questions-container' style={{ backgroundColor: [backgroundColor] }}>
                 <WidjetWrapper id={id} replaceVidj = {replaceVidj} delHandler={delHandler} setBackground={setBackgroundColor} isView={viewEdit} setViewEdit={setViewEdit} editWindow={<Contacts content={body} setViewEdit={setViewEdit} id={id}  /* changeStateVidjet={changeStateVidjet} isNew={false} listArr={body} */ />} >

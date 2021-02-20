@@ -24,12 +24,10 @@ const TextContent = ({ body, id, replaceVidj,bgColor }) => {
     const [backgroundColor, setBackgroundColor] = useState(bgColor)
     const {isOpenEditBlock, setIsOpenEditBlock} = useContext(ContextAddBlock)
     
-    console.log(backgroundColor, 'as;ljdasflkjadsfkljadsfkljadskljadsfkljadskljdaskljdasflkj')
 
     const closeEdit = () => setViewEdit(false)
 
     useState(()=>{
-        console.log('backgroundColor', bgColor)
     },[backgroundColor])
 
     body.id = id
@@ -37,10 +35,9 @@ const TextContent = ({ body, id, replaceVidj,bgColor }) => {
 
     useEffect(()=>{
         if(backgroundColor === '#'+bgColor) return
-        console.log(backgroundColor, bgColor)
         const formData = new FormData()
         formData.set('landing_prop_data_id', id)
-        formData.set('background_color', backgroundColor.substring(1))
+        formData.set('background_color', backgroundColor)
         doFetchColor(formData)
     },[backgroundColor])
 
@@ -55,7 +52,6 @@ const TextContent = ({ body, id, replaceVidj,bgColor }) => {
 
     useEffect(()=>{
         if(!respColor) return
-        console.log(respColor,'lkjdasfkjhadsfkjhsd')
     },[respColor])
 
     useEffect(() => {
@@ -65,7 +61,6 @@ const TextContent = ({ body, id, replaceVidj,bgColor }) => {
         list.map((el, i) => {
             if (!el) return
             if (el.id === id) {
-                console.log(el, id)
                 list.splice(i, 1)
             }
         })

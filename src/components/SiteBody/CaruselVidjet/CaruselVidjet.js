@@ -54,6 +54,7 @@ const CaruselVidjet = ({ body, id , replaceVidj}) => {
                     <Carousel
                         itemsToShow={1}
                         enableAutoPlay={true}
+                        isRTL = {false}
                         onChange={(currentItem, pageIndex) => {
                         }}
                     >

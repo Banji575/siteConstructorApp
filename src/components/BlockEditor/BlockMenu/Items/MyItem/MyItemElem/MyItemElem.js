@@ -17,7 +17,6 @@ const MyItemElem = ({src,addImgCheckArr,id}) => {
                 list.splice(index,1)
             }
             
-            
             return list
         })
         setCheckImg(state=>!state)
@@ -26,10 +25,8 @@ const MyItemElem = ({src,addImgCheckArr,id}) => {
     if(checkImg){
         classes.push('my-items-check')
     }
-
-
     return (
-    <li onClick = {()=>checkImgHandler()} className={classes.join(' ')}><img   src={src} /></li>
+    <li onClick = {()=>checkImgHandler()} className={classes.join(' ')}><img className = 'my-items-elem-img' src={src} /></li>
     )
 }
 export default MyItemElem

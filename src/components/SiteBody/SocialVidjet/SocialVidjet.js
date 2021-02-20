@@ -12,6 +12,7 @@ import WidjetWrapper from '../../../UI/VidjetVrapper/WidjetWrapper'
 
 import {ContextAddBlock} from '../../../ContextAddBlock'
 import ButtonAddComponent from '../../../UI/ButtonAddComponent/ButtonAddComponent'
+import Utils from '../../../scripts/Utils'
 
 const SocialVidjet = ({ body ,id, replaceVidj}) => {
     const [viewEdit, setViewEdit] = useState(false)
@@ -23,6 +24,8 @@ const SocialVidjet = ({ body ,id, replaceVidj}) => {
     const editHandler = () => {
         setViewEdit(true)
     }
+
+    console.log('socialVidjetdata', body)
 
     const delHandler = () => {
         const formData = new FormData()
@@ -52,6 +55,8 @@ const SocialVidjet = ({ body ,id, replaceVidj}) => {
                 <div className='questions-body'>
                     <div className='social-vidjet-list-container  d-md-flex'>
                         {socialSection.map((el, i) => {
+                            console.log(Utils.checkSocialList(body[el]))
+                            console.log('dsafjasd;ljdasljdas',body[el])
                             return <SocialVidjetItem key={i} data={body[el]} />
                         })}
                     </div>

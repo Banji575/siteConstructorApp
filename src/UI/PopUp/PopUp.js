@@ -1,7 +1,13 @@
 import React from 'react'
 import './popUp.css'
-const PopUp = ({ children, closePopup, title ,saveHandler, editMode = true}) => {
+const PopUp = ({ children, closePopup, title ,saveHandler, editMode = true, buttonDisable = true}) => {
     
+
+    const disabledButton = () => buttonDisable ? saveHandler : null
+    const classes = ['block-question-button-save']
+    if(!buttonDisable){
+        classes.push('button-disabled')
+    }
     return (
         <React.Fragment>
             <div className='popup-container  pupUpZindex '>
@@ -12,7 +18,7 @@ const PopUp = ({ children, closePopup, title ,saveHandler, editMode = true}) => 
                 <div className = 'popup-body'>
                 {children}
                 </div>
-                <div className='block-question-save'><p onClick={editMode ? saveHandler : closePopup}  className='block-question-button-save'>{editMode ? 'Сохранить': 'Отменить'}</p></div>
+                <div className='block-question-save'><p onClick={editMode ? disabledButton() : closePopup}  className={classes.join(' ')}>{editMode ? 'Сохранить': 'Отменить'}</p></div>
             </div>
             <div onClick={closePopup} className='overlay-wpapper'>
             </div>

@@ -10,20 +10,22 @@ const MyItem = ({ showMyItem, renderCheckImg }) => {
     const [imageLoad, setImageIsLoad] = useState(false)
     const [checkedImg, setCheckedImg] = useState([])
     const [fileArr, setFileArr] = useState(null)
-    const [response, doFetch] = useFetch('https://cloudsgoods.com/api/CatalogController.php?')
+    const [response, doFetch] = useFetch('https://cloudsgoods.com/api/actionsAdmin.php?')
     const [state, changeState, setState, catalogId, setVidjetData, vidjArr] = useContext(Context)
 
 
     const loadItemhandler = () => {
         console.log(checkedImg)
-        renderCheckImg(checkedImg)
+        renderCheckImg(s=>(
+            [...s,...checkedImg]
+            ))
         showMyItem(false)
     }
     useEffect(() => {
         const formData = new FormData()
-        formData.set('mode', 'get_catalog_objects')
-        formData.set('catalog_id', catalogId)
-        formData.set('menu_id', 0)
+        formData.set('mode', 'get_my_objects')
+        /* formData.set('catalog_id', catalogId)
+        formData.set('menu_id', 0) */
         formData.set('start', 0)
         formData.append('limit', 50)
         doFetch(formData)
